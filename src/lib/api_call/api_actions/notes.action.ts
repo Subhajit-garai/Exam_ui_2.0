@@ -1,0 +1,31 @@
+import { ApiClient } from "../ApiClient";
+import {
+  setContentData,
+  setSubjects,
+  setTopics,
+} from "@repo/store/slice/noteSlice";
+
+// exam metadata
+
+export class noteApi {
+  private api: ApiClient;
+  constructor() {
+    this.api = ApiClient.getInstance();
+  }
+
+  // notes
+
+  fetchAvalibleSubject = (dispatch: any) => {
+    let endpoint = `/notes/allsubject`;
+    this.api.apiDispatcher(endpoint, dispatch, setSubjects);
+  };
+  fetchSubject_topics = (dispatch: any, Subject: string) => {
+    let endpoint = `/notes/alltopic/${Subject}`;
+    this.api.apiDispatcher(endpoint, dispatch, setTopics);
+  };
+
+  fetchNotes = (dispatch: any, Subject: string, topic: string) => {
+    let endpoint = `/notes/getnote/${Subject}/${topic}`;
+    this.api.apiDispatcher(endpoint, dispatch, setContentData);
+  };
+}
