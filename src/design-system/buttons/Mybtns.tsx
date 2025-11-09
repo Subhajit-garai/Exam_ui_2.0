@@ -16,13 +16,14 @@ export const ExamJoinBtn = ({
       color="blue"
       onClick={handleJoinExam}
       disabled={isDisabled}
+      className=" bg-primary-foreground"
     >
       <div className="flex gap-1 items-center">
-        <div className="bg-white px-1 rounded-md flex items-center gap-1">
-          <p className="text-gray-700">{entryChange}</p>
+        <div className="bg-background px-1 rounded-md flex items-center gap-1">
+          <p className="text-primary ">{entryChange}</p>
           <Currencyicon size={17} />
         </div>
-        Join Now
+        <p className=" text-primary">Join Now</p>
       </div>
     </Button>
   );

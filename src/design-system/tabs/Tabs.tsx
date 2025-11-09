@@ -1,7 +1,6 @@
-
-import { useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@repo/lib/utils/utils";
+import { useEffect, useState } from "react";
 
 type Tab = {
   title: string;
@@ -32,6 +31,22 @@ export const Tabs = ({
     setTabs(newTabs);
     setActive(newTabs[0]);
   };
+
+  useEffect(() => {
+    const newTabs = [...propTabs];
+
+    // Find current active tab in new data
+    const idx = newTabs.findIndex((tab) => tab.value === active?.value);
+
+    if (idx !== -1) {
+      const selectedTab = newTabs.splice(idx, 1);
+      newTabs.unshift(selectedTab[0]);
+      setTabs(newTabs);
+    } else {
+      setTabs(propTabs);
+      if (propTabs.length > 0) setActive(propTabs[0]);
+    }
+  }, [propTabs]);
 
   const [hovering, setHovering] = useState(false);
 
@@ -88,6 +103,7 @@ export const FadeInDiv = ({
   className,
   tabs,
   hovering,
+  active,
 }: {
   className?: string;
   key?: string;
@@ -96,7 +112,7 @@ export const FadeInDiv = ({
   hovering?: boolean;
 }) => {
   const isActive = (tab: Tab) => {
-    return tab.value === tabs[0].value;
+    return tab.value === active.value;
   };
   return (
     <div className="relative w-full h-full">

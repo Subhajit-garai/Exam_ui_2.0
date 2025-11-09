@@ -8,4 +8,8 @@ export class eventApi {
     this.api = ApiClient.getInstance();
   }
 
+   demo = async (id: string) => {
+    const endpoint = `/demo?id=${id}`;
+    return this.api.request(endpoint);
+  };
 }

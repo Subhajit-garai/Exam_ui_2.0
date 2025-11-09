@@ -10,9 +10,10 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import { SelectionInput } from "@repo/design-system/inputs";
-// import type { WeaknessSegmentationData_type } from "./types";
 import { useApi } from "@/ApiProvider";
+// import type { WeaknessSegmentationData_type } from "./types";
+
+
 
 // const WeaknessSegmentationData:WeaknessSegmentationData_type[] = [
 //   { subject: "OS", A: 92, B: 11, fullMark: 100 },
@@ -26,35 +27,24 @@ import { useApi } from "@/ApiProvider";
 //   { subject: "SE", A: 65, B: 85, fullMark: 100 },
 // ];
 
-
-const WeaknessSegmentation = () => {
+const WeaknessSegmentationOfexam = ({ examid }: { examid: string  }) => {
+  const _ = useApi();
   const [data, setdata] = useState([]);
-  const [offset, setOffset] = useState("day");
   const [range, setrange] = useState(20);
 
-  const _ = useApi()
-
-  const handeOffset = (e:any) =>{
-	setOffset(e.target.value)
-  }
-
-  const MetrixSetUpFunc = (offset:string) =>{
-
-	_.api.metrix.getsubjectwiseMetrixData(offset).then((data) => {  
-		setdata(data.data);
-    setrange(data.range)
-	  });
-  }
+  const MetrixSetUpFunc = () => {
+    if (examid) {
+      _.api.metrix.getExamWeeknessMetrix(examid).then((data) => {
+        setdata(data.data);
+        setrange(data.range);
+      });
+    }
+  };
 
   useEffect(() => {
-	MetrixSetUpFunc(offset)
-  }, [offset]);
+    MetrixSetUpFunc();
+  }, [examid]);
 
-  useEffect(() => {
-    MetrixSetUpFunc("day")
-  }, []);
-
-  
   return (
     <motion.div
       className="bg-s2 bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg rounded-xl p-3 md:p-6 border border-gray-700"
@@ -63,20 +53,9 @@ const WeaknessSegmentation = () => {
       transition={{ delay: 0.6 }}
     >
       <div className="flex  justify-around items-center mb-4">
-        <h2 className="md:text-xl font-semibold text-gray-100">
+        <h2 className="md:text-xl font-semibold text-primary">
           Weakness Segmentation
         </h2>
-        {/* <p className="text-xl font-semibold text-gray-100 mb-4">"--WEEKly"</p> */}
-		<SelectionInput options={[{
-                id: "1",
-                inputId: "input-Offcet",
-                // placeholder: "Enter Ans ",
-                options: ["day","week","month","hour","minute"],
-                required: true,
-                name: "offset",
-              }]}
-              handleInputefn={(e) =>handeOffset(e)} value={offset}
-               />
       </div>
       <div style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>
@@ -112,4 +91,4 @@ const WeaknessSegmentation = () => {
     </motion.div>
   );
 };
-export default WeaknessSegmentation;
+export default WeaknessSegmentationOfexam;

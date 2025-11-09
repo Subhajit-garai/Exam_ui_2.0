@@ -1,8 +1,6 @@
 import { Light  as SyntaxHighlighterBase}  from "react-syntax-highlighter";
 // import  SyntaxHighlighter  from "react-syntax-highlighter";
 import {
-  docco,
-  dark,
   atomOneDarkReasonable,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 

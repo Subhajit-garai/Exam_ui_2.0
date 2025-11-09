@@ -21,10 +21,22 @@ import { toast } from "react-toastify";
 import ExamSecurity from "./ExamSecurity";
 import { useApi } from "@/ApiProvider";
 import { useAppSelector } from "@repo/store/hook";
-import { DrawerDialogComponentRender} from "@repo/design-system/drawer"
 
 type question_extra_type = {
   [key: string]: string;
+};
+
+export type exam_question_format_type = {
+  number: number;
+  part: string;
+  question: {
+    id: string;
+    title: string;
+    options: string[];
+    extra: question_extra_type;
+    format: string;
+    is_multiple_ans: boolean;
+  } | null;
 };
 
 type AnsSet_data_type = { isview: number; isans: number; ans: string[] };
@@ -44,20 +56,20 @@ const Examportal = () => {
     options: string[];
     is_multiple_ans?: boolean | undefined;
     extra?: question_extra_type;
-    formate: string;
+    format: string;
   } = {
     id: "111",
     title: "what is 2 + 2",
     options: ["4", "2", "11", "0"],
-    formate: "Text",
+    format: "Text",
   };
 
-  const [Question, setQuestion] = useState(initialvalue || {});
+  const [Question, setQuestion] = useState(initialvalue);
   const [Ans, setAns] = useState(["0"]);
   const [Examid, setExamid] = useState(searchParams.get("id"));
   const [Number, setNumber] = useState(1);
-  const [MobileViewDrawer, setMobileViewDrawer] = useState(false);
-  const [MobileViewDrawer2, setMobileViewDrawer2] = useState(false);
+  // const [MobileViewDrawer, setMobileViewDrawer] = useState(false);
+  // const [MobileViewDrawer2, setMobileViewDrawer2] = useState(false);
   // const [Part, setPart] = useState("part1");
 
   let { ansset, total_questions, CurrentPart } = useAppSelector(
@@ -70,7 +82,7 @@ const Examportal = () => {
     if (!(searchParams.get("id") == ansset.examid)) {
       console.log("no exam");
       let newarr: AnsSet_data_type[] = [];
-      let newSet:AnsSet_type = {};
+      let newSet: AnsSet_type = {};
       total_questions.map((question, index) => {
         for (let i = 1; i <= question; i++) {
           newarr.push({ isview: 0, isans: 0, ans: [] });
@@ -99,6 +111,7 @@ const Examportal = () => {
     });
     updateansBoxisView();
   };
+
   const PreQuestion = () => {
     if (!Examid) return;
     fetchExamQuestionAndset({
@@ -132,6 +145,7 @@ const Examportal = () => {
 
     // console.log("Ans ---->",Ans);
     if (!Examid) return;
+
     _.api.exam.saveExamAns({
       examid: Examid,
       number: Number,
@@ -141,13 +155,19 @@ const Examportal = () => {
     });
     updateansBoxisAns(1);
     updateansBoxAns(Ans);
-    setAns(["0"]);
+    setAns([]);
   };
 
-  const updateansBoxisView = (data?: number) => {
-    data = data || 1;
+  const updateansBoxisView = (isviewflag?: number) => {
+    isviewflag = isviewflag || 1;
     let number = Number - 1;
-    dispatch(updateisView({ part: CurrentPart, number: number, data: data }));
+    dispatch(
+      updateisView({
+        part: CurrentPart,
+        number: number,
+        isviewflag: isviewflag,
+      })
+    );
   };
 
   const updateansBoxisAns = (data?: number) => {
@@ -171,6 +191,8 @@ const Examportal = () => {
       part: CurrentPart,
       number: number,
     });
+
+    updateansBoxisView();
   };
 
   async function fetchExamQuestionAndset({
@@ -190,10 +212,12 @@ const Examportal = () => {
       number: number ? number : Number,
       part,
     });
-    let data = res.data.question;
+    let data: exam_question_format_type = res.data;
     let num = res.data.number;
+    let question = data?.question ? data?.question : initialvalue;
+
     setNumber(num);
-    setQuestion(data);
+    setQuestion(question);
   }
 
   useEffect(() => {
@@ -235,7 +259,7 @@ const Examportal = () => {
         <div className="mobileViewDrawerBtn md:hidden flex items-center justify-between gap-2 px-2">
           <Button
             onClick={() => {
-              setMobileViewDrawer(true);
+              // setMobileViewDrawer(true);
             }}
           >
             Ans info
@@ -243,7 +267,7 @@ const Examportal = () => {
           <Button
             color="blue"
             onClick={() => {
-              setMobileViewDrawer2(true);
+              // setMobileViewDrawer2(true);
             }}
           >
             Exam info
@@ -259,7 +283,7 @@ const Examportal = () => {
               Part={CurrentPart}
               setans={setAns}
               ismultiple={Question?.is_multiple_ans}
-              extra={Question.extra ? Question.extra[Question?.formate] : null}
+              extra={Question.extra ? Question.extra[Question?.format] : null}
               // formate={Question.formate}
               // topic={Question.topic}
             />
@@ -328,10 +352,6 @@ const Examportal = () => {
             </div>
           </DrawerItems>
         </Drawer> */}
-
-        <DrawerDialogComponentRender TriggerBtnText="Ansinfo">
-          <h1>hi</h1>
-        </DrawerDialogComponentRender>
 
       </div>
       <div className=" drawer md:hidden">

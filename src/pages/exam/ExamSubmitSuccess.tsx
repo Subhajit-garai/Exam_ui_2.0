@@ -9,9 +9,9 @@ const ExamSubmitSuccess = () => {
 let ismobile = useIsMobile()
 
   return (
-    <div className='flex w-full h-fit justify-center'>
+    <div className='flex  h-fit justify-center p-4  '>
 
-        <Card className=' md:min-w-[25rem]'>
+        <Card className=' md:min-w-[25rem] gap-4 p-4  '>
                 <div className="submit-logo flex items-center justify-center">
                     <BadgeCheck size={40} colorProfile={12} color='green'/>
                     {/* <CheckCircleIcon size={40} colorProfile={12} color='green'/> */}

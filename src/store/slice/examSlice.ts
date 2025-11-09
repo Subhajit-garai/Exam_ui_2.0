@@ -59,7 +59,7 @@ let examSlice = createSlice({
     setansset: (state, actions) => {
       state.ansset.parts = actions.payload;
     },
-    setanssetInit: (state, actions) => {
+    setanssetInit: (state) => {
       state.ansset = {
         examid: "",
         parts: {},
@@ -71,11 +71,11 @@ let examSlice = createSlice({
     },
 
     updateisView: (state, actions) => {
-      let { part, number, data } = actions.payload;
+      let { part, number, isviewflag } = actions.payload;
       if (
         typeof part !== "string" ||
         typeof number !== "number" ||
-        typeof data !== "number"
+        typeof isviewflag !== "number"
       )
         return;
       if (
@@ -86,7 +86,7 @@ let examSlice = createSlice({
         const part_data = state.ansset.parts[part];
         if (part_data) {
           if (part_data[number]) {
-            part_data[number].isview = data;
+            part_data[number].isview = isviewflag;
           }
         }
       }

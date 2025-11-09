@@ -32,6 +32,7 @@ export const QuestionSection = ({
   let [currentAnswer, setcurrentAnswer] = useState<string[]>([]);
 
   const ans = (ansid: string) => {
+
     setcurrentAnswer((prev) => {
       let updatedAnswer: string[] = [];
       if (ismultiple) {
@@ -84,7 +85,7 @@ export const QuestionSection = ({
                           <Checkbox
                             className={cn(
                               "peer appearance-none w-5 h-5 rounded-full border-2 border-blue-400  focus:outline-hidden relative transition duration-200",
-                              "data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                              "bg-blue-500 data-[state=checked]:border-blue-500"
                             )}
                             id={`option${i + 1}`}
                             name={`question${number}`}
@@ -108,12 +109,12 @@ export const QuestionSection = ({
                       <Checkbox
                         className={cn(
                           "peer appearance-none w-5 h-5 rounded-full border-2 border-blue-400  focus:outline-hidden relative transition duration-200",
-                          "data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                          "bg-blue-500 border-blue-500"
                         )}
                         id={`option${i + 1}`}
                         name={`question${number}`}
                         value={i + 1}
-                        onClick={() => ans(String(i + 1))}
+                        onClick={() =>  {ans(String(i + 1))}}
                         checked={currentAnswer.includes(String(i + 1))}
                         // readOnly={true}
                       />

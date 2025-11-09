@@ -10,9 +10,9 @@ import {
   type parts_type,
 } from "@repo/store/slice/examSlice";
 import { ExamEndTime } from "../Timer";
-import { ToastConfig } from "@repo/lib";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ToastConfig } from "@/lib";
 
 export const InfoCont = () => {
   const _ = useApi();
@@ -34,7 +34,7 @@ export const InfoCont = () => {
         if (response.success) {
           console.log("test submission successful");
           toast.success(response.message, ToastConfig());
-          dispatch(setanssetInit({}));
+          dispatch(setanssetInit());
           navigate("/test/submitsuccess");
         }
       })

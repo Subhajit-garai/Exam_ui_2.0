@@ -13,7 +13,7 @@ import { type  LucideIcon } from "@repo/types/Icon";
 export type SIDEBAR_ITEMS_types = {
   id: number;
   href: string;
-  icon: LucideIcon;
+  Icon: LucideIcon;
   name: string;
   color: string;
 };
@@ -54,7 +54,7 @@ const Sidebar = ({ SIDEBAR_ITEMS }: { SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] }) =>
             {SIDEBAR_ITEMS.map((item) => (
               <Link key={item.href} to={item.href}>
                 <motion.div className="flex items-center px-2 py-4  gap-2 text-sm font-medium rounded-lg hover:bg-hover transition-colors  md:p-4  md:mb-2">
-                  <item.icon
+                  <item.Icon
                     size={20}
                     style={{ color: item.color, minWidth: "20px" }}
                   />

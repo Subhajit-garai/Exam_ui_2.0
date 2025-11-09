@@ -1,6 +1,6 @@
 import slugify from "slugify";
 import { type ClassValue, clsx } from "clsx";
-import { type Theme, type ToastOptions, type ToastPosition } from "react-toastify";
+import { type ToastOptions, type ToastPosition } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {

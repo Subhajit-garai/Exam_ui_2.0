@@ -17,7 +17,7 @@ interface Props {
   color?: string;
 }
 
-export function SelectCom({ handleInputefn, value, options, color }: Props) {
+export function SelectCom({ handleInputefn, value, options }: Props) {
   options = Array.isArray(options) ? options : [options];
 
   return (

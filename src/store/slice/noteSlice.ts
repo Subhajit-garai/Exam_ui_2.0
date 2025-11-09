@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type note_type = {
-  activetab: string;
-  Subjects: any[];
-  Topics: any[];
-  correntSubject: string;
-  subjectNames: any[];
-  content: string;
-  correntTopic: string;
-  correntTopicVersion: string;
-};
+// type note_type = {
+//   activetab: string;
+//   Subjects: any[];
+//   Topics: any[];
+//   correntSubject: string;
+//   subjectNames: any[];
+//   content: string;
+//   correntTopic: string;
+//   correntTopicVersion: string;
+// };
 
 const initialState = {
   activetab: "",

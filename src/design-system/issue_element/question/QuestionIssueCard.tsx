@@ -8,14 +8,14 @@ import Textinpute from "../../inputs/InputComponents";
 import useHandleinpute from "@repo/hooks/useHandleInpute";
 import { MyButton } from "../../buttons/Button";
 import type { issueTypes } from "@repo/lib/constants/issue.constants";
-import { InputOption } from "@repo/ui/types/Input";
+import type { InputOption } from "@/types";
 
 type issuedata_type = {};
 
 export const QuestionIssueCardCreate = ({
   mainDivColor,
   questionid,
-  issueType,
+  // issueType,
   handleCancle,
   CreateIssue,
   getQuestionIssueResuestCount,

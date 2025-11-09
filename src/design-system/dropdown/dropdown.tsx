@@ -1,12 +1,11 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@repo/ui/dropdown-menu";
-import { MouseEventHandler, ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 
 interface drawer_data {
   name: string;
@@ -28,7 +27,7 @@ export const drawer_one = ({ children, data }: props) => {
             if (Array.isArray(drawer)) {
               return (
                 <>
-                  {drawer.map((innerDrawer) => {
+                  {drawer.map(() => {
                     return (
                       <DropdownMenuLabel onClick={drawer.Onclick}>
                         {drawer.name}

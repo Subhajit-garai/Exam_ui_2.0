@@ -43,7 +43,7 @@ export class examApi {
 
   // exam
 
-  getTokensystem = async (type: string = "Exam") => {
+  getTokensystem = async (type: string = "Test") => {
     let endpoint = `/exam/tokensystem?type=${type}`;
     return await this.api.request(endpoint);
   };

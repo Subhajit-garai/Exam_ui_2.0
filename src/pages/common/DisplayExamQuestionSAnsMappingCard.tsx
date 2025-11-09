@@ -1,20 +1,17 @@
 import { useEffect, useMemo, useState, type JSX } from "react";
-import { ModelCont } from "@repo/design-system/model";
 import { useIsMobile } from "@repo/hooks/isMobile";
-import { QuestionIssueCardCreate } from "@repo/design-system/issue_element";
 import { useApi } from "@/ApiProvider";
 import { Button } from "@repo/ui/button";
 import { Checkbox } from "@repo/ui/checkbox";
 import { Label } from "@repo/ui/label";
+import { DialogBox } from "@/design-system";
+import { Tabs } from "@/design-system/tabs/Tabs";
 // import { TabManue } from "@repo/design-system/tabs";
 
-
-
 interface Option {
-  id: number;
   title: string;
-  isDisable: boolean;
-  component: JSX.Element;
+  value: string;
+  content: JSX.Element;
 }
 
 function isCorrectAnswerFn(Ans: any[], userAns: any[]) {
@@ -55,16 +52,16 @@ export const DisplayExamQuestionSAnsMapping = ({
     //
     allQuestions.map((question: any) => {
       const userAns = question.is_multiple_ans
-        ? (question.userAnswer?.split(",") ?? [])
+        ? question.userAnswer?.split(",") ?? []
         : question.userAnswer
-          ? [question.userAnswer]
-          : [];
+        ? [question.userAnswer]
+        : [];
 
       const correctAns = Array.isArray(question.ans)
         ? question.ans
         : typeof question.ans === "string"
-          ? question.ans.split(",")
-          : [];
+        ? question.ans.split(",")
+        : [];
 
       if (!question.userAnswer || question.userAnswer === "0") {
         mapping["Unattempted"].push(question);
@@ -95,13 +92,11 @@ export const DisplayExamQuestionSAnsMapping = ({
   }, [Object.keys(questionMappedSet).length]);
 
   useEffect(() => {
-    let tempOption = parts.map((part, idx) => {
+    let tempOption = parts.map((part) => {
       return {
-        id: idx,
         title: part,
-        // icon: () => <BookOpenCheck color="#6366f1" />,
-        isDisable: false,
-        component: (
+        value: part,
+        content: (
           <DisplayQuestionSAnsCont QuestionsData={categorizedQuestions[part]} />
         ),
       };
@@ -114,11 +109,15 @@ export const DisplayExamQuestionSAnsMapping = ({
   return (
     <>
       <div className="partSwitch flex gap-2">
-        {/* <TabManue
-          config={options}
-          parentClass={" flex justify-center "}
-          variant="pills"
-        /> */}
+        <div className="flex-1 md:h-160  relative  mb-20 md:mb-0 ">
+          <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
+            <Tabs
+              tabs={options}
+              contentClassName="mt-10"
+              activeTabClassName=""
+            />
+          </div>
+        </div>
       </div>
     </>
   );
@@ -179,8 +178,8 @@ export const DisplayQuestionAnsCard = ({
   ans: string[] | string;
   ismultiple: boolean;
 }): JSX.Element => {
-  const [openModal, setOpenModal] = useState(false);
-  const [openModalReportError, setOpenModalReportError] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
+  // const [openModalReportError, setOpenModalReportError] = useState(false);
 
   let ContainerColor = "bg-red-700";
   let ismobile = useIsMobile();
@@ -188,14 +187,14 @@ export const DisplayQuestionAnsCard = ({
   let currentUserAnswer = ismultiple
     ? userAnswer.split(",")
     : userAnswer
-      ? [userAnswer]
-      : [];
+    ? [userAnswer]
+    : [];
 
   const correctAnswerArray = Array.isArray(ans)
     ? ans
     : typeof ans === "string"
-      ? ans.split(",")
-      : [];
+    ? ans.split(",")
+    : [];
 
   if (isCorrectAnswerFn(correctAnswerArray, currentUserAnswer)) {
     ContainerColor = "bg-green-700";
@@ -214,6 +213,17 @@ export const DisplayQuestionAnsCard = ({
   return (
     <>
       <div className={`" rounded-md p-4  ${ContainerColor}`} key={questionid}>
+        <DialogBox
+          TriggerBtnText="open"
+          Title="Solution"
+          dialogDescription=" Question decription "
+        >
+          <SolutionDisplayCont
+            questionid={questionid}
+            ans={CorretOptionsTitle}
+            isMultipleAns={ismultiple}
+          />
+        </DialogBox>
         {/* <ModelCont
           HeaderComp={<SolutionDisplayHeader title={title} />}
           Body={
@@ -267,7 +277,7 @@ export const DisplayQuestionAnsCard = ({
                             value={i + 1}
                             // onClick={() => ans(i + 1)}
                             checked={currentUserAnswer.includes(String(i + 1))}
-                            
+
                             // readOnly={true}
                           />
                           <Label
@@ -289,7 +299,7 @@ export const DisplayQuestionAnsCard = ({
               size={ismobile ? "sm" : "default"}
               color="red"
               onClick={() => {
-                setOpenModalReportError(true);
+                // setOpenModalReportError(true);
               }}
             >
               Report Error
@@ -309,7 +319,7 @@ export const DisplayQuestionAnsCard = ({
             <Button
               size={ismobile ? "sm" : "default"}
               color="blue"
-              onClick={() => setOpenModal(true)}
+              onClick={() => {}} //setOpenModal(true)
             >
               view Solution
             </Button>
@@ -335,11 +345,12 @@ const SolutionDisplayCont = ({
   useEffect(() => {
     _.api.question
       .GetQuestionExplanationData({ questionid })
-      .then((res:any) => {
+      .then((res: any) => {
         setSolution(res.data.explanation);
         // setLink(res.data.links);
       })
-      .catch((err: any) => {console.log("error ->" ,err);
+      .catch((err: any) => {
+        console.log("error ->", err);
       });
   }, []);
 
@@ -354,14 +365,6 @@ const SolutionDisplayCont = ({
           ? "  (--->inform admin to add explanation)"
           : null}
       </p>
-    </div>
-  );
-};
-
-const SolutionDisplayHeader = ({ title }: { title: string }) => {
-  return (
-    <div className="flex justify-between items-center ">
-      <p className=" text-sm lg:text-lg text-pretty">Question :- {title}</p>
     </div>
   );
 };

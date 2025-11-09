@@ -2,7 +2,7 @@
 import { Plus } from "lucide-react";
 import { motion } from "motion/react";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   CurrencyCard,
   Currencyicon,
@@ -13,28 +13,28 @@ import { useAppSelector } from "@repo/store/hook";
 import { Card } from "@repo/design-system/card";
 
 
-type transition_type = {
-  head: string[];
-  body: string[][];
-};
+// type transition_type = {
+//   head: string[];
+//   body: string[][];
+// };
 
 export const Balance = () => {
   let { blance, ticket } = useAppSelector((state) => state.user);
 
-  const [data, setdata] = useState<transition_type>({ head: [], body: [] });
+  // const [data, setdata] = useState<transition_type>({ head: [], body: [] });
 
-  let demo_data = {
-    head: ["tx name", "status", "date", "amount"],
-    body: [
-      ["iasdoa", "success", "23/04", "50"],
-      ["iasdo2", "success", "23/26", "120"],
-      ["iasdo4", "faild", "3/14", "70"],
-      ["iasdo6", "success", "21/24", "50"],
-    ],
-  };
+  // let demo_data = {
+  //   head: ["tx name", "status", "date", "amount"],
+  //   body: [
+  //     ["iasdoa", "success", "23/04", "50"],
+  //     ["iasdo2", "success", "23/26", "120"],
+  //     ["iasdo4", "faild", "3/14", "70"],
+  //     ["iasdo6", "success", "21/24", "50"],
+  //   ],
+  // };
 
   useEffect(()=>{
-    setdata(demo_data)
+    // setdata(demo_data)
   },[])
 
   return (

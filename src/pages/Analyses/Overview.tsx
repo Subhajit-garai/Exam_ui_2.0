@@ -9,8 +9,8 @@ import {
 import { motion } from "motion/react";
 
 import StatCard from "../common/StatCard";
-import PerformanceMetrix from "./metrix/PerformanceMetrix";
-import WeaknessSegmentation from "./metrix/WeaknessSegmentation";
+import PerformanceMetrix from "../metrix/PerformanceMetrix";
+import WeaknessSegmentation from "../metrix/WeaknessSegmentationOfOverAll";
 import { useApi } from "@/ApiProvider";
 
 interface progress {
@@ -54,7 +54,7 @@ export const Overview = () => {
   }, []);
 
   return (
-    <div className="flex-1   relative  md:h-160  mb-10">
+    <div className="flex-1 relative  mb-10 no-visible-scrollbar ">
       <main className="max-w-7xl mx-auto  mb-10 ">
         {/* STATS */}
         {metrix ? (

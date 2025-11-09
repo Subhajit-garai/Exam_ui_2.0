@@ -63,7 +63,7 @@ const PerformanceMetrix = () => {
       transition={{ delay: 0.2 }}
     >
       <div className="flex  justify-around items-center mb-4">
-        <h2 className="md:text-lg font-medium  text-gray-100">
+        <h2 className="md:text-lg font-medium   text-primary">
           Performance Overview
         </h2>
 

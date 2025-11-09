@@ -1,4 +1,4 @@
-import { cn } from "@repo/lib";
+import { cn } from "@/lib";
 import { Award } from "lucide-react";
 
 export const Subscription = ({

@@ -26,7 +26,7 @@ const initialState: user_type = {
   ticket: 0,
   isprime: "",
   status: "none",
-  islogin: true,
+  islogin: false,
   isverify: false,
   contact: "xxxxxxxx",
   verification: {
@@ -62,7 +62,7 @@ let userSlice = createSlice({
     updateLogin: (state, actions) => {
       state.islogin = actions.payload;
     },
-    logout: (state, actions) => {
+    logout: (state) => {
       ((state.name = null), (state.email = null));
       state.blance = null;
       state.ticket = null;

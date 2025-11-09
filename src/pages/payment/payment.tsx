@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { PaymentOfferCard, PaymentSubcriptionCard } from "./PaymentOfferCard";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
-import { Award } from "lucide-react";
-import { Currencyicon } from "@repo/design-system/OwnCurrency";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import type { Dispatch } from "@reduxjs/toolkit";
+import { LoaderFive } from "@/design-system/loader/loader";
+import { Tabs } from "@/design-system/tabs/Tabs";
 
 declare global {
   interface Window {
@@ -14,32 +14,16 @@ declare global {
   }
 }
 
-const buySubscription = async (
-  price: number,
-  plan: string,
-  dispatch: Dispatch
-) => {
-  const _ = useApi();
-  let responce = await _.api.payment.SubscriptionCheckout({
-    amount: String(price),
-    plan: plan,
-  });
-
-  if (responce.success) {
-    toast.success(responce.message, ToastConfig());
-    _.api.user.fetchuser(dispatch);
-  } else {
-    toast.error(responce.message, ToastConfig());
-  }
-};
 const Payment = () => {
   const _ = useApi();
   const dispatch = useAppDispatch();
   const [tokens, setTokens] = useState<any[]>([]);
   const [subcriptions, setSubcriptions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       let offerandSubcription = await _.api.payment.getOfferAndSubscription();
       if (offerandSubcription.success) {
         let tokenData = [];
@@ -61,6 +45,8 @@ const Payment = () => {
 
           setSubcriptions(subcriptionData);
           setTokens(tokenData);
+
+          setLoading(false);
         });
       }
     })();
@@ -88,7 +74,9 @@ const Payment = () => {
 
     const { order } = responce;
 
-    let PaymentSuccessurl = _.api.client.createUrl("/payment/paymentverification");
+    let PaymentSuccessurl = _.api.client.createUrl(
+      "/payment/paymentverification"
+    );
 
     var options = {
       key: key, // Enter the Key ID generated from the Dashboard
@@ -117,53 +105,89 @@ const Payment = () => {
     razor.open();
   };
 
-  const SubscriptionCheckoutfn = async (price:number, plan:string) => {
+  const SubscriptionCheckoutfn = async (price: number, plan: string) => {
     const confirmed = window.confirm(
       "Are you sure you want to buy this subscription?"
     );
     if (confirmed) {
-      // Proceed with payment logic
       buySubscription(price, plan, dispatch);
     }
   };
 
-  let PaymentOptions = [
+  const buySubscription = async (
+    price: number,
+    plan: string,
+    dispatch: Dispatch
+  ) => {
+    let responce = await _.api.payment.SubscriptionCheckout({
+      amount: String(price),
+      plan: plan,
+    });
+
+    if (responce.success) {
+      toast.success(responce.message, ToastConfig());
+      _.api.user.fetchuser(dispatch);
+    } else {
+      toast.error(responce.message, ToastConfig());
+    }
+  };
+
+  const PaymentTabs = [
     {
-      id: 1,
       title: "Token",
-      icon: () => <Currencyicon color="#6366f1" />,
-      isDisable: false,
-      component: (
-        <PaymentOptionsCont
-          type={"Token"}
-          data={tokens}
-          checkoutFN={checkout}
-        />
+      value: "Token",
+      content: (
+        <div
+          key={`Token`}
+          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card"
+        >
+          <p>Live Tab</p>
+
+          {loading ? (
+            <LoaderFive text="Loading..." />
+          ) : (
+            <PaymentOptionsCont
+              type={"Token"}
+              data={tokens}
+              checkoutFN={checkout}
+            />
+          )}
+        </div>
       ),
     },
     {
-      id: 2,
       title: "Subscription",
-      icon: () => <Award color="#e1e515" />,
-      isDisable: false,
-      component: (
-        <PaymentOptionsCont
-          type="Subscription"
-          data={subcriptions}
-          checkoutFN={SubscriptionCheckoutfn}
-        />
+      value: "Subscription",
+      content: (
+        <div
+          key={`Subscription`}
+          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card"
+        >
+          <p>Live Tab</p>
+
+          {loading ? (
+            <LoaderFive text="Loading..." />
+          ) : (
+            <PaymentOptionsCont
+              type="Subscription"
+              data={subcriptions}
+              checkoutFN={SubscriptionCheckoutfn}
+            />
+          )}
+        </div>
       ),
     },
   ];
+
   return (
-    <div className="  h-full ">
-      <main className="  h-full mx-auto  flex flex-col gap-4 overflow-auto py-6 lg:px-8 mb-20">
-        {/* <TabManue
-          config={PaymentOptions}
-          parentClass={""}
-          variant="underline"
-        /> */}
-      </main>
+    <div className="flex-1 md:h-160  relative  mb-20 md:mb-0 ">
+      <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
+        <Tabs
+          tabs={PaymentTabs}
+          contentClassName="mt-10"
+          activeTabClassName=""
+        />
+      </div>
     </div>
   );
 };
@@ -175,9 +199,9 @@ export const PaymentOptionsCont = ({
   data,
   checkoutFN,
 }: {
-  type: "offer" | "Subscription" |"Token";
+  type: "offer" | "Subscription" | "Token";
   data: any;
-  checkoutFN:any;
+  checkoutFN: any;
 }) => {
   return (
     <>

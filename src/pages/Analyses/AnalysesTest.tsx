@@ -4,7 +4,7 @@ import {  Card } from "@repo/design-system/card";// import { HeaderCompForSelect
 import StatCard from "../common/StatCard";
 import { motion } from "motion/react";
 import { Ban, ChartLine, Check, Trophy, Users, Zap } from "lucide-react";
-import WeaknessSegmentationOfexam from "../Performance/metrix/WeaknessSegmentationOfexam";
+import WeaknessSegmentationOfexam from "../metrix/WeaknessSegmentationOfexam";
 import { DisplayExamQuestionSAnsMapping } from "../common/DisplayExamQuestionSAnsMappingCard";
 import { useIsMobile } from "@repo/hooks/isMobile";
 import { toast } from "react-toastify";
@@ -19,6 +19,8 @@ import { ToastConfig } from "@repo/lib/utils/utils";
 // } from "@/components/ui/animated-modal.js";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
+import ExamAttemptQuestionChart from "../metrix/ExamAttemptQuestionChart";
+import LeaderBoard from "../metrix/LeaderBoard";
 
 type exam_type = {
   id: string;
@@ -232,6 +234,9 @@ export const AnalysesTest = () => {
       <main className="md:max-w-7xl mx-auto py-2 px-1 md:py-4 md:px-4 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2  gap-2 md:gap-8 ">
           {examid && <WeaknessSegmentationOfexam examid={examid} />}
+
+          {examid &&<ExamAttemptQuestionChart examid={examid ?? ""} /> }
+          {examid &&<LeaderBoard examid={examid ?? ""} initoffset={0} />}
 
           <div className="data w-full">
             <motion.div

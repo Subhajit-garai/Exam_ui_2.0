@@ -24,17 +24,14 @@ import Examportal from "./pages/exam/Examportal/Examportal.js";
 import ExamSubmitSuccess from "./pages/exam/ExamSubmitSuccess.js";
 import JoinTests from "./pages/exam/JoinTests.js";
 import JoinDpp from "./pages/exam/JoinDpp.js";
-import JoinContest from "./pages/exam/JoinContest.js";
-import { JoinPYQAndMock } from "./pages/exam/JoinPYQAndMock.js";
 
 // performence
-import { Overview as PerformanceOverview } from "./pages/Performance/Overview.js";
-import { Contest as PerformanceContest } from "./pages/Performance/Contest.js";
-import { PerformanceTest } from "./pages/Performance/Test.js";
 
 // analyses
 // import { Dashboard as AnalysesDashboard } from "./pages/Analyses/Dashboard.js";
 // import { AnalysesOverview } from "./pages/Analyses/AnalysesOverview.js";
+import { Overview } from "./pages/Analyses/Overview.js";
+
 import { AnalysesTest } from "./pages/Analyses/AnalysesTest.js";
 import { AnalysesPYQMock } from "./pages/Analyses/AnalysesPYQMock.js";
 import { AnalysesContest } from "./pages/Analyses/AnalysesContest.js";
@@ -61,7 +58,6 @@ import {
 // import { Bounce, ToastContainer } from "react-toastify";
 import { store } from "@repo/store/store.js";
 import { Provider } from "react-redux";
-import PerformanceDashboard from "./pages/Performance/Dashboard.js";
 import Payment from "./pages/payment/payment.js";
 import PaymentSuccess from "./pages/payment/PaymentSuccess.js";
 import Profile from "./pages/user/Profile.js";
@@ -75,13 +71,14 @@ import { NotePage } from "./pages/notes/NotePage.js";
 import NoteSubjectList from "./pages/notes/NoteSubjectList.js";
 import NoteTopicList from "./pages/notes/NoteTopicList.js";
 import { ApiProvider } from "./ApiProvider.js";
-import { ToastContainer } from "react-toastify";
+import { JoinMock } from "./pages/exam/joinMock.js";
+import { JoinPYQ } from "./pages/exam/JoinPYQ.js";
 
 let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
     id: 1,
     href: "/analysis/pyqmock",
-    icon: Trophy,
+    Icon: Trophy,
     color: "#8B5CF6",
     name: "PYQ Mock",
   },
@@ -89,8 +86,15 @@ let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 2,
     href: "/analysis/test",
     color: "#F59E0B",
-    icon: ChartLine,
+    Icon: ChartLine,
     name: "Test",
+  },
+  {
+    id: 3,
+    name: "Overview",
+    Icon: BarChart2,
+    color: "#6366f1",
+    href: "/analysis/overview",
   },
 ];
 
@@ -98,47 +102,30 @@ const EXAM_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
     id: 1,
     name: "Tests",
-    icon: ListChecks,
+    Icon: ListChecks,
     color: "#6366f1",
     href: "/test/join",
   },
   {
     id: 2,
     name: "DPP",
-    icon: Pencil,
+    Icon: Pencil,
     color: "#6366f1",
     href: "/test/dpp",
   },
   {
     id: 3,
     name: "Mock",
-    icon: Trophy,
+    Icon: Trophy,
     color: "#F59E0B",
     href: "/test/mock",
   },
-];
-const PERFORMANCE_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
-    id: 1,
-    name: "Overview",
-    icon: BarChart2,
-    color: "#6366f1",
-    href: "/performance/overview",
-  },
-
-  // {
-  //   id: 2,
-  //   name: "Contest",
-  //   icon: ChartSpline,
-  //   color: "#EC4899",
-  //   href: "/performance/contest",
-  // },
-  {
-    id: 3,
-    name: "Test",
-    icon: ChartLine,
+    id: 4,
+    name: "PYQ",
+    Icon: Trophy,
     color: "#F59E0B",
-    href: "/performance/test",
+    href: "/test/PYQ",
   },
 ];
 
@@ -146,14 +133,14 @@ const USER_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
     id: 1,
     name: "Profile",
-    icon: BarChart2,
+    Icon: BarChart2,
     color: "#6366f1",
     href: "/user/profile",
   },
   {
     id: 2,
     name: "Balance",
-    icon: HandCoins,
+    Icon: HandCoins,
     color: "#10B981",
     href: "/user/balance",
   },
@@ -161,7 +148,7 @@ const USER_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
     id: 3,
     name: "Validate",
-    icon: ShieldCheck,
+    Icon: ShieldCheck,
     color: "#EC4899",
     href: "/user/validation",
   },
@@ -171,7 +158,7 @@ let NotesOtions: SIDEBAR_ITEMS_types[] = [
   {
     id: 2,
     href: "/notes/notes",
-    icon: AlarmClockCheck,
+    Icon: AlarmClockCheck,
     name: "notes",
     color: "#6366f1",
   },
@@ -184,7 +171,7 @@ const App = () => {
   return (
     <>
       <ApiProvider baseUrl={baseUrl}>
-        <div className=" min-h-screen  text-gray-100  overflow-hidden   ">
+        <div className=" min-h-screen  text-gray-100  overflow-hidden   no-visible-scrollbar">
           <HashRouter>
             <Provider store={store}>
               {/* <ToastContainer  aria-label={"toast"}/> */}
@@ -194,7 +181,7 @@ const App = () => {
                 BrandName={"Jeca"}
               />
               
-              <div className="main flex  flex-col  lg:pl-[4rem]  w-screen  ">
+              <div className="main flex  flex-col  lg:pl-[5rem]  w-screen  ">
                 <Breadcrumb />
                 <Routes>
                   <Route path="/" element={<Home />} />{" "}
@@ -246,24 +233,11 @@ const App = () => {
                       <SplitOutlet SIDEBAR_ITEMS={ANALYSIS_SIDEBAR_ITEMS} />
                     }
                   >
+                    <Route path="overview" element={<Overview />} />
                     <Route path="test" element={<AnalysesTest />} />
                     <Route path="pyqmock" element={<AnalysesPYQMock />} />
                     <Route path="contest" element={<AnalysesContest />} />
                     <Route path="quiz" element={<AnalysesQuiz />} />
-                  </Route>
-                  <Route
-                    path="/performance"
-                    element={
-                      <SplitOutlet SIDEBAR_ITEMS={PERFORMANCE_SIDEBAR_ITEMS} />
-                    }
-                  >
-                    <Route
-                      path="dashboard"
-                      element={<PerformanceDashboard />}
-                    />
-                    <Route path="test" element={<PerformanceTest />} />
-                    <Route path="contest" element={<PerformanceContest />} />
-                    <Route path="overview" element={<PerformanceOverview />} />
                   </Route>
                   <Route
                     path="/test"
@@ -271,8 +245,9 @@ const App = () => {
                   >
                     <Route path="join" element={<JoinTests />} />
                     <Route path="dpp" element={<JoinDpp />} />
-                    <Route path="contest" element={<JoinContest />} />
-                    <Route path="mock" element={<JoinPYQAndMock />} />
+                    {/* <Route path="contest" element={<JoinContest />} /> */}
+                    <Route path="mock" element={<JoinMock />} />
+                    <Route path="PYQ" element={<JoinPYQ />} />
                     <Route
                       path="submitsuccess"
                       element={<ExamSubmitSuccess />}

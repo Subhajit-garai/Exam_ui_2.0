@@ -3,7 +3,7 @@ import { calculateExamRemining_Time, useRemainingTime,calculateExamJoinRemaining
 import { Badge } from "@repo/ui/badge";
 import { AlarmClockCheck, type LucideIcon } from "lucide-react";
 import { useApi } from "@/ApiProvider";
-import { cn } from "@repo/lib";
+import { cn } from "@repo/lib/utils";
 
 const KbdTimer = ({
   Icon = AlarmClockCheck,
@@ -20,10 +20,10 @@ const KbdTimer = ({
 
   return (
     <div>
-      <div className={cn(`time absolute`, className)}>
-        <Badge className="flex gap-1">
-          {<Icon size={15} />}
-          {message + " " + time_str}
+      <div className={cn(`time absolute `, className)}>
+        <Badge className="flex gap-1 bg-primary-foreground">
+          {<Icon className=" text-primary " size={15} />}
+          <p className=" text-primary">{message + " " + time_str}</p>
         </Badge>
       </div>
     </div>
@@ -49,8 +49,8 @@ export const Timer = ({
     <div>
       <div className={cn("time", className)}>
         <div className="flex gap-1">
-          {<Icon size={22} />}
-          <p className=" text-[16px]">{message + " " + time_str}</p>
+          {<Icon  className =" text-primary " size={22} />}
+          <p className=" text-primary text-[16px]">{message + " " + time_str}</p>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@ export const ExamJoinTime = ({
 
   return (
     <div>
-      <div className={cn("time flex", className)}>
+      <div className={cn("time flex ", className)}>
         {startTimeRemining <= 0 && joinTimeRemining <= 0 ? (
           <div className={`time absolute ${timerClass}`}>
             <Badge className="flex gap-1">

@@ -187,7 +187,7 @@ export function Component() {
             ) : null}
             {pathnames
               .slice(-ITEMS_TO_DISPLAY + 1)
-              .map((path: string, index: number) => (
+              .map((_: string, index: number) => (
                 <BreadcrumbItem key={index}>
                   {getFullPath(index) &&
                   pathnames.slice(-ITEMS_TO_DISPLAY + 1).length != index + 1 ? (

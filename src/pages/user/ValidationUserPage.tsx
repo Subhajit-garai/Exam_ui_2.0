@@ -1,6 +1,6 @@
 import { Button } from "@repo/ui/button";
 import { Card } from "@repo/design-system/card";
-import React, { useEffect, useState, type ElementType } from "react";
+import  { useEffect, useState, type ElementType } from "react";
 import { Textinput } from "@repo/design-system/inputs";
 import useHandleinpute, {
   type handleInputefn_type,

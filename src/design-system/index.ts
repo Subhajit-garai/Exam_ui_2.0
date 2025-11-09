@@ -14,7 +14,7 @@ export * from "./OwnCurrency/index";
 export * from "./tabs/index";
 export * from "./theme/index";
 export * from "./avatar/index";
-export * from "./drawer/index";
+export * from "./dialog/index";
 export * from "./dropdown/index";
 export * from "./datepicker/index";
 export * from "./pagenation/index";

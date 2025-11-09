@@ -2,7 +2,6 @@ import {
   ChartSpline,
   BookCheck,
   Home,
-  School,
   SidebarOpen,
   SidebarClose,
   NotebookPen,
@@ -21,14 +20,8 @@ export type nav_items_types = {
 export const menuOptions:nav_items_types[] = [
   { id: 1, name: "Home", Component: Home, href: "/home" },
   { id: 2, name: "Notes", Component: NotebookPen, href: "/notes/notes" },
-  {
-    id: 3,
-    name: "Performance",
-    Component: School,
-    href: "/performance/overview",
-  },
-  { id: 4, name: "Tests", Component: BookCheck, href: "/test/join" },
-  { id: 5, name: "Analysis", Component: ChartSpline, href: "/analysis/test" },
+  { id: 3, name: "Tests", Component: BookCheck, href: "/test/join" },
+  { id: 4, name: "Analysis", Component: ChartSpline, href: "/analysis/test" },
   // { id: 6, name: 'History', Component: History, href: '/history' },
 ];
 
@@ -66,7 +59,7 @@ export const Appbar = () => {
 
   const sidebarVariants = {
     expanded: { width: "15vw" },
-    collapsed: { width: "4vw" }, // 5 vw
+    collapsed: { width: "5vw" }, // 5 vw
     // collapsed: { width: '6 %' },  // 5 vw
   };
 
@@ -83,7 +76,7 @@ export const Appbar = () => {
           stiffness: 300,
           damping: 20,
         }}
-        className=" appbar fixed left-0 top-0  hidden h-full flex-col  border-r dark:border-white/20  lg:flex  z-[9] "
+        className=" appbar fixed left-0 top-0  hidden h-full flex-col  border-r dark:border-white/20  lg:flex  z-[9] bg-sidebar  "
       >
         <div className="flex h-full flex-col gap-4  pr">
           <div className="flex w-full items-center border-b border-white/10 px-2 py-4">
@@ -119,9 +112,9 @@ export const Appbar = () => {
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className=" appbarmob fixed bottom-0 left-0 right-0  md:hidden"
+        className=" appbarmob fixed bottom-0 left-0 right-0  md:hidden bg-sidebar "
       >
-        <div className="flex items-center justify-around border-t border-white/10  bg-s1 p-4 shadow-xl">
+        <div className="flex items-center justify-around border-t border-white/10  p-4 shadow-xl  ">
           <SidebarItems items={menuOptions} isCollapsed={!isMediumToXL} />
         </div>
       </motion.nav>

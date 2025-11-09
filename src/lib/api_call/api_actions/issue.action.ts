@@ -59,7 +59,7 @@ export class issueApi {
     const endpoint = `/issue/getbyid?id=${id}`;
     return this.api.request(endpoint);
   };
-  FetchAllIssue = async (baseUrl: string) => {
+  FetchAllIssue = async () => {
     const endpoint = `/issue/all`;
     return this.api.request(endpoint);
   };
