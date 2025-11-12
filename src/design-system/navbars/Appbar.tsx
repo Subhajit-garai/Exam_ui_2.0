@@ -17,7 +17,7 @@ export type nav_items_types = {
   href: string;
 };
 
-export const menuOptions:nav_items_types[] = [
+export const menuOptions: nav_items_types[] = [
   { id: 1, name: "Home", Component: Home, href: "/home" },
   { id: 2, name: "Notes", Component: NotebookPen, href: "/notes/notes" },
   { id: 3, name: "Tests", Component: BookCheck, href: "/test/join" },
@@ -58,10 +58,13 @@ export const Appbar = () => {
   };
 
   const sidebarVariants = {
-    expanded: { width: "15vw" },
-    collapsed: { width: "5vw" }, // 5 vw
-    // collapsed: { width: '6 %' },  // 5 vw
+    expanded: { width: "var(--sidebar-expanded)" },
+    collapsed: { width: "var(--sidebar-collapsed)" },
   };
+  // const sidebarVariants = {
+  //   expanded: { width: "15vw" },
+  //   collapsed: { width: "5vw" }, // 5 vw
+  // };
 
   return (
     <>
@@ -76,21 +79,22 @@ export const Appbar = () => {
           stiffness: 300,
           damping: 20,
         }}
-        className=" appbar fixed left-0 top-0  hidden h-full flex-col  border-r dark:border-white/20  lg:flex  z-[9] bg-sidebar  "
+        className=" appbar fixed left-0 top-0  hidden h-full flex-col  border-r dark:border-white/20  md:flex  z-[9] bg-sidebar   [--sidebar-expanded:15vw] [--sidebar-collapsed:5vw]
+            md:[--sidebar-collapsed:7vw]  lg:[--sidebar-collapsed:6vw] xl:[--sidebar-collapsed:5vw] 2xl:[--sidebar-collapsed:4vw] "
       >
         <div className="flex h-full flex-col gap-4  pr">
           <div className="flex w-full items-center border-b border-white/10 px-2 py-4">
             <div>
               <motion.button
                 onClick={toggleCollapse}
-                className="ml-auto flex items-center rounded-lg p-3 text-center transition-all duration-300 text-primary   hover:bg-blue-600/15 hover:text-blue-500"
+                className="m-auto flex rounded-lg  md:p-2 lg:p-3  transition-all duration-300 text-primary   hover:bg-blue-600/15 hover:text-blue-500"
               >
                 {isCollapsed ? <SidebarOpen /> : <SidebarClose />}
               </motion.button>
             </div>
             <div>
               {!isCollapsed && (
-                <h3 className="text-xl font-bold tracking-tighter text-primary lg:text-2xl">
+                <h3 className="text-lg font-bold tracking-tighter text-primary lg:text-2xl">
                   Menu
                 </h3>
               )}

@@ -141,12 +141,14 @@ export class examApi {
     let endpoint = `/exam/finalsubmit?examid=${examid}`;
     return await this.api.request(endpoint);
   };
-  getExamAnsforAnalisys = async ({ examid }: { examid: string }) => {
-    let endpoint = `/exam/getexamans?examid=${examid}`;
-    return await this.api.request(endpoint);
-  };
+ 
   getUserAnsSet = async ({ examid }: { examid: string }) => {
     let endpoint = `/exam/getuseransset?examid=${examid}`;
     return await this.api.request(endpoint);
   };
+
+  //  getExamAnsforAnalisys = async ({ examid }: { examid: string }) => {
+  //   let endpoint = `/exam/getexamans?examid=${examid}`;
+  //   return await this.api.request(endpoint);
+  // };
 }

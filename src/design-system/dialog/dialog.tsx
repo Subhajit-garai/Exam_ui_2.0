@@ -41,7 +41,9 @@ export function DialogBox({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">{TriggerBtnText}</Button>
+          {TriggerBtnText && (
+            <Button variant="outline">{TriggerBtnText}</Button>
+          )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -57,7 +59,7 @@ export function DialogBox({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
-        <Button variant="outline">{TriggerBtnText}</Button>
+        {TriggerBtnText && <Button variant="outline">{TriggerBtnText}</Button>}
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">

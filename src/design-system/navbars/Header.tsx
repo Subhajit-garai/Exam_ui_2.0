@@ -39,7 +39,7 @@ export const Header = ({
         <div className="h-fit  flex ">
           <Logo url={LogoUrl} userLogoutFn={userLogoutFn}/>
 
-          <p className=" self md:whitespace-nowrap  md:text-xl font-semibold  ">
+          <p className=" self  text-primary md:whitespace-nowrap  md:text-xl font-semibold  ">
             {BrandName}
           </p>
         </div>

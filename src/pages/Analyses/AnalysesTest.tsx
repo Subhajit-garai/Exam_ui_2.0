@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@repo/ui/button";
-import {  Card } from "@repo/design-system/card";// import { HeaderCompForSelectExam } from "../common/HeaderCompForSelectExam";
+import { Card } from "@repo/design-system/card"; // import { HeaderCompForSelectExam } from "../common/HeaderCompForSelectExam";
 import StatCard from "../common/StatCard";
 import { motion } from "motion/react";
 import { Ban, ChartLine, Check, Trophy, Users, Zap } from "lucide-react";
@@ -10,50 +10,22 @@ import { useIsMobile } from "@repo/hooks/isMobile";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
 
-// import {
-//   Modal,
-//   ModalBody,
-//   ModalContent,
-//   ModalFooter,
-//   ModalTrigger,
-// } from "@/components/ui/animated-modal.js";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import ExamAttemptQuestionChart from "../metrix/ExamAttemptQuestionChart";
 import LeaderBoard from "../metrix/LeaderBoard";
-
-type exam_type = {
-  id: string;
-  category: string;
-  name: string | null;
-  date: Date;
-  display_id: string | null;
-  examname: string;
-  examtype: string;
-  Visibility: string;
-  creationstatus: string;
-  starttime: string | null;
-  jointime: string | null;
-  duration: string;
-  ContestRegister: {
-    count: number;
-  };
-  exam_pattern: {
-    id: string;
-    difficulty: string;
-    total_questions: number[];
-    syllabus: string;
-    format: string;
-  };
-};
+import { DialogBox, ModelCont } from "@/design-system";
+import { ExamSelection } from "../common/ExamSelection";
+import type { exam_type, UserAnsFormat_type } from "./types";
+import { cn } from "@/lib/utils";
 
 export const AnalysesTest = () => {
   const _ = useApi();
   let { Exams, lastexam } = useAppSelector((state) => state.exam);
-  // const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [examid, setexamid] = useState<string | null>(null);
   const [exams, setexams] = useState<exam_type[]>([]);
-  const [questionMappedSet, setquestionMappedSet] = useState([]);
+  const [QuestionAns, setQuestionAns] = useState<UserAnsFormat_type[]>([]);
   const [currentexams, setcurrentexams] = useState<exam_type | null>(null);
   const [examsMetadata, setexamsMetadata] = useState({
     examid: "",
@@ -72,42 +44,15 @@ export const AnalysesTest = () => {
 
   const fetchExamAnsMappingData = async () => {
     if (examid) {
-      let questions = await _.api.exam.getExamAnsforAnalisys({ examid });
-      questions = questions?.data;
       let UserAnsset = await _.api.exam.getUserAnsSet({ examid });
 
-      if (!UserAnsset.data) {
+      if (!UserAnsset.success) {
         return toast.info(
           "Please ensure that you submitted the exam.",
           ToastConfig()
         );
       }
-      UserAnsset = UserAnsset?.data?.ans;
-
-      const answerMap = Object.fromEntries(
-        UserAnsset.map((obj: any) => {
-          const key = Object.keys(obj)[0]; // Extract the question ID
-          return [key, obj[key]]; // Store answer as { "id": "answer" }
-        })
-      );
-
-      const mappedQuestions = questions.map((q: any) => {
-        return {
-          ...q,
-          userAnswer: answerMap[q.id]?.ans || null, // Add user answer if exists
-          part: answerMap[q.id]?.part || null, // Add user answer if exists
-        };
-      });
-      let filtered: any = {};
-
-      mappedQuestions.map((q: any) => {
-        if (!filtered[q?.part]) {
-          filtered[q.part] = []; // Initialize the array if it doesn't exist
-        }
-        filtered[q.part].push(q);
-      });
-
-      setquestionMappedSet(filtered);
+      setQuestionAns(UserAnsset.data);
     }
   };
 
@@ -157,30 +102,26 @@ export const AnalysesTest = () => {
 
   return (
     <div className="flex-1 relative md:h-160  mb-10">
-      <div className="flex items-center justify-center">
-        {/* <ModelCont
-          size="4xl"
-          HeaderComp={<HeaderCompForSelectExam setexams={setexams} />}
-          Body={
-            <ExamSelection
-              exams={exams}
-              setcurrentexams={setcurrentexams}
-              setexamid={setexamid}
-              modelClose={setOpenModal}
-            />
-          }
-          setOpenModal={setOpenModal}
-          openModal={openModal}
-        /> */}
-      </div>
+      <div className="flex items-center justify-center"></div>
+
       <div className=" mx-auto py-2 px-1 md:py-4 md:px-4 lg:px-8">
         <div className=" bg-s2 w-full  p-2 rounded-md md:p-6">
           {/* header */}
           <div className="flex gap-2 w-full items-center justify-between">
-            <p className={ismobile ? "text-[10px]" : "text-sm"}>
+            <p
+              className={cn(
+                " text-primary",
+                ismobile ? "text-[10px]" : "text-sm"
+              )}
+            >
               ID:{currentexams?.display_id}{" "}
             </p>
-            <p className={ismobile ? "text-[10px]" : "text-sm"}>
+            <p
+              className={cn(
+                " text-primary",
+                ismobile ? "text-[10px]" : "text-sm"
+              )}
+            >
               TIME:{" "}
               {currentexams
                 ? new Date(currentexams.date).toLocaleDateString()
@@ -189,35 +130,16 @@ export const AnalysesTest = () => {
             </p>
 
             <div className={`btn flex gap-1 md:gap-8 `}>
-              {/* <Button
-                size={ismobile ? "xs" : "sm"}
-                onClick={() => {
-                  setOpenModal(true);
-                }}
-              >
-                {ismobile ? "exam" : " Change Exam "}
-              </Button> */}
-
-              {/* <div className=" flex items-center justify-center">
-                <Modal>
-                  <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
-                    <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
-                      {ismobile ? "exam" : " Change Exam "}
-                    </span>
-                    <div className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-black z-20">
-                      Click
-                    </div>
-                  </ModalTrigger>
-                  <ModalBody className={` md:min-w-[50%]`}>
-                    <ModalContent>
-                      <div className="bg-red-700">hi</div>
-                    </ModalContent>
-                    <ModalFooter className="gap-4">
-                      <HeaderCompForSelectExam setexams={setexams} />
-                    </ModalFooter>
-                  </ModalBody>
-                </Modal>
-              </div> */}
+              <DialogBox TriggerBtnText="Exam" Title="select exam">
+                <div className="">
+                  <ExamSelection
+                    exams={exams}
+                    setcurrentexams={setcurrentexams}
+                    setexamid={setexamid}
+                    // modelClose={setOpenModal}
+                  />
+                </div>
+              </DialogBox>
 
               <Button
                 size={ismobile ? "sm" : "default"}
@@ -235,8 +157,8 @@ export const AnalysesTest = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2  gap-2 md:gap-8 ">
           {examid && <WeaknessSegmentationOfexam examid={examid} />}
 
-          {examid &&<ExamAttemptQuestionChart examid={examid ?? ""} /> }
-          {examid &&<LeaderBoard examid={examid ?? ""} initoffset={0} />}
+          {examid && <ExamAttemptQuestionChart examid={examid ?? ""} />}
+          {examid && <LeaderBoard examid={examid ?? ""} initoffset={0} />}
 
           <div className="data w-full">
             <motion.div
@@ -294,10 +216,8 @@ export const AnalysesTest = () => {
 
       <div className="md:max-w-7xl  md:max-h-7xl mx-auto lg:px-8 mb-10 ">
         <Card>
-          {Object.keys(questionMappedSet).length > 0 ? (
-            <DisplayExamQuestionSAnsMapping
-              questionMappedSet={questionMappedSet}
-            />
+          {Object.keys(QuestionAns).length > 0 ? (
+            <DisplayExamQuestionSAnsMapping questionMappedSet={QuestionAns} />
           ) : (
             <p>Make sure you generate your answer set. </p>
           )}

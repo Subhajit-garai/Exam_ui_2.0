@@ -9,7 +9,7 @@ export const ExamSelection = ({
   exams:any[];
   setcurrentexams:any;
   setexamid:any;
-  modelClose:any;
+  modelClose?:any;
 }) => {
   return (
     <div>

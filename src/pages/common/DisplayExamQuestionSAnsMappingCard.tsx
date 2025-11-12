@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState, type JSX } from "react";
-import { useIsMobile } from "@repo/hooks/isMobile";
 import { useApi } from "@/ApiProvider";
 import { Button } from "@repo/ui/button";
 import { Checkbox } from "@repo/ui/checkbox";
 import { Label } from "@repo/ui/label";
-import { DialogBox } from "@/design-system";
+import { DialogBox, QuestionIssueCardCreate } from "@/design-system";
 import { Tabs } from "@/design-system/tabs/Tabs";
+import type { UserAnsFormat_type } from "../Analyses/types";
+import { LoaderFive } from "@/design-system/loader/loader";
 // import { TabManue } from "@repo/design-system/tabs";
 
 interface Option {
@@ -14,74 +15,78 @@ interface Option {
   content: JSX.Element;
 }
 
-function isCorrectAnswerFn(Ans: any[], userAns: any[]) {
-  return (
-    Ans.length === userAns.length && Ans.every((ans) => userAns.includes(ans))
-  );
+function isCorrectAnswerFn(Ans: any[], userAns: any[], map: number[]) {
+  let ans =
+    Ans.length === userAns.length &&
+    userAns.every((userans) => {
+      let selectedAns = map[parseInt(userans) - 1];
+      return Ans.includes(String(selectedAns));
+    });
+  return ans;
 }
 
 export const DisplayExamQuestionSAnsMapping = ({
   questionMappedSet,
 }: {
-  questionMappedSet: any;
+  questionMappedSet: UserAnsFormat_type[];
 }) => {
+  const [totalParts, settotalParts] = useState<string[]>([]);
   const [parts, setparts] = useState<string[]>([]);
   const [options, setoptions] = useState<Option[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const categorizedQuestions = useMemo(() => {
     const mapping: any = {};
-    const partKeys = Object.keys(questionMappedSet);
+    const totalParts_data: Set<string> = new Set();
 
-    // Add part-wise
-    for (let i = 0; i < partKeys.length; i++) {
-      const key = `part${i + 1}`;
-      mapping[key] = questionMappedSet[partKeys[i]] || [];
-    }
+    questionMappedSet.map((questionAns) => {
+      if (!mapping[questionAns.part]) mapping[questionAns.part] = [];
+
+      mapping[questionAns.part].push(questionAns);
+      totalParts_data.add(questionAns.part);
+    });
+
+    settotalParts([...totalParts_data]);
 
     // Flatten all questions
-    const allQuestions = Object.values(questionMappedSet).flat();
-
+    const allQuestions = questionMappedSet;
     // "All" tab
     mapping["All"] = allQuestions;
 
     if (!mapping["Unattempted"]) mapping["Unattempted"] = [];
-
     if (!mapping["Correct"]) mapping["Correct"] = [];
     if (!mapping["InCorrect"]) mapping["InCorrect"] = [];
 
-    //
-    allQuestions.map((question: any) => {
-      const userAns = question.is_multiple_ans
-        ? question.userAnswer?.split(",") ?? []
-        : question.userAnswer
-        ? [question.userAnswer]
+    allQuestions.map((question) => {
+      const userAns = question.selectedOption;
+
+      const correctAns = Array.isArray(question.Question.ans)
+        ? question.Question.ans
+        : typeof question.Question.ans === "string"
+        ? question.Question.ans
         : [];
 
-      const correctAns = Array.isArray(question.ans)
-        ? question.ans
-        : typeof question.ans === "string"
-        ? question.ans.split(",")
-        : [];
-
-      if (!question.userAnswer || question.userAnswer === "0") {
+      if (
+        !question.selectedOption ||
+        question.selectedOption[0] === "0" ||
+        question.selectedOption[0] === "-1"
+      ) {
         mapping["Unattempted"].push(question);
       } else {
-        isCorrectAnswerFn(correctAns, userAns)
+        isCorrectAnswerFn(correctAns, userAns, question.shuffleMap)
           ? mapping["Correct"].push(question)
           : // console.log("----->", isCorrectAnswerFn(correctAns, userAns) ,"ismultiple -->" ,question.is_multiple_ans," userAns-->",userAns ,"correctAns--->", correctAns),
-
             mapping["InCorrect"].push(question);
       }
     });
-
     return mapping;
   }, [questionMappedSet]);
 
   useEffect(() => {
     let temp = [];
+    setLoading(true);
     temp.push("All");
-
-    Object.keys(questionMappedSet).map((_, idx) => {
+    totalParts.map((_, idx) => {
       let str = `part${idx + 1}`;
       temp.push(str);
     });
@@ -89,35 +94,42 @@ export const DisplayExamQuestionSAnsMapping = ({
     temp.push("InCorrect");
     temp.push("Unattempted"); // do not change names
     setparts(temp);
-  }, [Object.keys(questionMappedSet).length]);
+    setLoading(false);
+  }, [questionMappedSet.length]);
 
   useEffect(() => {
-    let tempOption = parts.map((part) => {
+    let tempOption = parts.map((option) => {
       return {
-        title: part,
-        value: part,
+        title: option,
+        value: option,
         content: (
-          <DisplayQuestionSAnsCont QuestionsData={categorizedQuestions[part]} />
+          <div
+            key={`${option}`}
+            className="w-full   relative  rounded-xl  font-bold text-primary bg-card"
+          >
+            {/* <p>Live Tab</p> */}
+
+            {loading ? (
+              <LoaderFive text="Loading..." />
+            ) : (
+              <DisplayQuestionSAnsCont
+                QuestionsData={categorizedQuestions[option]}
+              />
+            )}
+          </div>
         ),
       };
     });
-    // here i can use react usememo to memoigation data
 
     setoptions(tempOption);
   }, [parts]);
 
+  console.log(categorizedQuestions);
+
   return (
     <>
-      <div className="partSwitch flex gap-2">
-        <div className="flex-1 md:h-160  relative  mb-20 md:mb-0 ">
-          <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
-            <Tabs
-              tabs={options}
-              contentClassName="mt-10"
-              activeTabClassName=""
-            />
-          </div>
-        </div>
+      <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative  flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-4 overflow-auto  no-visible-scrollbar mb-8">
+        <Tabs tabs={options} contentClassName="mt-10" activeTabClassName="" />
       </div>
     </>
   );
@@ -126,29 +138,15 @@ export const DisplayExamQuestionSAnsMapping = ({
 const DisplayQuestionSAnsCont = ({
   QuestionsData,
 }: {
-  QuestionsData: any[];
+  QuestionsData: UserAnsFormat_type[];
 }) => {
   return (
     <>
-      <div className="  grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="  grid grid-cols-1 md:grid-cols-2 gap-4  ">
         {QuestionsData &&
           Array.isArray(QuestionsData) &&
-          QuestionsData.map((question, idx) => {
-            return (
-              <DisplayQuestionAnsCard
-                key={question.id}
-                questionid={question.id}
-                number={idx + 1}
-                title={question.title}
-                options={question.options}
-                // difficulty={question.difficulty}
-                topic={question.topic}
-                userAnswer={question.userAnswer}
-                part={question.part}
-                ans={question.ans}
-                ismultiple={question.is_multiple_ans}
-              />
-            );
+          QuestionsData.map((q, idx) => {
+            return <DisplayQuestionAnsCard key={idx} questionAnsData={q} />;
           })}
       </div>
     </>
@@ -156,51 +154,36 @@ const DisplayQuestionSAnsCont = ({
 };
 
 export const DisplayQuestionAnsCard = ({
-  questionid,
-  number,
-  title,
-  options,
-  // difficulty,
-  topic,
-  userAnswer,
-  part,
-  ans,
-  ismultiple,
+  questionAnsData,
 }: {
-  questionid: string;
-  number: number;
-  title: string;
-  options: string[];
-  // difficulty: string;
-  topic: string;
-  userAnswer: any;
-  part: string;
-  ans: string[] | string;
-  ismultiple: boolean;
+  questionAnsData: UserAnsFormat_type;
 }): JSX.Element => {
-  // const [openModal, setOpenModal] = useState(false);
-  // const [openModalReportError, setOpenModalReportError] = useState(false);
+  let { id, title, options, Topic, ans, is_multiple_ans } =
+    questionAnsData.Question;
+
+  let userAnswer = questionAnsData.selectedOption;
+  let map = questionAnsData.shuffleMap;
+  let number = questionAnsData.number;
 
   let ContainerColor = "bg-red-700";
-  let ismobile = useIsMobile();
 
-  let currentUserAnswer = ismultiple
-    ? userAnswer.split(",")
-    : userAnswer
-    ? [userAnswer]
-    : [];
+  let currentUserAnswer = is_multiple_ans
+    ? userAnswer
+    : Array.isArray(userAnswer)
+    ? userAnswer
+    : [userAnswer];
 
   const correctAnswerArray = Array.isArray(ans)
     ? ans
     : typeof ans === "string"
-    ? ans.split(",")
+    ? ans
     : [];
 
-  if (isCorrectAnswerFn(correctAnswerArray, currentUserAnswer)) {
+  if (isCorrectAnswerFn(correctAnswerArray, currentUserAnswer, map)) {
     ContainerColor = "bg-green-700";
   } else {
     if (!userAnswer) console.log("user not attemp this question", number); // **************
-    if (isCorrectAnswerFn(currentUserAnswer, ["0"])) {
+    if (isCorrectAnswerFn(currentUserAnswer, ["0"], map)) {
       //  "0" mean user not attemp that question
       ContainerColor = "bg-slate-700";
     }
@@ -212,47 +195,7 @@ export const DisplayQuestionAnsCard = ({
 
   return (
     <>
-      <div className={`" rounded-md p-4  ${ContainerColor}`} key={questionid}>
-        <DialogBox
-          TriggerBtnText="open"
-          Title="Solution"
-          dialogDescription=" Question decription "
-        >
-          <SolutionDisplayCont
-            questionid={questionid}
-            ans={CorretOptionsTitle}
-            isMultipleAns={ismultiple}
-          />
-        </DialogBox>
-        {/* <ModelCont
-          HeaderComp={<SolutionDisplayHeader title={title} />}
-          Body={
-            <SolutionDisplayCont
-              questionid={questionid}
-              ans={CorretOptionsTitle}
-              isMultipleAns={ismultiple}
-            />
-          }
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        /> */}
-        {/* <ModelCont
-          // HeaderComp={<SolutionDisplayHeader title={title} />}
-          Body={
-            <div className=" w-full flex justify-center items-center">
-              <QuestionIssueCardCreate
-                mainDivColor={""}
-                questionid={questionid}
-                handleCancle={() => {
-                  setOpenModalReportError(false);
-                }}
-              />
-            </div>
-          }
-          openModal={openModalReportError}
-          setOpenModal={setOpenModalReportError}
-        /> */}
-
+      <div className={`" rounded-md p-4  ${ContainerColor}`} key={id}>
         <div className={`  flex flex-col gap-2 justify-between`}>
           <fieldset className="flex w-full  flex-col">
             <legend className="mb-4 font-semibold  text-pretty">
@@ -295,34 +238,39 @@ export const DisplayQuestionAnsCard = ({
           </fieldset>
 
           <div className="actionBtn flex w-full justify-between">
-            <Button
-              size={ismobile ? "sm" : "default"}
-              color="red"
-              onClick={() => {
-                // setOpenModalReportError(true);
-              }}
+            <DialogBox
+              TriggerBtnText="Report Error"
+              Title="Report Error"
+              dialogDescription="  Error decription "
             >
-              Report Error
-            </Button>
+              <div className=" w-full flex justify-center items-center">
+                <QuestionIssueCardCreate mainDivColor={""} questionid={id} />
+              </div>
+            </DialogBox>
 
             <div className="infoSection  hidden md:flex gap-1">
               <Button color="purple" disabled>
-                {part}
+                {questionAnsData.part}
               </Button>
               <Button color="purple" disabled>
-                {topic}
+                {Topic.shortName}
               </Button>
               <Button color="purple" disabled>
-                {ismultiple ? "M" : "S"}
+                {is_multiple_ans ? "M" : "S"}
               </Button>
             </div>
-            <Button
-              size={ismobile ? "sm" : "default"}
-              color="blue"
-              onClick={() => {}} //setOpenModal(true)
+
+            <DialogBox
+              TriggerBtnText="view Solution"
+              Title="Solution"
+              dialogDescription=" Question decription "
             >
-              view Solution
-            </Button>
+              <SolutionDisplayCont
+                questionid={id}
+                ans={CorretOptionsTitle}
+                isMultipleAns={is_multiple_ans}
+              />
+            </DialogBox>
           </div>
         </div>
       </div>
