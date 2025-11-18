@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import ExamAttemptQuestionChart from "../metrix/ExamAttemptQuestionChart";
 import LeaderBoard from "../metrix/LeaderBoard";
-import { DialogBox, ModelCont } from "@/design-system";
+import { DialogBox } from "@/design-system";
 import { ExamSelection } from "../common/ExamSelection";
 import type { exam_type, UserAnsFormat_type } from "./types";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 export const AnalysesTest = () => {
   const _ = useApi();
   let { Exams, lastexam } = useAppSelector((state) => state.exam);
-  const [openModal, setOpenModal] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
   const [examid, setexamid] = useState<string | null>(null);
   const [exams, setexams] = useState<exam_type[]>([]);
   const [QuestionAns, setQuestionAns] = useState<UserAnsFormat_type[]>([]);
