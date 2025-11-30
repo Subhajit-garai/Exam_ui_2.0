@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import {Tooltip} from "@repo/design-system/tooltip/tooltip"
+import {Tooltip_one as Tooltip} from "@repo/design-system/tooltip/tooltip_one"
 import { ToastConfig } from "@repo/lib/utils/utils";
 
 const Gotobtn = ({

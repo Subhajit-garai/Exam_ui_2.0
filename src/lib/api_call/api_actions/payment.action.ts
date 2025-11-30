@@ -13,15 +13,15 @@ export class paymentApi {
     let endpoint = `/payment/getkey`;
     return await this.api.request(endpoint);
   };
-  Checkout = async (data: any) => {
-    let endpoint = `/payment/Checkout`;
+  TokenCheckout = async (data: any) => {
+    let endpoint = `/payment/checkout/tocken`;
     return await this.api.request(endpoint, {
       method: "POST",
       data: data,
     });
   };
   SubscriptionCheckout = async (data: any) => {
-    let endpoint = `/payment/subscriptioncheckout`;
+    let endpoint = `/payment/checkout/subscription`;
     return await this.api.request(endpoint, {
       method: "POST",
       data: data,

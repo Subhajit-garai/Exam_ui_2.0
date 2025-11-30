@@ -10,7 +10,7 @@ export class userApi {
     this.api = ApiClient.getInstance();
   }
 
-  userLogout = () =>{
+  userLogout = () => {
     let url = `/user/logout`;
     return this.api.request(url);
   }
@@ -38,5 +38,25 @@ export class userApi {
   forgotpassword = (data: any) => {
     let url = `/user/forgotpassword/verify`;
     return this.api.request(url, { method: "POST", data: data });
+  };
+
+  getRecentActivity = () => {
+    let url = `/user/activity/recent`;
+    return this.api.request(url);
+  };
+
+  getExamTimeline = () => {
+    let url = `/user/timeline`;
+    return this.api.request(url);
+  };
+
+  updateAcademicProfile = (data: { academicProfile: { category: string, exam: string, year: string }, standard?: string, stream?: string, school?: string }) => {
+    let url = `/user/profile/academic/update`;
+    return this.api.request(url, { method: "PUT", data });
+  };
+
+  getSubscriptionTiers = () => {
+    let url = `/user/subscription/tiers`;
+    return this.api.request(url);
   };
 }

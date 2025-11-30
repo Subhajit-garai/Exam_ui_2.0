@@ -12,7 +12,7 @@ interface Props {
   children?: ReactElement;
 }
 
-export function Component({ text, Trigger, children }: Props) {
+export  function Tooltip_one({ text, Trigger, children }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -25,4 +25,3 @@ export function Component({ text, Trigger, children }: Props) {
   );
 }
 
-export { Component as Tooltip };

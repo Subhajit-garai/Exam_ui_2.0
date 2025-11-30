@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import {  Badge } from "@repo/ui/badge";
 import { ToastConfig } from "@repo/lib/utils/utils";
-import {Tooltip} from "@repo/design-system/tooltip/tooltip"
+import {Tooltip_one as Tooltip} from "@repo/design-system/tooltip/tooltip_one"
 
 const CountBtn = ({
   text = "total",

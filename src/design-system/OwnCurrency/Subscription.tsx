@@ -5,18 +5,18 @@ export const Subscription = ({
   className,
   Subscription = "None",
 }: {
-  className: string;
+  className?: string;
   Subscription: string;
 }) => {
   return (
     <div
       className={cn(
-        ` flex gap-2 p-1 px-2 rounded-md shadow-md w-fit  items-center bg-linear-to-br from-cyan-400 via-blue-400 to-indigo-400`,
+        `flex gap-1.5 px-3 py-1 rounded-full shadow-sm w-fit items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white`,
         className
       )}
     >
-      <Award color="#e1e515" />
-      <p>{Subscription}</p>
+      <Award size={14} className="text-yellow-300 fill-yellow-300" />
+      <p className="text-xs font-bold tracking-wide uppercase">{Subscription}</p>
     </div>
   );
 };

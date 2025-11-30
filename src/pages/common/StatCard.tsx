@@ -21,15 +21,20 @@ const StatCard = ({
       whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)" }}
     >
       <Card className=" px-3  py-4 md:px-5 md:py-6  ">
-        <span className="flex items-center text-sm font-medium text-primary">
-          <Icon
-            size={iconSize ? iconSize : 20}
-            className="mr-2 "
-            style={{ color }}
-          />
-          {name}
-        </span>
-        <p className="mt-1 text-xl font-semibold text-primary ">{value}</p>
+        <div className="flex items-center gap-3">
+          <div
+            className="p-2 rounded-lg"
+            style={{ backgroundColor: `${color}20`, color: color }}
+          >
+            <Icon
+              size={iconSize ? iconSize : 20}
+            />
+          </div>
+          <span className="text-sm font-medium text-primary">
+            {name}
+          </span>
+        </div>
+        <p className="mt-2 text-xl font-semibold text-primary ">{value}</p>
       </Card>
     </motion.div>
   );

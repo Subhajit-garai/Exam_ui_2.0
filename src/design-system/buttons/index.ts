@@ -8,5 +8,4 @@ export * from "./CountBtn";
 export * from "./Gotobtn";
 export * from "./Marker";
 export * from "./Mybtns";
-export * from "./Tooltip.button";
 export * from "./Trashbtn";

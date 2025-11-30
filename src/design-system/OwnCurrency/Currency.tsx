@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useIsMobile } from "@repo/hooks/isMobile";
 import { useAppSelector } from "@repo/store/hook";
 import { type ElementType } from "react";
-import { Tooltip } from "@repo/design-system/tooltip/tooltip";
+import { Tooltip_one as Tooltip } from "@repo/design-system/tooltip/tooltip_one";
 import { Card } from "@repo/design-system/card/Card";
 import { Button } from "@repo/ui/button";
 

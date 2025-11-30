@@ -6,10 +6,10 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
-export const Card = ({ children, className }: CardProps) => {
+export const Card = ({ children, className ,...props}: CardProps) => {
   return (
     <>
-      <div className={cn(" bg-card flex flex-col justify-between items-center w-full rounded-lg ", className)}>{children}</div>
+      <div {...props} className={cn(" bg-card flex flex-col justify-between items-center w-full rounded-lg ", className)}>{children}</div>
     </>
   );
 };

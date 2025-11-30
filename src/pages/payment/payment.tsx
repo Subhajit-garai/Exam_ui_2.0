@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { PaymentOfferCard, PaymentSubcriptionCard } from "./PaymentOfferCard";
+import { PaymentSubcriptionCard, PaymentTokenCard } from "./PaymentOfferCard";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
-import { useAppDispatch, useAppSelector } from "@repo/store/hook";
+import { useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
-import type { Dispatch } from "@reduxjs/toolkit";
 import { LoaderFive } from "@/design-system/loader/loader";
 import { Tabs } from "@/design-system/tabs/Tabs";
+import type { PurchaseType } from "@/lib/constants/question.constants.type";
 
 declare global {
   interface Window {
@@ -16,7 +16,6 @@ declare global {
 
 const Payment = () => {
   const _ = useApi();
-  const dispatch = useAppDispatch();
   const [tokens, setTokens] = useState<any[]>([]);
   const [subcriptions, setSubcriptions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -30,11 +29,11 @@ const Payment = () => {
         let subcriptionData = [];
 
         offerandSubcription.data.map((item: any) => {
-          switch (item.type) {
-            case "subcription":
+          switch (item.type as PurchaseType) {
+            case "SUBSCRIPTION":
               subcriptionData.push(item);
               break;
-            case "token":
+            case "TOKEN":
               tokenData.push(item);
               break;
 
@@ -54,19 +53,44 @@ const Payment = () => {
 
   let { name, email, contact } = useAppSelector((state) => state.user);
 
-  const checkout = async (price: number, token: number) => {
-    let key_res = await _.api.payment.getKey();
+  const checkout = async (amount: number, plan: string, type: string) => {
 
+
+    let key_res = await _.api.payment.getKey();
     if (!key_res) {
       return toast.error(key_res.message, ToastConfig());
     }
-
     const { key } = key_res;
 
-    let responce = await _.api.payment.Checkout({
-      amount: price,
-      token: token,
-    });
+    let responce;
+
+    switch (type) {
+
+      case "SUBSCRIPTION":
+        {
+          responce = await _.api.payment.SubscriptionCheckout({
+            amount: String(amount),
+            plan: plan,
+            type: type,
+          });
+        }
+        break;
+      case "TOKEN":
+        {
+          responce = await _.api.payment.TokenCheckout({
+            amount: String(amount),
+            plan: plan,
+            type: type,
+          });
+
+          if (!responce.success) {
+            return toast.error(responce.message, ToastConfig());
+          }
+        }
+        break;
+      default:
+        break;
+    }
 
     if (!responce.success) {
       return toast.error(responce.message, ToastConfig());
@@ -102,37 +126,52 @@ const Payment = () => {
     };
 
     const razor = new window.Razorpay(options);
+
     razor.open();
   };
 
-  const SubscriptionCheckoutfn = async (price: number, plan: string) => {
+  const SubscriptionCheckoutfn = async (
+    price: number,
+    plan: string,
+    type: PurchaseType
+  ) => {
     const confirmed = window.confirm(
       "Are you sure you want to buy this subscription?"
     );
     if (confirmed) {
-      buySubscription(price, plan, dispatch);
+      checkout(price, plan, type);
     }
   };
-
-  const buySubscription = async (
-    price: number,
-    plan: string,
-    dispatch: Dispatch
-  ) => {
-    let responce = await _.api.payment.SubscriptionCheckout({
-      amount: String(price),
-      plan: plan,
-    });
-
-    if (responce.success) {
-      toast.success(responce.message, ToastConfig());
-      _.api.user.fetchuser(dispatch);
-    } else {
-      toast.error(responce.message, ToastConfig());
+  const TokenCheckoutfn = async (price: number, plan: string, type: string) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to buy this token plan?"
+    );
+    if (confirmed) {
+      checkout(price, plan, type);
     }
   };
 
   const PaymentTabs = [
+    {
+      title: "Subscription",
+      value: "Subscription",
+      content: (
+        <div
+          key={`Subscription`}
+          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card "
+        >
+          {loading ? (
+            <LoaderFive text="Loading..." />
+          ) : (
+            <PaymentOptionsCont
+              type="SUBSCRIPTION"
+              data={subcriptions}
+              checkoutFN={SubscriptionCheckoutfn}
+            />
+          )}
+        </div>
+      ),
+    },
     {
       title: "Token",
       value: "Token",
@@ -141,37 +180,13 @@ const Payment = () => {
           key={`Token`}
           className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card"
         >
-          <p>Live Tab</p>
-
           {loading ? (
             <LoaderFive text="Loading..." />
           ) : (
             <PaymentOptionsCont
-              type={"Token"}
+              type="TOKEN"
               data={tokens}
-              checkoutFN={checkout}
-            />
-          )}
-        </div>
-      ),
-    },
-    {
-      title: "Subscription",
-      value: "Subscription",
-      content: (
-        <div
-          key={`Subscription`}
-          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card"
-        >
-          <p>Live Tab</p>
-
-          {loading ? (
-            <LoaderFive text="Loading..." />
-          ) : (
-            <PaymentOptionsCont
-              type="Subscription"
-              data={subcriptions}
-              checkoutFN={SubscriptionCheckoutfn}
+              checkoutFN={TokenCheckoutfn}
             />
           )}
         </div>
@@ -180,13 +195,15 @@ const Payment = () => {
   ];
 
   return (
-    <div className="flex-1 md:h-160  relative  mb-20 md:mb-0 ">
-      <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
-        <Tabs
-          tabs={PaymentTabs}
-          contentClassName="mt-10"
-          activeTabClassName=""
-        />
+    <div className="main w-full h-full overflow-auto no-visible-scrollbar">
+      <div className="flex-1 md:h-160  relative  mb-20 md:mb-0 ">
+        <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
+          <Tabs
+            tabs={PaymentTabs}
+            contentClassName="mt-10"
+            activeTabClassName=""
+          />
+        </div>
       </div>
     </div>
   );
@@ -195,53 +212,29 @@ const Payment = () => {
 export default Payment;
 
 export const PaymentOptionsCont = ({
-  type = "offer",
+  type = "SUBSCRIPTION",
   data,
   checkoutFN,
 }: {
-  type: "offer" | "Subscription" | "Token";
+  type: PurchaseType;
   data: any;
   checkoutFN: any;
 }) => {
   return (
     <>
-      <div className=" flex flex-wrap  md:flex-row  items-center  justify-center  gap-2 md:gap-8 ">
+      <div className=" flex flex-wrap  md:flex-row  items-center  justify-center  gap-2 md:gap-8 overflow-auto no-visible-scrollbar">
         {data.map((sub: any, idx: any) => {
-          return type == "Subscription" ? (
+          return type == "SUBSCRIPTION" ? (
             <PaymentSubcriptionCard
               key={idx}
               data={sub}
               checkout={checkoutFN}
             />
           ) : (
-            <PaymentOfferCard key={idx} data={sub} checkout={checkoutFN} />
+            <PaymentTokenCard key={idx} data={sub} checkout={checkoutFN} />
           );
         })}
       </div>
     </>
   );
 };
-
-// export const SubscriptionTiers = () => {
-//   const tiers = [
-//     { label: "GOLD", color: "bg-yellow-400", textColor: "text-yellow-800" },
-//     { label: "SILVER", color: "bg-gray-300", textColor: "text-gray-700" },
-//     { label: "BRONZE", color: "bg-amber-500", textColor: "text-amber-900" },
-//   ];
-
-//   return (
-//     <div className="flex justify-center gap-8 py-8">
-//       {tiers.map((tier) => (
-//         <div
-//           key={tier.label}
-//           className={`w-32 h-32 rounded-full shadow-md flex flex-col justify-center items-center ${tier.color}`}
-//         >
-//           <div className="text-2xl font-bold uppercase tracking-wide">
-//             <span className={tier.textColor}>{tier.label}</span>
-//           </div>
-//           <div className="text-sm mt-1 text-white">★</div>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };

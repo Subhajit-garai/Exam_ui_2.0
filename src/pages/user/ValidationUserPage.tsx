@@ -1,6 +1,6 @@
 import { Button } from "@repo/ui/button";
 import { Card } from "@repo/design-system/card";
-import  { useEffect, useState, type ElementType } from "react";
+import { useEffect, useState, type ElementType } from "react";
 import { Textinput } from "@repo/design-system/inputs";
 import useHandleinpute, {
   type handleInputefn_type,
@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import type { InputOption } from "@repo/types/Input.js";
 
 const ValidationUserPage = () => {
-  let { email, telegramid, verification } = useAppSelector(
+  let { email, social } = useAppSelector(
     (state) => state.user
   );
 
@@ -24,7 +24,7 @@ const ValidationUserPage = () => {
     {
       id: "1",
       inputId: "input-telegramid",
-      placeholder: telegramid,
+      placeholder: social?.telegram,
       required: true,
       name: "token",
       disabled: sendTokengen ? false : true,
@@ -54,23 +54,23 @@ const ValidationUserPage = () => {
   }, []);
 
   return (
-    <div className="">
-      {verification?.email ? (
+    <div className=" flex gap-4">
+      {social?.isEmailVerified ? (
         <>
           <VerificationSuccessDisplayinfoCont
             title={"email verified"}
             Icon={ShieldCheck}
             data={email}
-            // btntext={"Validate agin"}
+          // btntext={"Validate agin"}
           />
 
-          {verification?.telegram ? (
+          {social?.isTelegramVerified ? (
             <>
               <VerificationSuccessDisplayinfoCont
                 title={"Telegram id verified"}
                 Icon={ShieldCheck}
-                data={telegramid}
-                // btntext={"Validate agin"}
+                data={social.telegram}
+              // btntext={"Validate agin"}
               />
             </>
           ) : (
@@ -85,14 +85,14 @@ const ValidationUserPage = () => {
                 Icon={ShieldX}
                 otpsendfn={() => {
                   _.api.user
-                    .genTockenFroTelegram({ telegramid: telegramid })
-                    .then((response:any) => {
+                    .genTockenFroTelegram({ telegramid: social?.telegram })
+                    .then((response: any) => {
                       if (response?.success) {
                         toast.success(response.message, ToastConfig());
                         setsendTokengen(true);
                       }
                     })
-                    .catch((error:any) => {
+                    .catch((error: any) => {
                       console.log(error.response.data);
                       toast.error(error.response.data, ToastConfig());
                       // toast.info(<GotoSignUpPage />, ToastConfig());
@@ -102,14 +102,14 @@ const ValidationUserPage = () => {
                 submitfn={() => {
                   _.api.user
                     .veryfyTockenFroTelegram(value)
-                    .then((response:any) => {
+                    .then((response: any) => {
                       if (response?.success) {
                         toast.success(response.message, ToastConfig());
                         _.api.user.fetchuser(dispatch);
                         setsendTokengen(false);
                       }
                     })
-                    .catch((error:any) => {
+                    .catch((error: any) => {
                       toast.error(error.response.data, ToastConfig());
                       // toast.info(<GotoSignUpPage />, ToastConfig());
                       setsendTokengen(true);
@@ -132,13 +132,13 @@ const ValidationUserPage = () => {
             otpsendfn={() => {
               _.api.user
                 .genTockenFroEmail({ email: email })
-                .then((response:any) => {
+                .then((response: any) => {
                   if (response.success) {
                     toast.success(response.message, ToastConfig());
                     setsendTokengen(true);
                   }
                 })
-                .catch((error:any) => {
+                .catch((error: any) => {
                   toast.error(error.response.data, ToastConfig());
                   // toast.info(<GotoSignUpPage />, ToastConfig());
                   setsendTokengen(false);
@@ -147,7 +147,7 @@ const ValidationUserPage = () => {
             submitfn={() => {
               _.api.user
                 .veryfyTockenFroEmail(value)
-                .then((response:any) => {
+                .then((response: any) => {
                   if (response.success) {
                     toast.success(response.message, ToastConfig());
                     _.api.user.fetchuser(dispatch);
@@ -155,10 +155,11 @@ const ValidationUserPage = () => {
                     setsendTokengen(false);
                     setValue({
                       token: "",
+                      email: "",
                     });
                   }
                 })
-                .catch((error:any) => {
+                .catch((error: any) => {
                   toast.error(error.response.data, ToastConfig());
                   // toast.info(<GotoSignUpPage />, ToastConfig());
                   setsendTokengen(true);
@@ -226,7 +227,7 @@ export const VerificationSuccessDisplayinfoCont = ({
 }) => {
   return (
     <>
-      <Card className="card">
+      <Card className="card p-4  gap-4 items-center">
         <span className="flex gap-2 justify-center">
           <h1 className=" text-center text-lg">{title} </h1>
           <Icon color="lightgreen" />
@@ -279,17 +280,17 @@ export const ValidationForgotpassword = () => {
     };
     await _.api.user
       .forgotpassword(data)
-      .then((response:any) => {
+      .then((response: any) => {
         toast.success(response.data.message, ToastConfig());
         navigate("/login");
       })
-      .catch((error:any) => {
+      .catch((error: any) => {
         toast.error(error.response.data.message, ToastConfig());
         toast.info(<GotoSignUpPage />, ToastConfig());
       });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <div className="flex-1 overflow-auto relative flex  flex-col items-center ">

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-type FormValues = Record<string, string>;
 
 export type HandleInputEvent =
   | React.ChangeEvent<
@@ -10,14 +9,14 @@ export type HandleInputEvent =
   | any ;
 
 export type handleInputefn_type = (e: HandleInputEvent) => void;
-export type HandleInputeReturn = {
-  value: FormValues;
+export type HandleInputeReturn<T extends object> = {
+  value: T;
   handleInputefn: handleInputefn_type;
-  setValue: React.Dispatch<React.SetStateAction<FormValues>>;
+  setValue: React.Dispatch<React.SetStateAction<T>>;
 };
 
-const useHandleinpute = (initialstate: FormValues = {}): HandleInputeReturn => {
-  let [value, setValue] = useState<FormValues>(initialstate);
+const useHandleinpute = <T extends object>(initialstate: T ): HandleInputeReturn<T> => {
+  let [value, setValue] = useState<T>(initialstate);
 
   const handleInputefn = (
     e:

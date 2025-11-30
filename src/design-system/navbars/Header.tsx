@@ -25,7 +25,6 @@ type api_responce_type = {
 export const Header = ({
   LogoUrl,
   BrandName,
-  userLogoutFn,
 }: {
   LogoUrl: string;
   BrandName: string;
@@ -37,14 +36,17 @@ export const Header = ({
     <nav className=" header  top-0 right-0 left-0  border-b border-white/10 h-[5rem] max-w-full z-[8]">
       <div className="  flex  gap-2 md:gap-4 items-center justify-between p-2 md:mx-20 h-full  ">
         <div className="h-fit  flex ">
-          <Logo url={LogoUrl} userLogoutFn={userLogoutFn}/>
+          <Logo url={LogoUrl} />
 
-          <p className=" self  text-primary md:whitespace-nowrap  md:text-xl font-semibold  ">
+          <p className=" self md:whitespace-nowrap  md:text-xl font-semibold  ">
             {BrandName}
           </p>
         </div>
 
         <div className="button_section flex h-fit gap-1 md:gap-4 ">
+          {/* <div className="currency">
+            <Suspense fallback={<LoaderFive text="loading ..."/>}></Suspense>
+          </div> */}
           <ThemeToggler />
           {!islogin && (
             <div className="flex gap-2">

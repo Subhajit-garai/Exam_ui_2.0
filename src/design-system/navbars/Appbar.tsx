@@ -1,10 +1,12 @@
 import {
-  ChartSpline,
   BookCheck,
   Home,
   SidebarOpen,
   SidebarClose,
   NotebookPen,
+  BadgeAlert,
+  BarChart,
+  Activity,
 } from "lucide-react";
 import { SidebarItems } from "./sidebar-items";
 import { useState, useEffect, type ElementType } from "react";
@@ -15,14 +17,16 @@ export type nav_items_types = {
   name: string;
   Component: ElementType;
   href: string;
+  color?: string;
 };
 
 export const menuOptions: nav_items_types[] = [
-  { id: 1, name: "Home", Component: Home, href: "/home" },
-  { id: 2, name: "Notes", Component: NotebookPen, href: "/notes/notes" },
-  { id: 3, name: "Tests", Component: BookCheck, href: "/test/join" },
-  { id: 4, name: "Analysis", Component: ChartSpline, href: "/analysis/test" },
-  // { id: 6, name: 'History', Component: History, href: '/history' },
+  { id: 1, name: "Home", Component: Home, href: "/home", color: "text-blue-500" },
+  { id: 2, name: "Notes", Component: NotebookPen, href: "/notes/notes", color: "text-purple-500" },
+  { id: 3, name: "Exam", Component: BookCheck, href: "/test/join", color: "text-green-500" },
+  { id: 6, name: "Activity", Component: Activity, href: "/activity/dashboard", color: "text-orange-500" },
+  { id: 4, name: "Analysis", Component: BarChart, href: "/analysis/test", color: "text-yellow-500" },
+  { id: 5, name: "Issue", Component: BadgeAlert, href: "/issue/dashboard", color: "text-red-500" },
 ];
 
 // Custom hook for media query
@@ -58,13 +62,10 @@ export const Appbar = () => {
   };
 
   const sidebarVariants = {
-    expanded: { width: "var(--sidebar-expanded)" },
-    collapsed: { width: "var(--sidebar-collapsed)" },
+    expanded: { width: "15vw" },
+    collapsed: { width: "4vw" }, // 5 vw
+    // collapsed: { width: '6 %' },  // 5 vw
   };
-  // const sidebarVariants = {
-  //   expanded: { width: "15vw" },
-  //   collapsed: { width: "5vw" }, // 5 vw
-  // };
 
   return (
     <>
@@ -79,22 +80,21 @@ export const Appbar = () => {
           stiffness: 300,
           damping: 20,
         }}
-        className=" appbar fixed left-0 top-0  hidden h-full flex-col  border-r dark:border-white/20  md:flex  z-[9] bg-sidebar   [--sidebar-expanded:15vw] [--sidebar-collapsed:5vw]
-            md:[--sidebar-collapsed:7vw]  lg:[--sidebar-collapsed:6vw] xl:[--sidebar-collapsed:5vw] 2xl:[--sidebar-collapsed:4vw] "
+        className=" appbar fixed left-0 top-0  hidden h-full flex-col  border-r dark:border-white/20  bg-background lg:flex  z-[9] "
       >
         <div className="flex h-full flex-col gap-4  pr">
           <div className="flex w-full items-center border-b border-white/10 px-2 py-4">
             <div>
               <motion.button
                 onClick={toggleCollapse}
-                className="m-auto flex rounded-lg  md:p-2 lg:p-3  transition-all duration-300 text-primary   hover:bg-blue-600/15 hover:text-blue-500"
+                className="ml-auto flex items-center rounded-lg p-3 text-center transition-all duration-300 text-primary   hover:bg-blue-600/15 hover:text-blue-500"
               >
                 {isCollapsed ? <SidebarOpen /> : <SidebarClose />}
               </motion.button>
             </div>
             <div>
               {!isCollapsed && (
-                <h3 className="text-lg font-bold tracking-tighter text-primary lg:text-2xl">
+                <h3 className="text-xl font-bold tracking-tighter text-primary lg:text-2xl">
                   Menu
                 </h3>
               )}
@@ -116,9 +116,9 @@ export const Appbar = () => {
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className=" appbarmob fixed bottom-0 left-0 right-0  md:hidden bg-sidebar "
+        className=" appbarmob fixed bottom-0 left-0 right-0  md:hidden z-[9]"
       >
-        <div className="flex items-center justify-around border-t border-white/10  p-4 shadow-xl  ">
+        <div className="flex items-center justify-around border-t border-border bg-background p-4 shadow-2xl">
           <SidebarItems items={menuOptions} isCollapsed={!isMediumToXL} />
         </div>
       </motion.nav>

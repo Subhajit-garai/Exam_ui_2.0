@@ -28,4 +28,23 @@ export class noteApi {
     let endpoint = `/notes/getnote/${Subject}/${topic}`;
     this.api.apiDispatcher(endpoint, dispatch, setContentData);
   };
+
+  getSubjects = async (exam?: string, dispatch?: any, setinredux: boolean = false) => {
+    let endpoint = `/notes/allsubject`;
+    if (exam) {
+      endpoint += `?exam=${exam}`;
+    }
+    if (setinredux) {
+      this.api.apiDispatcher(endpoint, dispatch, setSubjects);
+    }
+    return await this.api.request(endpoint);
+  };
+
+  getTopics = async (subject: string, dispatch?: any, setinredux: boolean = false) => {
+    let endpoint = `/notes/alltopic/${subject}`;
+    if (setinredux) {
+      this.api.apiDispatcher(endpoint, dispatch, setTopics);
+    }
+    return await this.api.request(endpoint);
+  };
 }

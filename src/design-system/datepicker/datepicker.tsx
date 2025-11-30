@@ -10,13 +10,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@repo/ui/popover";
+import { cn } from "@/lib/utils";
 
 export function SimpleDatepicker({
   lable,
   date,
   setDate,
+  buttonClassName
 }: {
   lable: string;
+  buttonClassName?: string;
   date: Date | undefined;
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }) {
@@ -32,7 +35,7 @@ export function SimpleDatepicker({
           <Button
             variant="outline"
             id="date"
-            className="w-48 justify-between font-normal"
+            className= {cn(buttonClassName ," justify-between font-normal")}
           >
             {date ? date.toLocaleDateString() : "Select date"}
             <ChevronDownIcon />

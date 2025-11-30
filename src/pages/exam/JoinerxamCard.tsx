@@ -1,16 +1,8 @@
 import { Badge } from "@repo/ui/badge";
-
 import { Button } from "@repo/ui/button";
-
 import { ExamJoinTime } from "./Timer.js";
-
 import { AlarmClockCheck, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-// import {
-//   fetchExamsByid,
-//   fetchuser,
-//   requestTojoinExam,
-// } from "@re";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
@@ -20,20 +12,19 @@ import { setlastExam, setTotal_Questions } from "@repo/store/slice/examSlice";
 import { useApi } from "@/ApiProvider.js";
 import { ExamJoinBtn } from "@repo/design-system/buttons";
 
-
-type props ={
-  imageurl:string,
-  contestid:string,
-  Title:string,
-  particepents:number,
-  displayId:string,
-  timeStamp:string,
-  startTime:string,
-  joinTime:string,
-  examtype:string,
-  entryChange:string,
-  status:string,
-}
+type props = {
+  imageurl: string;
+  contestid: string;
+  Title: string;
+  particepents: number;
+  displayId: string;
+  timeStamp: string;
+  startTime: string;
+  joinTime: string;
+  examtype: string;
+  entryChange: string;
+  status: string;
+};
 
 const JoinerxamCard = ({
   imageurl,
@@ -48,10 +39,8 @@ const JoinerxamCard = ({
   examtype,
   entryChange,
   status,
-}:props) => {
-
-
-  const _ = useApi()
+}: props) => {
+  const _ = useApi();
   timeStamp = dayjs(timeStamp).format("DD-MM-YYYY");
   const navigator = useNavigate();
   const dispatch = useDispatch();
@@ -64,13 +53,20 @@ const JoinerxamCard = ({
     if (res.success == true) {
       toast.success(res.message, ToastConfig());
       _.api.user.fetchuser(dispatch);
-      // dispatch(setlastExam(contestid));
       localStorage.setItem("lastexam", contestid);
       let responce = await _.api.exam.fetchExamsByid(contestid);
       if (responce.success) {
         dispatch(
           setTotal_Questions(responce.data[0]?.exam_pattern?.total_questions)
         );
+        // Log Activity
+        _.api.activity.logActivity({
+          type: examtype.toUpperCase(),
+          title: `Joined ${Title}`,
+          description: `Started attempting ${Title}`,
+          status: "Joined",
+          metadata: { examId: contestid, examType: examtype },
+        });
         navigator(`/examportal?id=${encodeURIComponent(contestid)}`);
       } else {
         console.log("error res -> ", responce);
@@ -85,9 +81,8 @@ const JoinerxamCard = ({
 
   return (
     <div
-      className={` flex flex-col gap-8  ${
-        isDisabled ? "opacity-55 pointer-events-none" : "opacity-100"
-      }`}
+      className={` flex flex-col gap-8  ${isDisabled ? "opacity-55 pointer-events-none" : "opacity-100"
+        }`}
     >
       <div className="w-60 relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <img className="rounded-t-lg" src={imageurl} alt="" />
@@ -113,7 +108,7 @@ const JoinerxamCard = ({
               timeStamp={timeStamp}
               startTime={startTime}
               joinTime={joinTime}
-              timerClass={"right-0 mr-5 "}
+              timerClass={"absolute right-0 mr-5 "}
             />
           )}
           <Badge className=" bg-primary-foreground">
@@ -124,7 +119,7 @@ const JoinerxamCard = ({
         </div>
         <div className="info flex gap-2 w-full justify-between absolute  bottom-14 right-0  p-4">
           <Badge className="flex gap-1  bg-primary-foreground">
-            {<AlarmClockCheck size={15} />}
+            {<AlarmClockCheck className="text-primary" size={15} />}
             <h5 className=" font-semibold text-primary text-md z-30 left-0 mr-1 ">
               {startTime ? startTime : "0:00 am"}
             </h5>
@@ -153,7 +148,7 @@ const JoinerxamCard = ({
             ) : (
               <>
                 {remainingSecondsForStart == 0 &&
-                remainingSecondsForjoin == 0 ? (
+                  remainingSecondsForjoin == 0 ? (
                   <Button
                     size="sm"
                     color="success"

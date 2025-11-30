@@ -1,11 +1,15 @@
 import { Outlet } from "react-router-dom";
+import { Footer } from "../footer/Footer";
 
 export const FullpageOutlet = () => {
   return (
-    <div className="h-full w-full p-4 overflow-y-auto no-visible-scrollbar">
-        <Outlet/>
-    </div>  
-  )
-}
+    <div className="min-h-[95vh] w-full overflow-y-auto no-visible-scrollbar flex flex-col">
+      <div className="flex-1 p-4">
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
 export default FullpageOutlet

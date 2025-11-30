@@ -42,6 +42,7 @@ export const Tabs = ({
       const selectedTab = newTabs.splice(idx, 1);
       newTabs.unshift(selectedTab[0]);
       setTabs(newTabs);
+      setActive(newTabs[0]);
     } else {
       setTabs(propTabs);
       if (propTabs.length > 0) setActive(propTabs[0]);
@@ -71,7 +72,7 @@ export const Tabs = ({
               transformStyle: "preserve-3d",
             }}
           >
-            {active?.value === tab?.value && (
+            {active?.value === tab.value && (
               <motion.div
                 layoutId="clickedbutton"
                 transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
@@ -112,7 +113,7 @@ export const FadeInDiv = ({
   hovering?: boolean;
 }) => {
   const isActive = (tab: Tab) => {
-    return tab.value === active.value;
+    return tab.value === active?.value;
   };
   return (
     <div className="relative w-full h-full">
@@ -131,7 +132,11 @@ export const FadeInDiv = ({
           }}
           className={cn("w-full h-full absolute top-0 left-0", className)}
         >
-          {tab.content}
+          {idx === 0 ? (
+            tab.content
+          ) : (
+            <div className="w-full h-full bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm" />
+          )}
         </motion.div>
       ))}
     </div>

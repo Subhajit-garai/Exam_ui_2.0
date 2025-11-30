@@ -16,11 +16,10 @@ import { NumberBox } from "./NumberBox";
 import { QuestionSection } from "./QuestionSection";
 import { InfoCont } from "./IconCont";
 import { useIsMobile } from "@repo/hooks/isMobile";
-// import { Info } from "lucide-react";
 import { toast } from "react-toastify";
-import ExamSecurity from "./ExamSecurity";
 import { useApi } from "@/ApiProvider";
 import { useAppSelector } from "@repo/store/hook";
+import { SideDrawer } from "./SideDrawer";
 
 type question_extra_type = {
   [key: string]: string;
@@ -68,9 +67,10 @@ const Examportal = () => {
   const [Ans, setAns] = useState(["0"]);
   const [Examid, setExamid] = useState(searchParams.get("id"));
   const [Number, setNumber] = useState(1);
-  // const [MobileViewDrawer, setMobileViewDrawer] = useState(false);
-  // const [MobileViewDrawer2, setMobileViewDrawer2] = useState(false);
-  // const [Part, setPart] = useState("part1");
+
+
+  const [leftDrawerOpen, setLeftDrawerOpen] = useState(false);
+  const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
 
   let { ansset, total_questions, CurrentPart } = useAppSelector(
     (state) => state.exam
@@ -193,6 +193,9 @@ const Examportal = () => {
     });
 
     updateansBoxisView();
+    if (ismobile) {
+      setLeftDrawerOpen(false);
+    }
   };
 
   async function fetchExamQuestionAndset({
@@ -248,7 +251,7 @@ const Examportal = () => {
   return (
     <>
       <div className="  flex flex-col mt-5 lg:grid  md:grid-cols-12 gap-4  md:gap-8 w-full  overflow-auto md:p-4 mb-20">
-        <ExamSecurity />
+        {/* <ExamSecurity /> */}
 
         <div className="left col-span-1 hidden md:block rounded-xs md:col-span-2 ">
           <div className="box flex gap-2 flex-wrap justify-between p-1   md:max-h-120 overflow-auto ">
@@ -259,7 +262,7 @@ const Examportal = () => {
         <div className="mobileViewDrawerBtn md:hidden flex items-center justify-between gap-2 px-2">
           <Button
             onClick={() => {
-              // setMobileViewDrawer(true);
+              setLeftDrawerOpen(true);
             }}
           >
             Ans info
@@ -267,7 +270,7 @@ const Examportal = () => {
           <Button
             color="blue"
             onClick={() => {
-              // setMobileViewDrawer2(true);
+              setRightDrawerOpen(true);
             }}
           >
             Exam info
@@ -284,8 +287,7 @@ const Examportal = () => {
               setans={setAns}
               ismultiple={Question?.is_multiple_ans}
               extra={Question.extra ? Question.extra[Question?.format] : null}
-              // formate={Question.formate}
-              // topic={Question.topic}
+
             />
           </div>
 
@@ -326,56 +328,29 @@ const Examportal = () => {
         </div>
       </div>
 
-      <div className="drawer md:hidden">
-        {/* <Drawer
-          className="z-299"
-          open={MobileViewDrawer}
-          onClose={() => {
-            setMobileViewDrawer(false);
-          }}
-        >
-          <DrawerTrigger>
-            <h1>hi</h1>
-          </DrawerTrigger>
-          <DrawerHeader title="Ans info"  />
+      <SideDrawer
+        open={leftDrawerOpen}
+        onClose={() => setLeftDrawerOpen(false)}
+        position="left"
+        title="Answer Info"
+        className="md:hidden"
+      >
+        <div className="flex gap-2 flex-wrap justify-between">
+          <NumberBox fetchQuestionwithNumber={fetchQuestionwithNumber} />
+        </div>
+      </SideDrawer>
 
-          <DrawerItems>
-            <div className="left col-span-1  md:hidden rounded-xs md:col-span-2 ">
-              <div className="box flex gap-2 flex-wrap justify-between">
-                <NumberBox
-                  fetchQuestionwithNumber={fetchQuestionwithNumber}
-                  // closeFn={() => {
-                  //   setMobileViewDrawer(false);
-                  // }}
-                />
-              </div>
-            </div>
-          </DrawerItems>
-        </Drawer> */}
-
-      </div>
-      <div className=" drawer md:hidden">
-        {/* <Drawer
-          position="right"
-          className="z-299"
-          open={MobileViewDrawer2}
-          onClose={() => {
-            setMobileViewDrawer2(false);
-          }}
-        >
-          <DrawerHeader title="Exam info" titleIcon={Info} />
-
-          <DrawerItems>
-            <div className="info md:col-span-2 h-full flex  items-center justify-center md:hidden gap-2 p-2 ">
-              <InfoCont
-              // closeFn={() => {
-              //   setMobileViewDrawer2(false);
-              // }}
-              />
-            </div>
-          </DrawerItems>
-        </Drawer> */}
-      </div>
+      <SideDrawer
+        open={rightDrawerOpen}
+        onClose={() => setRightDrawerOpen(false)}
+        position="right"
+        title="Exam Info"
+        className="md:hidden"
+      >
+        <div className="flex flex-col gap-2">
+          <InfoCont />
+        </div>
+      </SideDrawer>
     </>
   );
 };

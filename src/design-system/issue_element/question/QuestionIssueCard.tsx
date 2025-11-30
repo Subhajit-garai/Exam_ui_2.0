@@ -15,7 +15,6 @@ type issuedata_type = {};
 export const QuestionIssueCardCreate = ({
   mainDivColor,
   questionid,
-  // issueType,
   handleCancle,
   CreateIssue,
   getQuestionIssueResuestCount,
@@ -113,14 +112,14 @@ export const QuestionIssueCardCreate = ({
 
   const textRef = useRef<HTMLParagraphElement>(null);
 
-  const handleCopy = () => {
-    if (textRef.current) {
-      const text = textRef.current.innerText;
-      navigator.clipboard
-        .writeText(text)
-        .catch((err) => alert("Failed to copy: " + err));
-    }
-  };
+  // const handleCopy = () => {
+  //   if (textRef.current) {
+  //     const text = textRef.current.innerText;
+  //     navigator.clipboard
+  //       .writeText(text)
+  //       .catch((err) => alert("Failed to copy: " + err));
+  //   }
+  // };
 
   return (
     <>
@@ -135,7 +134,7 @@ export const QuestionIssueCardCreate = ({
           </p>
           <div className="actions flex">
             <CountBtn count={count} />
-            <Copybtn textMessage="Id copyed" copyFn={handleCopy} />
+            <Copybtn textMessage="Id copyed"  />
             <Gotobtn link="/" />
           </div>
         </div>
@@ -182,21 +181,22 @@ export const QuestionIssueCardDisplay = ({
   note,
   data,
 }: {
-  mainDivColor: string;
+  mainDivColor?: string;
   title: string;
   note: string;
   data?: any; // Optional prop for additional data
+  gotoLink?: string;
 }) => {
-  const textRef = useRef<HTMLParagraphElement>(null);
+  // const textRef = useRef<HTMLParagraphElement>(null);
 
-  const handleCopy = () => {
-    if (textRef.current) {
-      const text = textRef.current.innerText;
-      navigator.clipboard
-        .writeText(text)
-        .catch((err) => alert("Failed to copy: " + err));
-    }
-  };
+  // const handleCopy = () => {
+  //   if (textRef.current) {
+  //     const text = textRef.current.innerText;
+  //     navigator.clipboard
+  //       .writeText(text)
+  //       .catch((err) => alert("Failed to copy: " + err));
+  //   }
+  // };
 
   return (
     <>
@@ -211,7 +211,7 @@ export const QuestionIssueCardDisplay = ({
           </p>
           <div className="actions flex">
             <Trashbtn text="Trash" />
-            <Copybtn textMessage="Id copyed" copyFn={handleCopy} />
+            <Copybtn textMessage="Id copyed"  />
             <Gotobtn link="/" />
           </div>
         </div>

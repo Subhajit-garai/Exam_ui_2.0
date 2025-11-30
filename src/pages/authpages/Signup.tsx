@@ -1,7 +1,7 @@
-import  {Textinput } from "@repo/design-system/inputs";
+import { Textinput } from "@repo/design-system/inputs";
 import useHandleinpute from "@repo/hooks/useHandleInpute";
 import { Button } from "@repo/ui/button";
-import {  Card } from "@repo/design-system/card";
+import { Card } from "@repo/design-system/card";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
@@ -11,7 +11,7 @@ import { useApi } from "@/ApiProvider.js";
 import type { InputOption } from "@repo/types/Input";
 
 
-let loginOptions:InputOption[] = [
+let loginOptions: InputOption[] = [
   {
     id: "1",
     inputId: "input-name",
@@ -31,9 +31,9 @@ let loginOptions:InputOption[] = [
     inputId: "input-telegram",
     placeholder: "Enter telegram id",
     required: true,
-    name: "telegramid",
+    name: "telegram",
     type: "number",
-  
+
   },
   {
     id: "4",
@@ -41,7 +41,7 @@ let loginOptions:InputOption[] = [
     placeholder: "Enter password",
     required: true,
     name: "password",
-    
+
   },
 ];
 
@@ -50,10 +50,10 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    telegramid: "",
+    telegram: "",
   });
 
-  
+
 
   const _ = useApi();
   const navigate = useNavigate();
@@ -61,13 +61,13 @@ const Signup = () => {
 
   const signupfn = async () => {
 
-    let url =  _.api.client.createUrl("/user/signup");
+    let url = _.api.client.createUrl("/user/signup");
     await axios
       .post(url, value, { withCredentials: true })
       .then((response) => {
         if (response.status == 200) {
           toast.success(response.data.message, ToastConfig());
-           _.api.user.fetchuser(dispatch);
+          _.api.user.fetchuser(dispatch);
           navigate("/user/validation?email=" + value.email, { replace: true });
         }
       })
@@ -78,7 +78,7 @@ const Signup = () => {
   return (
     <>
       <div className="main flex justify-center">
-        <Card  className="inputCont w-fit flex-col p-8 rounded-lg">
+        <Card className="inputCont w-fit flex-col p-8 rounded-lg">
           <div className="gap-2 flex-col flex">
             <h2 className="text-center font-bold capitalize  text-primary ">Sign up now</h2>
             <Textinput

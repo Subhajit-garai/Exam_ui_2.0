@@ -1,156 +1,106 @@
-import  { useEffect } from "react";
-// import ProgressCard from "../../components/ui/ProgressCard.jsx";
-// import Servicecard from "../../components/ui/Servicecard.jsx";
-import { useAppDispatch } from "@repo/store/hook";
+import { useAppSelector } from "@repo/store/hook";
+import {
+  IconBook,
+  IconChartBar,
+  IconClock,
+  IconTrophy,
+  IconPlayerPlay,
+} from "@tabler/icons-react";
+
+import { ExamTimeline, type TimelineEvent } from "./ExamTimeline";
+import { WelcomeHeader } from "./components/WelcomeHeader";
+import { StatsGrid, type StatItem } from "./components/StatsGrid";
+import { QuickActions, type ActionItem } from "./components/QuickActions";
+import { DailyChallenge } from "./components/DailyChallenge";
+import { RecentActivity, type ActivityItem } from "./components/RecentActivity";
 import { useApi } from "@/ApiProvider";
-
-
-// let status = [
-//   {
-//     id: 1,
-//     text: "Submited work",
-//     icon: <AlarmClockCheck className="text-blue-700 " size={40} />,
-//     icon_bg: "bg-blue-300",
-//     count: 23,
-//     totalCount: 40,
-//     link: "/test",
-//   },
-//   {
-//     id: 2,
-//     text: "Exams Attended",
-//     icon: <BookCheck className="text-indigo-700 " size={40} />,
-//     icon_bg: "bg-indigo-200",
-//     count: 0,
-//     totalCount: 40,
-//     link: "/test",
-//   },
-//   {
-//     id: 3,
-//     text: "Top in Exams ",
-//     icon: <Trophy className="text-yellow-700 " size={40} />,
-//     icon_bg: "bg-yellow-300",
-//     count: 0,
-//     totalCount: 40,
-//     link: "/test",
-//   },
-//   {
-//     id: 4,
-//     text: "Daily Routine",
-//     icon: <Medal className="text-violet-700 " size={40} />,
-//     icon_bg: "bg-violet-300",
-//     count: 0,
-//     totalCount: 30,
-//     link: "/test",
-//   },
-//   {
-//     id: 5,
-//     text: "Registered Exams",
-//     icon: <LandPlot className="text-pink-700 " size={40} />,
-//     icon_bg: "bg-pink-300",
-//     count: 0,
-//     totalCount: 40,
-//     link: "/test",
-//   },
-// ];
-// let survice = [
-//   {
-//     id: 1,
-//     btnText: "Go to Exam",
-//     heading: "Attened Exam",
-//     paragraph:
-//       "This will help you build confidence, stay motivated, and improve your skills through practice exams.",
-//     imageUrl: "./assets/exam.jpg",
-//     link: "/test/join",
-//     btnColor: "",
-//   },
-//   {
-//     id: 2,
-//     btnText: "Go to Exam",
-//     heading: "Subject-Wise Mock Tests",
-//     paragraph:
-//       "Focus on one subject at a time with targeted mock exams to build mastery and boost confidence in every topic.",
-//     imageUrl: "./assets/exam_blue.jpg",
-//     link: "/test/join",
-//     btnColor: "",
-//   },
-//   {
-//     id: 3,
-//     btnText: "Go to Exam",
-//     heading: "Full-Length Mock Exams",
-//     paragraph:
-//       "Simulate real exam conditions with full-length mock tests and build the confidence to perform under pressure.",
-//     imageUrl: "./assets/resource.jpg",
-//     link: "/test/join",
-//     btnColor: "",
-//   },
-//   {
-//     id: 4,
-//     btnText: "Go to Exam",
-//     heading: "Timed Practice Tests",
-//     paragraph:
-//       "Enhance your time management and accuracy with timed practice tests designed to maximize your performance.",
-//     imageUrl: "./assets/topper.jpg",
-//     link: "/test/join",
-//     btnColor: "",
-//   },
-// ];
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { ToastConfig } from "@/lib";
 
 const Home = () => {
-  const dispatch = useAppDispatch();
+  const { name } = useAppSelector((state) => state.user);
+  const date = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  const stats: StatItem[] = [
+    { label: "Tests Attempted", value: "12", icon: <IconBook size={24} />, color: "text-blue-500", bg: "bg-blue-500/10" },
+    { label: "Avg Score", value: "78%", icon: <IconTrophy size={24} />, color: "text-yellow-500", bg: "bg-yellow-500/10" },
+    { label: "Study Hours", value: "45h", icon: <IconClock size={24} />, color: "text-purple-500", bg: "bg-purple-500/10" },
+    { label: "Accuracy", value: "85%", icon: <IconChartBar size={24} />, color: "text-green-500", bg: "bg-green-500/10" },
+  ];
+
+
+
+  //ref
+  //  const examEvents: TimelineEvent[] = [
+  //     { id: "1", title: "Registration Starts", date: "Nov 01, 2025", description: "Online application form opens.", status: "completed" },
+  //     { id: "2", title: "Form Correction", date: "Nov 15, 2025", description: "Last date for form corrections.", status: "completed" },
+  //     { id: "3", title: "Admit Card Release", date: "Dec 10, 2025", description: "Download admit card from portal.", status: "current", notification: "Admit Card is Live!" },
+  //     { id: "4", title: "Mock Test Series", date: "Dec 20, 2025", description: "Official mock tests begin.", status: "upcoming" },
+  //     { id: "5", title: "Final Exam", date: "Jan 05, 2026", description: "All India Entrance Examination.", status: "upcoming" },
+  //     { id: "6", title: "Result Declaration", date: "Feb 10, 2026", description: "Check results online.", status: "upcoming" },
+  //   ];
+  const [examEvents, setExamEvents] = useState<TimelineEvent[]>([]);
+
+  const quickActions: ActionItem[] = [
+    { title: "Join Test", desc: "Enter a code to join", icon: <IconPlayerPlay size={20} />, href: "/test/join", color: "bg-indigo-500" },
+    { title: "Analysis", desc: "Check your progress", icon: <IconChartBar size={20} />, href: "/analysis/test", color: "bg-pink-500" },
+    { title: "Practice", desc: "Topic-wise questions", icon: <IconBook size={20} />, href: "/question/create", color: "bg-orange-500" },
+  ];
+
+  // const recentActivity: ActivityItem[] = [
+  //   { title: "Physics Mock Test 1", score: "82/100", date: "2 hours ago", status: "Completed" },
+  //   { title: "Chemistry Chapter 4", score: "Pending", date: "Yesterday", status: "In Progress" },
+  //   { title: "Maths Weekly Quiz", score: "95/100", date: "2 days ago", status: "Completed" },
+  // ];
+  const [recentActivity, setrecentActivity] = useState<ActivityItem[]>([])
+
   const _ = useApi()
+
+  // loads  recentActivity
   useEffect(() => {
-    _.api.user.fetchuser(dispatch);
-  }, []);
+    (async () => {
+      const res = await _.api.user.getRecentActivity()
+      if (res.success) {
+        setrecentActivity(res.data)
+        toast.success(res.message, ToastConfig(800))
+      } else {
+        toast.error(res.message, ToastConfig(1000))
+      }
+    })()
+  }, [])
+
+  // loads examEvents
+  useEffect(() => {
+    (async () => {
+      const res = await _.api.user.getExamTimeline()
+      if (res.success) {
+        setExamEvents(res.data)
+        toast.success(res.message, ToastConfig(800))
+      } else {
+        toast.error(res.message, ToastConfig(1000))
+      }
+    })()
+  }, [])
+
   return (
-    <>
-      <div className="main w-full grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <div className="flex flex-col gap-6 p-4 max-w-7xl mx-auto w-full">
+      <WelcomeHeader name={name} date={date} />
 
-       
+      <StatsGrid stats={stats} />
 
+      <ExamTimeline events={examEvents} />
 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 flex flex-col gap-6">
+          <QuickActions actions={quickActions} />
+          <DailyChallenge />
         </div>
-        {/* <div className="StatusCont w-full flex flex-col gap-4 items-center  sm:grid sm:grid-cols-2  sm:justify-items-center lg:flex">
-          {status.map((s) => (
-            <ProgressCard
-              key={s.id}
-              Icon={s.icon}
-              icon_bg={s.icon_bg}
-              count={s.count}
-              totalCount={s.totalCount}
-              text={s.text}
-            />
-          ))}
-        </div> */}
-        {/* <div className="surviceCont w-full  flex flex-col gap-4 items-center mb-20 sm:grid sm:grid-cols-2  sm:justify-items-center lg:flex lg:col-span-3 lg:flex-row lg:justify-center">
-          {survice.map((s) => (
-            <Servicecard
-              key={s.id}
-              btnText={s.btnText}
-              heading={s.heading}
-              para={s.paragraph}
-              imageurl={s.imageUrl}
-              link={s.link}
-              btnColor={s.btnColor}
-            />
-          ))}
-        </div> */}
 
-        <div className="  legal  w-full  flex flex-col gap-4 items-center mb-20 sm:grid sm:grid-cols-2  sm:justify-items-center lg:flex lg:col-span-3 lg:flex-row lg:justify-center">
-          {/* <LegalPages /> */}
-
-          {/* <CardDemo/> */}
-          {/* <Trashbtn/>
-           */}
-
-           {/* <AnimatedModalBasecomp/> */}
-
-        </div>
-    </>
+        <RecentActivity activities={recentActivity} />
+      </div>
+    </div>
   );
 };
 
 export default Home;
-
-
-
-

@@ -3,6 +3,7 @@ import {
   setCategorys,
   setDpps,
   setExams,
+  setExamYear,
   setMocks,
   setSyllabus,
 } from "@repo/store/slice/examSlice";
@@ -33,12 +34,26 @@ export class examApi {
     this.api.apiDispatcher(endpoint, dispatch, setCategorys);
   };
   fetchAvalibleExam = (dispatch: any, category: string) => {
-    let endpoint = `/exam/avalibleExam?category=${category}`;
+    let endpoint = `/exam/avalible/targeted/exam?category=${category}`;
     this.api.apiDispatcher(endpoint, dispatch, setAvailableexams);
   };
   fetchSyllabus = (dispatch: any, examname: string) => {
     let endpoint = `/exam/syllabus?syllabus=${examname}`;
     this.api.apiDispatcher(endpoint, dispatch, setSyllabus);
+  };
+
+
+  fetchExamYear = (dispatch: any, examname: string) => {
+    let endpoint = `/exam/year/get?examname=${examname}`;
+    this.api.apiDispatcher(endpoint, dispatch, setExamYear);
+  };
+  fetchExamYearById = (id: string) => {
+    let endpoint = `/exam/year/get?id=${id}`;
+    return this.api.request(endpoint);
+  };
+  fetchTargetExamById = (id: string) => {
+    let endpoint = `/get/target/exam/id?id=${id}`;
+    return this.api.request(endpoint);
   };
 
   // exam
@@ -141,7 +156,7 @@ export class examApi {
     let endpoint = `/exam/finalsubmit?examid=${examid}`;
     return await this.api.request(endpoint);
   };
- 
+
   getUserAnsSet = async ({ examid }: { examid: string }) => {
     let endpoint = `/exam/getuseransset?examid=${examid}`;
     return await this.api.request(endpoint);

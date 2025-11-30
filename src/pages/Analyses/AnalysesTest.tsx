@@ -3,7 +3,7 @@ import { Button } from "@repo/ui/button";
 import { Card } from "@repo/design-system/card"; // import { HeaderCompForSelectExam } from "../common/HeaderCompForSelectExam";
 import StatCard from "../common/StatCard";
 import { motion } from "motion/react";
-import { Ban, ChartLine, Check, Trophy, Users, Zap } from "lucide-react";
+import { Ban, ChartLine, Check, Trophy, Users, Zap, FileQuestion } from "lucide-react";
 import WeaknessSegmentationOfexam from "../metrix/WeaknessSegmentationOfexam";
 import { DisplayExamQuestionSAnsMapping } from "../common/DisplayExamQuestionSAnsMappingCard";
 import { useIsMobile } from "@repo/hooks/isMobile";
@@ -14,10 +14,10 @@ import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import ExamAttemptQuestionChart from "../metrix/ExamAttemptQuestionChart";
 import LeaderBoard from "../metrix/LeaderBoard";
-import { DialogBox } from "@/design-system";
 import { ExamSelection } from "../common/ExamSelection";
 import type { exam_type, UserAnsFormat_type } from "./types";
 import { cn } from "@/lib/utils";
+import { DialogBox } from "@/design-system/dialog";
 
 export const AnalysesTest = () => {
   const _ = useApi();
@@ -44,6 +44,17 @@ export const AnalysesTest = () => {
 
   const fetchExamAnsMappingData = async () => {
     if (examid) {
+      try {
+        await _.api.activity.logActivity({
+          type: "REVIEWING_WRONG_ANSWERS",
+          title: "Reviewing Answers",
+          description: `Reviewing answers for exam ${currentexams?.display_id || examid}`,
+          metadata: { examId: examid }
+        });
+      } catch (e) {
+        console.error("Failed to log activity", e);
+      }
+
       let UserAnsset = await _.api.exam.getUserAnsSet({ examid });
 
       if (!UserAnsset.success) {
@@ -104,8 +115,8 @@ export const AnalysesTest = () => {
     <div className="flex-1 relative md:h-160  mb-10">
       <div className="flex items-center justify-center"></div>
 
-      <div className=" mx-auto py-2 px-1 md:py-4 md:px-4 lg:px-8">
-        <div className=" bg-s2 w-full  p-2 rounded-md md:p-6">
+      <div className="md:max-w-7xl mx-auto py-2 px-1 md:py-4 md:px-4 lg:px-8">
+        <div className=" w-full p-2 rounded-md md:px-10 shadow-lg">
           {/* header */}
           <div className="flex gap-2 w-full items-center justify-between">
             <p
@@ -136,7 +147,7 @@ export const AnalysesTest = () => {
                     exams={exams}
                     setcurrentexams={setcurrentexams}
                     setexamid={setexamid}
-                    // modelClose={setOpenModal}
+                  // modelClose={setOpenModal}
                   />
                 </div>
               </DialogBox>
@@ -219,7 +230,15 @@ export const AnalysesTest = () => {
           {Object.keys(QuestionAns).length > 0 ? (
             <DisplayExamQuestionSAnsMapping questionMappedSet={QuestionAns} />
           ) : (
-            <p>Make sure you generate your answer set. </p>
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="bg-secondary/20 p-4 rounded-full mb-4">
+                <FileQuestion size={48} className="text-muted-foreground" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">No Answers Generated</h3>
+              <p className="text-muted-foreground max-w-sm mt-2">
+                Click the "Generate Ans" button above to view the detailed question-wise analysis.
+              </p>
+            </div>
           )}
         </Card>
       </div>

@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 type user_type = {
   name: string | null;
   email: string | null;
-  telegramid: string;
   blance: number | null;
   ticket: number | null;
   isprime: string | null;
@@ -11,17 +10,34 @@ type user_type = {
   islogin: boolean;
   isverify: boolean;
   contact: string;
-  verification: {
-    email: boolean;
-    telegram: boolean;
-    whatsapp: boolean;
+  social: {
+    telegram?: string;
+    whatsapp?: string;
+    linkedin?: string;
+    github?: string;
+    twitter?: string;
+    instagram?: string;
+    facebook?: string;
+    website?: string;
+    isContactVerified: boolean;
+    isEmailVerified: boolean;
+    isTelegramVerified: boolean;
+    isWhatsappVerified: boolean;
   };
+  target_exam?: string;
+  academicProfile?: {
+    category: string;
+    exam: string;
+    year: string;
+  } | null;
+  standard?: string | null;
+  stream?: string | null;
+  school?: string | null;
 };
 
 const initialState: user_type = {
   name: "",
   email: "",
-  telegramid: "",
   blance: 0,
   ticket: 0,
   isprime: "",
@@ -29,11 +45,24 @@ const initialState: user_type = {
   islogin: false,
   isverify: false,
   contact: "xxxxxxxx",
-  verification: {
-    email: false,
-    telegram: false,
-    whatsapp: false,
+  social: {
+    telegram: "0000000000",
+    whatsapp: "",
+    linkedin: "",
+    github: "",
+    twitter: "",
+    instagram: "",
+    facebook: "",
+    website: "",
+    isContactVerified: false,
+    isEmailVerified: false,
+    isTelegramVerified: false,
+    isWhatsappVerified: false,
   },
+  academicProfile: null,
+  standard: null,
+  stream: null,
+  school: null,
 };
 
 let userSlice = createSlice({
@@ -42,7 +71,7 @@ let userSlice = createSlice({
   reducers: {
     setUser: (state, actions) => {
       console.log("user set...");
-      let { name, blance, email, prime, verification, telegram } =
+      let { name, blance, email, prime, social, target_exam, academicProfile, standard, stream, school } =
         actions.payload;
 
       state.name = name;
@@ -50,9 +79,13 @@ let userSlice = createSlice({
       state.blance = blance.amount;
       state.ticket = blance.ticket;
       state.isprime = prime.status;
-      state.verification = verification;
-      state.telegramid = telegram.telegramid;
+      state.social = social;
       state.status = prime.status;
+      state.target_exam = target_exam;
+      state.academicProfile = academicProfile;
+      state.standard = standard;
+      state.stream = stream;
+      state.school = school;
       if (name && email) {
         state.islogin = true;
       } else {
@@ -63,7 +96,8 @@ let userSlice = createSlice({
       state.islogin = actions.payload;
     },
     logout: (state) => {
-      ((state.name = null), (state.email = null));
+      state.name = null;
+      state.email = null;
       state.blance = null;
       state.ticket = null;
       state.isprime = null;

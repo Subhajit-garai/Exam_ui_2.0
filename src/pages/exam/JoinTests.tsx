@@ -178,7 +178,7 @@ const ExamDisplay = ({
                   return (
                     <JoinerxamCard
                       key={exam.id}
-                      imageurl={"/assets/background2.jpg"}
+                      imageurl={"/assets/cardbg/background2.jpg"}
                       contestid={exam?.id}
                       displayId={exam?.display_id}
                       Title={exam?.name}

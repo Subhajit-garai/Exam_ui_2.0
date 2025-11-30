@@ -1,9 +1,16 @@
 import { Button } from "@repo/ui/button";
-import {  Card } from "@repo/design-system/card/Card";
+import { Card } from "@repo/design-system/card/Card";
 import { Currencyicon } from "@repo/design-system/OwnCurrency/Currency";
 
-export function PaymentSubcriptionCard({ data, checkout }:{data:any ,checkout:any}) {
+export function PaymentSubcriptionCard({
+  data,
+  checkout,
+}: {
+  data: any;
+  checkout: (price: number, plan: string, type: string) => Promise<void>;
+}) {
   let {
+    type,
     price,
     title,
     time,
@@ -14,33 +21,25 @@ export function PaymentSubcriptionCard({ data, checkout }:{data:any ,checkout:an
   } = data;
 
 
-  // console.log("offerInActive ,", offerInActive);
-  
-
   return (
-    <Card
-      className="min-w-[20rem] max-w-sm  md:max-w-sm "
-    >
+    <Card className="min-w-[20rem] max-w-sm  md:max-w-sm ">
       <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
         {title}
       </h5>
       <div className="flex items-baseline text-gray-900 dark:text-white">
-        <span className="text-3xl font-semibold">
-          <Currencyicon />
-        </span>
+        <span className="text-3xl font-semibold">₹</span>
         <span className="text-5xl font-extrabold tracking-tight">{price}</span>
         <span className="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400 flex  items-center gap-2">
           /{time}
         </span>
       </div>
       <ul className="my-7 space-y-5">
-        {offerActive.map((text:any, i:number) => {
+        {offerActive.map((text: any, i: number) => {
           return (
             <OfferActiveInactiveListCard key={i} isactive={true} text={text} />
           );
         })}
-        {offerInActive.map((text:any, i:number) => {
-          
+        {offerInActive.map((text: any, i: number) => {
           return (
             <OfferActiveInactiveListCard key={i} isactive={false} text={text} />
           );
@@ -48,15 +47,22 @@ export function PaymentSubcriptionCard({ data, checkout }:{data:any ,checkout:an
       </ul>
       <Button
         color={`${btncolor ? btncolor : "blue"}`}
-        onClick={() => checkout(price, title, time)}
+        onClick={() => checkout(price, title, type)}
       >
         {buttontext}
       </Button>
     </Card>
   );
 }
-export function PaymentOfferCard({ data, checkout }:{data:any ,checkout:any}) {
+export function PaymentTokenCard({
+  data,
+  checkout,
+}: {
+  data: any;
+  checkout: (price: number, plan: string, type: string) => Promise<void>;
+}) {
   let {
+    type,
     price,
     title,
     token,
@@ -66,10 +72,9 @@ export function PaymentOfferCard({ data, checkout }:{data:any ,checkout:any}) {
     buttontext = "Choose plan",
   } = data;
 
+
   return (
-    <Card
-      className=" min-w-[20rem] max-w-sm  md:max-w-sm "
-    >
+    <Card className=" min-w-[20rem] max-w-sm  md:max-w-sm ">
       <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
         {title}
       </h5>
@@ -81,12 +86,12 @@ export function PaymentOfferCard({ data, checkout }:{data:any ,checkout:any}) {
         </span>
       </div>
       <ul className="my-7 space-y-5">
-      {offerActive.map((text:any, i:number) => {
+        {offerActive.map((text: any, i: number) => {
           return (
             <OfferActiveInactiveListCard key={i} isactive={true} text={text} />
           );
         })}
-        {offerInActive.map((text:any, i:number) => {
+        {offerInActive.map((text: any, i: number) => {
           return (
             <OfferActiveInactiveListCard key={i} isactive={false} text={text} />
           );
@@ -94,15 +99,25 @@ export function PaymentOfferCard({ data, checkout }:{data:any ,checkout:any}) {
       </ul>
       <Button
         color={`${btncolor ? btncolor : "blue"}`}
-        onClick={() => {console.log("check out....") 
-         checkout(price, token)}}
+        onClick={() => {
+          console.log("check out....");
+          checkout(price,title,type);
+        }}
       >
         {buttontext}
       </Button>
     </Card>
   );
 }
-export const OfferActiveInactiveListCard = ({ isactive, text }:{isactive:boolean ,text:string}) => {
+
+
+export const OfferActiveInactiveListCard = ({
+  isactive,
+  text,
+}: {
+  isactive: boolean;
+  text: string;
+}) => {
   return (
     <>
       <li className={`flex space-x-3 ${!isactive && "line-through"}`}>

@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState, type JSX } from "react";
 import { useApi } from "@/ApiProvider";
-import { Button } from "@repo/ui/button";
 import { Checkbox } from "@repo/ui/checkbox";
 import { Label } from "@repo/ui/label";
-import { DialogBox, QuestionIssueCardCreate } from "@/design-system";
+import { Badge } from "@repo/ui/badge";
+import { cn } from "@repo/lib/utils";
+import { QuestionIssueCardCreate } from "@/design-system";
 import { Tabs } from "@/design-system/tabs/Tabs";
 import type { UserAnsFormat_type } from "../Analyses/types";
 import { LoaderFive } from "@/design-system/loader/loader";
+import { DialogBox } from "@/design-system/dialog";
 // import { TabManue } from "@repo/design-system/tabs";
 
 interface Option {
@@ -63,8 +65,8 @@ export const DisplayExamQuestionSAnsMapping = ({
       const correctAns = Array.isArray(question.Question.ans)
         ? question.Question.ans
         : typeof question.Question.ans === "string"
-        ? question.Question.ans
-        : [];
+          ? question.Question.ans
+          : [];
 
       if (
         !question.selectedOption ||
@@ -76,7 +78,7 @@ export const DisplayExamQuestionSAnsMapping = ({
         isCorrectAnswerFn(correctAns, userAns, question.shuffleMap)
           ? mapping["Correct"].push(question)
           : // console.log("----->", isCorrectAnswerFn(correctAns, userAns) ,"ismultiple -->" ,question.is_multiple_ans," userAns-->",userAns ,"correctAns--->", correctAns),
-            mapping["InCorrect"].push(question);
+          mapping["InCorrect"].push(question);
       }
     });
     return mapping;
@@ -107,8 +109,6 @@ export const DisplayExamQuestionSAnsMapping = ({
             key={`${option}`}
             className="w-full   relative  rounded-xl  font-bold text-primary bg-card"
           >
-            {/* <p>Live Tab</p> */}
-
             {loading ? (
               <LoaderFive text="Loading..." />
             ) : (
@@ -124,7 +124,6 @@ export const DisplayExamQuestionSAnsMapping = ({
     setoptions(tempOption);
   }, [parts]);
 
-  console.log(categorizedQuestions);
 
   return (
     <>
@@ -165,27 +164,32 @@ export const DisplayQuestionAnsCard = ({
   let map = questionAnsData.shuffleMap;
   let number = questionAnsData.number;
 
-  let ContainerColor = "bg-red-700";
+  let status: "correct" | "incorrect" | "unattempted" = "unattempted";
+  let statusColor = "text-zinc-500 bg-zinc-100 border-zinc-200 dark:text-zinc-400 dark:bg-zinc-800 dark:border-zinc-700";
 
   let currentUserAnswer = is_multiple_ans
     ? userAnswer
     : Array.isArray(userAnswer)
-    ? userAnswer
-    : [userAnswer];
+      ? userAnswer
+      : [userAnswer];
 
   const correctAnswerArray = Array.isArray(ans)
     ? ans
     : typeof ans === "string"
-    ? ans
-    : [];
+      ? ans
+      : [];
 
   if (isCorrectAnswerFn(correctAnswerArray, currentUserAnswer, map)) {
-    ContainerColor = "bg-green-700";
+    status = "correct";
+    statusColor = "text-emerald-600 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-900/20 dark:border-emerald-800";
   } else {
-    if (!userAnswer) console.log("user not attemp this question", number); // **************
+    if (!userAnswer) console.log("user not attemp this question", number);
     if (isCorrectAnswerFn(currentUserAnswer, ["0"], map)) {
-      //  "0" mean user not attemp that question
-      ContainerColor = "bg-slate-700";
+      status = "unattempted";
+      statusColor = "text-zinc-500 bg-zinc-100 border-zinc-200 dark:text-zinc-400 dark:bg-zinc-800 dark:border-zinc-700";
+    } else {
+      status = "incorrect";
+      statusColor = "text-rose-600 bg-rose-50 border-rose-200 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800";
     }
   }
 
@@ -195,49 +199,77 @@ export const DisplayQuestionAnsCard = ({
 
   return (
     <>
-      <div className={`" rounded-md p-4  ${ContainerColor}`} key={id}>
-        <div className={`  flex flex-col gap-2 justify-between`}>
-          <fieldset className="flex w-full  flex-col">
-            <legend className="mb-4 font-semibold  text-pretty">
-              {number}) {title}
-            </legend>
+      <div className={cn("rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-200 hover:shadow-md bg-white dark:bg-zinc-950")} key={id}>
+        <div className={`  flex flex-col gap-4 justify-between h-full`}>
+          <fieldset className="flex w-full  flex-col gap-4">
+            <div className="flex justify-between items-start gap-4">
+              <legend className="font-semibold text-lg text-zinc-900 dark:text-zinc-100 leading-relaxed">
+                <span className="inline-block mr-2 text-zinc-500 dark:text-zinc-400">Q{number}.</span>
+                {title}
+              </legend>
+              <Badge variant="outline" className={cn("capitalize shrink-0", statusColor)}>
+                {status}
+              </Badge>
+            </div>
 
-            <div className="option  min-h-50 flex  flex-col gap-4  pl-8 mb-4">
+            <div className="option flex flex-col gap-3 pl-2">
               {options &&
                 options?.map((option, i) => {
-                  return (
-                    <>
-                      <div
-                        className="flex items-center rounded-xs gap-2 lg:gap-4"
-                        id="checkbox"
-                        key={i}
-                      >
-                        <div className="flex items-center gap-2">
-                          <Checkbox
-                            className="peer appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-blue-500 checked:border-blue-500 focus:outline-hidden relative transition duration-200"
-                            id={`option${i + 1}`}
-                            name={`question${number}`}
-                            value={i + 1}
-                            // onClick={() => ans(i + 1)}
-                            checked={currentUserAnswer.includes(String(i + 1))}
+                  const isSelected = currentUserAnswer.includes(String(i + 1));
+                  let optionStyles = "border-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900";
 
-                            // readOnly={true}
-                          />
-                          <Label
-                            htmlFor={`option${i + 1}`}
-                            className="text-md "
-                          >
-                            {option}
-                          </Label>
-                        </div>
+                  if (isSelected) {
+                    if (status === "correct") {
+                      optionStyles = "bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800";
+                    } else if (status === "incorrect") {
+                      optionStyles = "bg-rose-50 border-rose-200 dark:bg-rose-900/20 dark:border-rose-800";
+                    } else {
+                      optionStyles = "bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
+                    }
+                  }
+
+                  return (
+                    <div
+                      className={cn(
+                        "flex items-start p-3 rounded-lg border transition-colors duration-200",
+                        optionStyles
+                      )}
+                      id="checkbox"
+                      key={i}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <Checkbox
+                          className={cn(
+                            "mt-1 peer appearance-none w-5 h-5 rounded-md border transition-all",
+                            isSelected && status === "correct" ? "border-emerald-500 checked:bg-emerald-500 checked:border-emerald-500" :
+                              isSelected && status === "incorrect" ? "border-rose-500 checked:bg-rose-500 checked:border-rose-500" :
+                                "border-zinc-300 dark:border-zinc-600 checked:bg-zinc-600 checked:border-zinc-600"
+                          )}
+                          id={`option${i + 1}-${id}`}
+                          name={`question${number}`}
+                          value={i + 1}
+                          checked={isSelected}
+                        // readOnly={true}
+                        />
+                        <Label
+                          htmlFor={`option${i + 1}-${id}`}
+                          className={cn(
+                            "text-base leading-relaxed cursor-pointer select-none w-full",
+                            isSelected && status === "correct" ? "text-emerald-700 dark:text-emerald-300 font-medium" :
+                              isSelected && status === "incorrect" ? "text-rose-700 dark:text-rose-300 font-medium" :
+                                "text-zinc-700 dark:text-zinc-300"
+                          )}
+                        >
+                          {option}
+                        </Label>
                       </div>
-                    </>
+                    </div>
                   );
                 })}
             </div>
           </fieldset>
 
-          <div className="actionBtn flex w-full justify-between">
+          <div className="actionBtn flex w-full justify-between items-center pt-4 border-t border-zinc-200 dark:border-zinc-800/50 mt-auto">
             <DialogBox
               TriggerBtnText="Report Error"
               Title="Report Error"
@@ -248,20 +280,20 @@ export const DisplayQuestionAnsCard = ({
               </div>
             </DialogBox>
 
-            <div className="infoSection  hidden md:flex gap-1">
-              <Button color="purple" disabled>
+            <div className="infoSection hidden md:flex gap-2">
+              <Badge variant="outline" className="text-xs font-medium text-zinc-500 border-zinc-200 dark:border-zinc-800">
                 {questionAnsData.part}
-              </Button>
-              <Button color="purple" disabled>
+              </Badge>
+              <Badge variant="outline" className="text-xs font-medium text-zinc-500 border-zinc-200 dark:border-zinc-800">
                 {Topic.shortName}
-              </Button>
-              <Button color="purple" disabled>
-                {is_multiple_ans ? "M" : "S"}
-              </Button>
+              </Badge>
+              <Badge variant="outline" className="text-xs font-medium text-zinc-500 border-zinc-200 dark:border-zinc-800">
+                {is_multiple_ans ? "Multiple" : "Single"}
+              </Badge>
             </div>
 
             <DialogBox
-              TriggerBtnText="view Solution"
+              TriggerBtnText="View Solution"
               Title="Solution"
               dialogDescription=" Question decription "
             >

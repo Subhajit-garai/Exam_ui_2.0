@@ -1,5 +1,6 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 // outlates
 import {
@@ -51,16 +52,13 @@ import {
   ShieldCheck,
   ListChecks,
   AlarmClockCheck,
+  FileQuestion,
 } from "lucide-react";
-
-// import {store} from "./redux/store.jsx";
-// import { PersistGate } from "redux-persist/integration/react";
-// import { Bounce, ToastContainer } from "react-toastify";
 import { store } from "@repo/store/store.js";
 import { Provider } from "react-redux";
 import Payment from "./pages/payment/payment.js";
 import PaymentSuccess from "./pages/payment/PaymentSuccess.js";
-import Profile from "./pages/user/Profile.js";
+import Profile from "./pages/user/profile/Profile.js";
 import { Balance } from "./pages/user/Balance.js";
 import { SecurityUserPage } from "./pages/user/SecurityUserPage.js";
 import ValidationUserPage, {
@@ -73,6 +71,9 @@ import NoteTopicList from "./pages/notes/NoteTopicList.js";
 import { ApiProvider } from "./ApiProvider.js";
 import { JoinMock } from "./pages/exam/joinMock.js";
 import { JoinPYQ } from "./pages/exam/JoinPYQ.js";
+import { IssueDashboard } from "./pages/issue/IssueDashboard.js";
+import ActivityPage from "./pages/Activity/ActivityPage.js";
+import { ActivityHistory } from "./pages/user/profile/ActivityHistory.js";
 
 let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
@@ -103,28 +104,28 @@ const EXAM_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 1,
     name: "Tests",
     Icon: ListChecks,
-    color: "#6366f1",
+    color: "#6366f1", // Indigo
     href: "/test/join",
   },
   {
     id: 2,
     name: "DPP",
     Icon: Pencil,
-    color: "#6366f1",
+    color: "#EC4899", // Pink
     href: "/test/dpp",
   },
   {
     id: 3,
     name: "Mock",
-    Icon: Trophy,
-    color: "#F59E0B",
+    Icon: AlarmClockCheck,
+    color: "#10B981", // Emerald
     href: "/test/mock",
   },
   {
     id: 4,
     name: "PYQ",
-    Icon: Trophy,
-    color: "#F59E0B",
+    Icon: FileQuestion,
+    color: "#F59E0B", // Amber
     href: "/test/PYQ",
   },
 ];
@@ -147,6 +148,13 @@ const USER_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
 
   {
     id: 3,
+    name: "Activity History",
+    Icon: ChartLine,
+    color: "#F59E0B",
+    href: "/user/activityhistory",
+  },
+  {
+    id: 4,
     name: "Validate",
     Icon: ShieldCheck,
     color: "#EC4899",
@@ -163,6 +171,25 @@ let NotesOtions: SIDEBAR_ITEMS_types[] = [
     color: "#6366f1",
   },
 ];
+let ActivityOptions: SIDEBAR_ITEMS_types[] = [
+  {
+    id: 2,
+    href: "/activity/dashboard",
+    Icon: AlarmClockCheck,
+    name: "activity",
+    color: "#6366f1",
+  },
+];
+
+const ISSUE_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
+  {
+    id: 1,
+    name: "Dashboard",
+    Icon: BarChart2,
+    color: "#EF4444", // Red color for issues
+    href: "/issue/dashboard",
+  },
+];
 
 let baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -174,14 +201,14 @@ const App = () => {
         <div className=" min-h-screen  text-gray-100  overflow-hidden   no-visible-scrollbar">
           <HashRouter>
             <Provider store={store}>
-              {/* <ToastContainer  aria-label={"toast"}/> */}
+              <ToastContainer />
               <Appbar />
               <Header
                 LogoUrl={"/assets/logo/logo-png.png"}
                 BrandName={"Jeca"}
               />
-              
-              <div className="main flex  flex-col  lg:pl-[5rem]  w-screen  ">
+
+              <div className="main flex  flex-col  lg:pl-[5rem]  w-screen pb-24 md:pb-0 ">
                 <Breadcrumb />
                 <Routes>
                   <Route path="/" element={<Home />} />{" "}
@@ -194,14 +221,6 @@ const App = () => {
                     <Route path="/refund" element={<LegalPages />} />
                     <Route path="/contact" element={<LegalPages />} />
 
-                    <Route
-                      path="/notes"
-                      element={<SplitOutlet SIDEBAR_ITEMS={NotesOtions} />}
-                    >
-                      <Route path="notes" element={<NoteSubjectList />} />
-                      <Route path=":category" element={<NoteTopicList />} />
-                      <Route path=":category/:topic" element={<NotePage />} />
-                    </Route>
 
                     <Route
                       path="/login/validate/email"
@@ -209,23 +228,41 @@ const App = () => {
                     />
                     <Route path="/signup" element={<Signup />} />
                   </Route>
+
                   <Route path="/" element={<ProtectedRoute />}>
                     <Route path="examportal" element={<Examportal />} />
                     <Route path="payment" element={<Payment />} />
                     <Route path="paymentsuccess" element={<PaymentSuccess />} />
                   </Route>
+
+                  <Route
+                    path="/notes"
+                    element={<SplitOutlet SIDEBAR_ITEMS={NotesOtions} />}
+                  >
+                    <Route path="notes" element={<NoteSubjectList />} />
+                    <Route path=":category" element={<NoteTopicList />} />
+                    <Route path=":category/:topic" element={<NotePage />} />
+                  </Route>
+
                   <Route
                     path="/user"
                     element={<SplitOutlet SIDEBAR_ITEMS={USER_SIDEBAR_ITEMS} />}
                   >
                     <Route path="balance" element={<Balance />} />
                     <Route path="profile" element={<Profile />} />
+                    <Route path="activityhistory" element={<ActivityHistory />} />
                     <Route path="validation" element={<ValidationUserPage />} />
                     <Route path="security" element={<SecurityUserPage />} />
                     <Route
                       path="forgotpassword"
                       element={<ValidationForgotpassword />}
                     />
+                  </Route>
+                  <Route
+                    path="/activity"
+                    element={<SplitOutlet SIDEBAR_ITEMS={ActivityOptions} />}
+                  >
+                    <Route path="dashboard" element={<ActivityPage />} />
                   </Route>
                   <Route
                     path="/analysis"
@@ -252,6 +289,13 @@ const App = () => {
                       path="submitsuccess"
                       element={<ExamSubmitSuccess />}
                     />
+                  </Route>
+
+                  <Route
+                    path="/issue"
+                    element={<SplitOutlet SIDEBAR_ITEMS={ISSUE_SIDEBAR_ITEMS} />}
+                  >
+                    <Route path="dashboard" element={<IssueDashboard />} />
                   </Route>
                   <Route path="*" element={<ErrorPage />} />
                 </Routes>

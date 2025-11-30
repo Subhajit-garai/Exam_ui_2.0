@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
-import { TooltipBtn as Tooltip} from "@repo/design-system/buttons/Tooltip.button.js";
 import { ToastConfig } from "@repo/lib/utils/utils";
+import { Tooltip_one as Tooltip } from "@repo/design-system//tooltip/tooltip_one";
+
 
 const Trashbtn = ({
   text = "copy",
@@ -19,7 +20,7 @@ const Trashbtn = ({
         <div
           className=" flex items-center gap-1 cursor-pointer text-blue-700   p-1 rounded-sm"
           onClick={() => {
-            toast.info(textMessage,ToastConfig());
+            toast.info(textMessage, ToastConfig());
             copyFn && copyFn();
           }}
         >

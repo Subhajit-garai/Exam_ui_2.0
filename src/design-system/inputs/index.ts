@@ -3,4 +3,3 @@
  */
 
 export * from "./InputComponents";
-export * from "./select/index";

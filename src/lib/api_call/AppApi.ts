@@ -8,6 +8,9 @@ import { paymentApi } from "./api_actions/payment.action";
 import { questionApi } from "./api_actions/question.action";
 import { userApi } from "./api_actions/user.actions";
 
+import { SocialLinksApi } from "./api_actions/socialLinks.actions";
+import { activityApi } from "./api_actions/activity.actions";
+
 export class AppApi {
   public client: ApiClient;
   public exam: examApi;
@@ -18,6 +21,8 @@ export class AppApi {
   public event: eventApi;
   public issue: issueApi;
   public payment: paymentApi;
+  public socialLinks: SocialLinksApi;
+  public activity: activityApi;
   //   public notes: NotesApi;
 
   constructor(baseUrl: string) {
@@ -30,5 +35,7 @@ export class AppApi {
     this.event = new eventApi();
     this.issue = new issueApi();
     this.payment = new paymentApi();
+    this.socialLinks = new SocialLinksApi();
+    this.activity = new activityApi();
   }
 }
