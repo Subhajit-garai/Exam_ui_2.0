@@ -15,23 +15,15 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/dropdown-menu";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
-
-type api_responce_type = {
-  success: boolean;
-  message: string;
-  data?: any;
-};
-
+import { useApi } from "@/ApiProvider";
 export const Header = ({
   LogoUrl,
   BrandName,
 }: {
   LogoUrl: string;
   BrandName: string;
-  userLogoutFn?: () => Promise<api_responce_type>;
 }) => {
   let { islogin } = useAppSelector((state) => state.user);
-
   return (
     <nav className=" header  top-0 right-0 left-0  border-b border-[var(--header-border)] h-[5rem] max-w-full z-[8]">
       <div className="  flex  gap-2 md:gap-4 items-center justify-between p-2 md:mx-20 h-full  ">
@@ -66,14 +58,14 @@ export const Header = ({
 export default Header;
 
 export const Logo = ({
-  url,
-  userLogoutFn,
+  url
 }: {
   url: string;
-  userLogoutFn?: () => Promise<api_responce_type>;
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { api } = useApi()
 
   let { islogin, name, email } = useAppSelector(
     (state) => state.user
@@ -82,19 +74,18 @@ export const Logo = ({
   const userLogout = async () => {
     if (islogin) {
       dispatch(logout());
+      let responce = await api.user.userLogout()
 
-      userLogoutFn &&
-        userLogoutFn()
-          .then((data) => {
-            data.success
-              ? (toast.success(data.message, ToastConfig()),
-                // persistor.purge(),
-                console.log("removed  cached.."),
-                navigate("/login"))
-              : toast.info("processing", ToastConfig());
-            window.location.reload();
-          })
-          .catch(() => toast.error("log out faild", ToastConfig()));
+      if (
+        responce.success
+      ) {
+        toast.success(responce.message, ToastConfig()),
+          console.log("removed  cached.."),
+          navigate("/login")
+      } else {
+        toast.info("processing", ToastConfig());
+        window.location.reload();
+      }
     }
   };
 

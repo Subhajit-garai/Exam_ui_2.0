@@ -49,16 +49,13 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const signupfn = async () => {
-
-
-
     let response = await _.api.user.signup(value);
-    if (response.status == 200) {
-      toast.success(response.data.message, ToastConfig());
+    if (response.success) {
+      toast.success(response.message, ToastConfig(1000));
       _.api.user.fetchuser(dispatch);
       navigate("/user/validation?email=" + value.email, { replace: true });
     } else {
-      toast.error(response.data.message, ToastConfig());
+      toast.error(response.message, ToastConfig());
     }
 
   };

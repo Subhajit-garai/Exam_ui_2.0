@@ -74,28 +74,26 @@ const Login = () => {
   const Loginfn = async () => {
 
     let response = await _.api.user.login(value);
-    if (response.status == 200) {
-      toast.success(response.data.message, ToastConfig());
+    if (response.success) {
+      toast.success(response.message, ToastConfig(1000));
       _.api.user.fetchuser(dispatch);
-      navigate(`/login/validate/email?email=${response.data.email}`);
+      navigate(`/login/validate/email?email=${response.email}`);
       // navigate("/home");
     }
-
     else {
-      toast.error(response.data.message, ToastConfig());
+      toast.error(response.message, ToastConfig());
       toast.info(<GotoSignUpPage />, ToastConfig());
     }
   };
 
   const forgotpasswordFn = async () => {
-
     let response = await _.api.user.forgotpassword(value);
-    if (response.status == 200) {
-      toast.success(response.data.message, ToastConfig());
+    if (response.success) {
+      toast.success(response.message, ToastConfig());
       navigate("/user/forgotpassword?email=" + value.email);
     }
     else {
-      toast.error(response.data.message, ToastConfig());
+      toast.error(response.message, ToastConfig());
       toast.info(<GotoSignUpPage />, ToastConfig());
     }
   };
