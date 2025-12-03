@@ -24,10 +24,10 @@ const Home = () => {
   const date = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   const stats: StatItem[] = [
-    { label: "Tests Attempted", value: "12", icon: <IconBook size={24} />, color: "text-blue-500", bg: "bg-blue-500/10" },
-    { label: "Avg Score", value: "78%", icon: <IconTrophy size={24} />, color: "text-yellow-500", bg: "bg-yellow-500/10" },
-    { label: "Study Hours", value: "45h", icon: <IconClock size={24} />, color: "text-purple-500", bg: "bg-purple-500/10" },
-    { label: "Accuracy", value: "85%", icon: <IconChartBar size={24} />, color: "text-green-500", bg: "bg-green-500/10" },
+    { label: "Tests Attempted", value: "12", icon: <IconBook size={24} />, color: "text-[var(--color-blue)]", bg: "bg-[var(--color-blue-soft)]" },
+    { label: "Avg Score", value: "78%", icon: <IconTrophy size={24} />, color: "text-[var(--color-yellow)]", bg: "bg-[var(--color-yellow-soft)]" },
+    { label: "Study Hours", value: "45h", icon: <IconClock size={24} />, color: "text-[var(--color-purple)]", bg: "bg-[var(--color-purple-soft)]" },
+    { label: "Accuracy", value: "85%", icon: <IconChartBar size={24} />, color: "text-[var(--color-green)]", bg: "bg-[var(--color-green-soft)]" },
   ];
 
 
@@ -44,9 +44,9 @@ const Home = () => {
   const [examEvents, setExamEvents] = useState<TimelineEvent[]>([]);
 
   const quickActions: ActionItem[] = [
-    { title: "Join Test", desc: "Enter a code to join", icon: <IconPlayerPlay size={20} />, href: "/test/join", color: "bg-indigo-500" },
-    { title: "Analysis", desc: "Check your progress", icon: <IconChartBar size={20} />, href: "/analysis/test", color: "bg-pink-500" },
-    { title: "Practice", desc: "Topic-wise questions", icon: <IconBook size={20} />, href: "/question/create", color: "bg-orange-500" },
+    { title: "Join Test", desc: "Enter a code to join", icon: <IconPlayerPlay size={20} />, href: "/test/join", color: "bg-[var(--color-indigo)]" },
+    { title: "Analysis", desc: "Check your progress", icon: <IconChartBar size={20} />, href: "/analysis/test", color: "bg-[var(--color-pink)]" },
+    { title: "Practice", desc: "Topic-wise questions", icon: <IconBook size={20} />, href: "/question/create", color: "bg-[var(--color-orange)]" },
   ];
 
   // const recentActivity: ActivityItem[] = [

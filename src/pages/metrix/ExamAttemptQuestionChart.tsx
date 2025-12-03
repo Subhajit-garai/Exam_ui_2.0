@@ -36,13 +36,13 @@ const ExamAttemptQuestionChart = ({ examid }: { examid: string }) => {
   }, [examid]);
   return (
     <motion.div
-      className="bg-s2 bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg rounded-xl p-4 border border-gray-700"
+      className="bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg rounded-xl p-4 border border-border"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
     >
       <div className="flex  justify-around items-center mb-4">
-        <h2 className="text-xl font-semibold text-primary mb-4">
+        <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-4">
           Exam Question Attempt
         </h2>
       </div>

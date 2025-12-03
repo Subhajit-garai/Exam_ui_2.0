@@ -21,7 +21,7 @@ export function NotePage() {
 
   return (
     <div>
-      <div className="bg-s2 p-4 w-full rounded-md">
+      <div className="bg-[var(--card)] p-4 w-full rounded-md">
         {content ? <NoteViewer content={content} /> : <p>Loading note .....</p>}
       </div>
     </div>

@@ -84,7 +84,7 @@ const JoinerxamCard = ({
       className={` flex flex-col gap-8  ${isDisabled ? "opacity-55 pointer-events-none" : "opacity-100"
         }`}
     >
-      <div className="w-60 relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-60 relative bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <img className="rounded-t-lg" src={imageurl} alt="" />
 
         <div className="info flex gap-2  absolute w-full top-0 left-0 py-4 px-2">
@@ -98,7 +98,7 @@ const JoinerxamCard = ({
               onClick={() => {
                 // set exam id
                 dispatch(setlastExam(contestid));
-                navigator("/performance/test");
+                navigator("/analysis/test");
               }}
             >
               View Result
@@ -111,30 +111,30 @@ const JoinerxamCard = ({
               timerClass={"absolute right-0 mr-5 "}
             />
           )}
-          <Badge className=" bg-primary-foreground">
-            <h5 className=" font-semibold text-primary text-md z-30 left-0 mr-1 ">
+          <Badge className=" bg-[var(--primary-foreground)]">
+            <h5 className=" font-semibold text-[var(--text-primary)] text-md z-30 left-0 mr-1 ">
               #{displayId ? displayId : "3421"}
             </h5>
           </Badge>
         </div>
         <div className="info flex gap-2 w-full justify-between absolute  bottom-14 right-0  p-4">
-          <Badge className="flex gap-1  bg-primary-foreground">
+          <Badge className="flex gap-1  bg-[var(--primary-foreground)]">
             {<AlarmClockCheck className="text-primary" size={15} />}
-            <h5 className=" font-semibold text-primary text-md z-30 left-0 mr-1 ">
+            <h5 className=" font-semibold text-[var(--text-primary)] text-md z-30 left-0 mr-1 ">
               {startTime ? startTime : "0:00 am"}
             </h5>
           </Badge>
-          <Badge className=" bg-primary-foreground">
+          <Badge className=" bg-[var(--primary-foreground)]">
             <span className="flex gap-1">
-              <Users className=" text-primary" size={15} />
-              <p className="text-primary">{particepents}</p>
+              <Users className=" text-[var(--text-primary)]" size={15} />
+              <p className="text-[var(--text-primary)]">{particepents}</p>
             </span>
           </Badge>
         </div>
         <div className=" flex font-semibold gap-2 justify-between  items-center ">
           <div className="p-2">
-            <p className="text-primary">{Title.slice(0, 20)}</p>
-            <p className="text-sm text-gray-500">{timeStamp}</p>
+            <p className="text-[var(--text-primary)]">{Title.slice(0, 20)}</p>
+            <p className="text-sm text-[var(--text-secondary)]">{timeStamp}</p>
           </div>
           <div className="p-1">
             {examtype == "Mock" || examtype == "PYQ" ? (

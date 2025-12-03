@@ -87,13 +87,13 @@ let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 1,
     href: "/analysis/pyqmock",
     Icon: Trophy,
-    color: "#8B5CF6",
+    color: "var(--color-purple)",
     name: "PYQ Mock",
   },
   {
     id: 2,
     href: "/analysis/test",
-    color: "#F59E0B",
+    color: "var(--color-yellow)",
     Icon: ChartLine,
     name: "Test",
   },
@@ -101,7 +101,7 @@ let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 3,
     name: "Overview",
     Icon: BarChart2,
-    color: "#6366f1",
+    color: "var(--color-indigo)",
     href: "/analysis/overview",
   },
 ];
@@ -111,28 +111,28 @@ const EXAM_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 1,
     name: "Tests",
     Icon: ListChecks,
-    color: "#6366f1", // Indigo
+    color: "var(--color-indigo)", // Indigo
     href: "/test/join",
   },
   {
     id: 2,
     name: "DPP",
     Icon: Pencil,
-    color: "#EC4899", // Pink
+    color: "var(--color-pink)", // Pink
     href: "/test/dpp",
   },
   {
     id: 3,
     name: "Mock",
     Icon: AlarmClockCheck,
-    color: "#10B981", // Emerald
+    color: "var(--color-green)", // Emerald
     href: "/test/mock",
   },
   {
     id: 4,
     name: "PYQ",
     Icon: FileQuestion,
-    color: "#F59E0B", // Amber
+    color: "var(--color-yellow)", // Amber
     href: "/test/PYQ",
   },
 ];
@@ -142,14 +142,14 @@ const USER_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 1,
     name: "Profile",
     Icon: BarChart2,
-    color: "#6366f1",
+    color: "var(--color-indigo)",
     href: "/user/profile",
   },
   {
     id: 2,
     name: "Balance",
     Icon: HandCoins,
-    color: "#10B981",
+    color: "var(--color-green)",
     href: "/user/balance",
   },
 
@@ -157,14 +157,14 @@ const USER_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 3,
     name: "Activity History",
     Icon: ChartLine,
-    color: "#F59E0B",
+    color: "var(--color-yellow)",
     href: "/user/activityhistory",
   },
   {
     id: 4,
     name: "Validate",
     Icon: ShieldCheck,
-    color: "#EC4899",
+    color: "var(--color-pink)",
     href: "/user/validation",
   },
 ];
@@ -175,7 +175,7 @@ let NotesOtions: SIDEBAR_ITEMS_types[] = [
     href: "/notes/notes",
     Icon: AlarmClockCheck,
     name: "notes",
-    color: "#6366f1",
+    color: "var(--color-indigo)",
   },
 ];
 let ActivityOptions: SIDEBAR_ITEMS_types[] = [
@@ -184,28 +184,28 @@ let ActivityOptions: SIDEBAR_ITEMS_types[] = [
     href: "/activity/dashboard",
     Icon: BarChart2,
     name: "Dashboard",
-    color: "#6366f1",
+    color: "var(--color-indigo)",
   },
   {
     id: 2,
     href: "/activity/challenge",
     Icon: Swords,
     name: "Challenge",
-    color: "#F43F5E",
+    color: "var(--color-red)",
   },
   {
     id: 3,
     href: "/activity/contest",
     Icon: Trophy,
     name: "Contest",
-    color: "#F59E0B",
+    color: "var(--color-yellow)",
   },
   {
     id: 4,
     href: "/activity/quiz",
     Icon: BrainCircuit,
     name: "Quiz",
-    color: "#8B5CF6",
+    color: "var(--color-purple)",
   },
 ];
 
@@ -214,7 +214,7 @@ const ISSUE_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 1,
     name: "Dashboard",
     Icon: BarChart2,
-    color: "#EF4444", // Red color for issues
+    color: "var(--color-red)", // Red color for issues
     href: "/issue/dashboard",
   },
 ];
@@ -223,7 +223,7 @@ const QUIZ_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     id: 1,
     name: "Quiz",
     Icon: BarChart2,
-    color: "#EF4444", // Red color for issues
+    color: "var(--color-red)", // Red color for issues
     href: "/quiz/start",
   },
 ];
@@ -235,7 +235,7 @@ const App = () => {
   return (
     <>
       <ApiProvider baseUrl={baseUrl}>
-        <div className=" min-h-screen  text-gray-100  overflow-hidden   no-visible-scrollbar">
+        <div className=" min-h-screen  overflow-hidden   no-visible-scrollbar">
           <HashRouter>
             <Provider store={store}>
               <ToastContainer />
@@ -245,7 +245,7 @@ const App = () => {
                 BrandName={"Jeca"}
               />
 
-              <div className="main flex  flex-col  lg:pl-[5rem]  w-screen pb-24 md:pb-0 ">
+              <div className="main flex  flex-col text-[var(--text-primary)]   lg:pl-[5rem]  w-screen pb-24 md:pb-0 ">
                 <Breadcrumb />
                 <Routes>
                   <Route path="/" element={<Home />} />{" "}

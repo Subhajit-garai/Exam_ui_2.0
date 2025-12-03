@@ -33,8 +33,8 @@ export const QuizPage = () => {
                 />
 
                 <div className="mb-6">
-                    <h1 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-zinc-100">Quizzes</h1>
-                    <p className="text-zinc-500 dark:text-zinc-400 mt-1">Practice with quizzes in different modes.</p>
+                    <h1 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)]">Quizzes</h1>
+                    <p className="text-[var(--text-secondary)] mt-1">Practice with quizzes in different modes.</p>
                 </div>
 
                 <div className="flex flex-col gap-10">

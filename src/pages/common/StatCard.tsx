@@ -17,7 +17,7 @@ const StatCard = ({
 }) => {
   return (
     <motion.div
-      className="bg-s2 bg-opacity-50 backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-gray-700"
+      className="bg-card bg-opacity-50 backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-border"
       whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)" }}
     >
       <Card className=" px-3  py-4 md:px-5 md:py-6  ">

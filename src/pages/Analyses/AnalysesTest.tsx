@@ -121,7 +121,7 @@ export const AnalysesTest = () => {
           <div className="flex gap-2 w-full items-center justify-between">
             <p
               className={cn(
-                " text-primary",
+                " text-[var(--text-primary)]",
                 ismobile ? "text-[10px]" : "text-sm"
               )}
             >
@@ -129,7 +129,7 @@ export const AnalysesTest = () => {
             </p>
             <p
               className={cn(
-                " text-primary",
+                " text-[var(--text-primary)]",
                 ismobile ? "text-[10px]" : "text-sm"
               )}
             >

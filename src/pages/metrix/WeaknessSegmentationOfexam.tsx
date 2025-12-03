@@ -19,15 +19,9 @@ import { useApi } from "@/ApiProvider";
 //   { subject: "OS", A: 92, B: 11, fullMark: 100 },
 //   { subject: "OS", A: 72, B: 21, fullMark: 100 },
 //   { subject: "DBMS", A: 98, B: 13, fullMark: 100 },
-//   { subject: "C", A: 86, B: 13, fullMark: 100 },
-//   { subject: "OOP", A: 99, B: 10, fullMark: 100 },
-//   { subject: "NETWORK", A: 85, B: 79, fullMark: 100 },
-//   { subject: "UNIX", A: 65, B: 85, fullMark: 100 },
-//   { subject: "ML", A: 65, B: 85, fullMark: 100 },
-//   { subject: "SE", A: 65, B: 85, fullMark: 100 },
 // ];
 
-const WeaknessSegmentationOfexam = ({ examid }: { examid: string  }) => {
+const WeaknessSegmentationOfexam = ({ examid }: { examid: string }) => {
   const _ = useApi();
   const [data, setdata] = useState([]);
   const [range, setrange] = useState(20);
@@ -47,13 +41,13 @@ const WeaknessSegmentationOfexam = ({ examid }: { examid: string  }) => {
 
   return (
     <motion.div
-      className="bg-s2 bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg rounded-xl p-3 md:p-6 border border-gray-700"
+      className="bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg rounded-xl p-3 md:p-6 border border-[var(--border)]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
     >
       <div className="flex  justify-around items-center mb-4">
-        <h2 className="md:text-xl font-semibold text-primary">
+        <h2 className="md:text-xl font-semibold text-[var(--text-primary)]">
           Weakness Segmentation
         </h2>
       </div>

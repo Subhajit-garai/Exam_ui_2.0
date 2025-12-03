@@ -26,8 +26,8 @@ export const JoinMock = () => {
         charge?.data == "0"
           ? "free"
           : typeof charge?.data !== "string"
-          ? String(charge?.data)
-          : charge?.data
+            ? String(charge?.data)
+            : charge?.data
       );
     }
 
@@ -56,7 +56,7 @@ export const JoinMock = () => {
     console.log("Hook updated:", { todaysExam, tomorrowsExam, completedExam });
   }, [todaysExam, tomorrowsExam, completedExam]);
 
-  
+
   const tabs = [
     {
       title: "Live",
@@ -64,7 +64,7 @@ export const JoinMock = () => {
       content: (
         <div
           key={`live-${TestsCount}`}
-          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card"
+          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-[var(--text-primary)] bg-[var(--card)]"
         >
           <p>Live Tab</p>
 
@@ -89,7 +89,7 @@ export const JoinMock = () => {
       content: (
         <div
           key={`Upcoming-${TestsCount}`}
-          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl font-bold text-primary bg-card"
+          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl font-bold text-[var(--text-primary)] bg-[var(--card)]"
         >
           <p>Upcoming tab</p>
 
@@ -112,7 +112,7 @@ export const JoinMock = () => {
       title: "Completed",
       value: "Completed",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl  font-bold text-primary bg-card">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl  font-bold text-[var(--text-primary)] bg-[var(--card)]">
           <p>Completed tab</p>
           {loading ? (
             <LoaderFive text="Loading..." />

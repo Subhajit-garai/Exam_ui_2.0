@@ -34,30 +34,30 @@ const WeaknessSegmentation = () => {
 
   const _ = useApi()
 
-  const handeOffset = (e:any) =>{
-	setOffset(e.target.value)
+  const handeOffset = (e: any) => {
+    setOffset(e.target.value)
   }
 
-  const MetrixSetUpFunc = (offset:string) =>{
+  const MetrixSetUpFunc = (offset: string) => {
 
-	_.api.metrix.getsubjectwiseMetrixData(offset).then((data) => {  
-		setdata(data.data);
-    setrange(data.range)
-	  });
+    _.api.metrix.getsubjectwiseMetrixData(offset).then((data) => {
+      setdata(data.data);
+      setrange(data.range)
+    });
   }
 
   useEffect(() => {
-	MetrixSetUpFunc(offset)
+    MetrixSetUpFunc(offset)
   }, [offset]);
 
   useEffect(() => {
     MetrixSetUpFunc("day")
   }, []);
 
-  
+
   return (
     <motion.div
-      className="bg-s2 bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg rounded-xl p-3 md:p-6 border border-gray-700"
+      className="bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg rounded-xl p-3 md:p-6 border border-border"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
@@ -67,16 +67,16 @@ const WeaknessSegmentation = () => {
           Weakness Segmentation
         </h2>
         {/* <p className="text-xl font-semibold text-gray-100 mb-4">"--WEEKly"</p> */}
-		<SelectionInput options={[{
-                id: "1",
-                inputId: "input-Offcet",
-                // placeholder: "Enter Ans ",
-                options: ["day","week","month","hour","minute"],
-                required: true,
-                name: "offset",
-              }]}
-              handleInputefn={(e) =>handeOffset(e)} value={offset}
-               />
+        <SelectionInput options={[{
+          id: "1",
+          inputId: "input-Offcet",
+          // placeholder: "Enter Ans ",
+          options: ["day", "week", "month", "hour", "minute"],
+          required: true,
+          name: "offset",
+        }]}
+          handleInputefn={(e) => handeOffset(e)} value={offset}
+        />
       </div>
       <div style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>

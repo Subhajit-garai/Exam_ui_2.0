@@ -76,7 +76,7 @@ export const AvailableQuizzes = ({ filterMode, onCreateQuiz }: AvailableQuizzesP
     return (
         <div className="flex flex-col gap-4">
             <div className="flex justify-between items-center">
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                <h3 className="text-xl font-bold text-[var(--text-primary)]">
                     {filterMode ? `${filterMode} Quizzes` : "Available Quizzes"}
                 </h3>
                 <Button className="gap-2" onClick={onCreateQuiz}>
@@ -86,7 +86,7 @@ export const AvailableQuizzes = ({ filterMode, onCreateQuiz }: AvailableQuizzesP
             </div>
 
             <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" size={16} />
                 <Input
                     placeholder="Search quizzes by topic or subject..."
                     className="pl-10 bg-white dark:bg-zinc-900"
@@ -112,11 +112,11 @@ export const AvailableQuizzes = ({ filterMode, onCreateQuiz }: AvailableQuizzesP
                                     <span className="px-2 py-1 rounded-md bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 text-xs font-medium">
                                         {quiz.subject}
                                     </span>
-                                    <span className="text-xs text-zinc-500">{quiz.mode}</span>
+                                    <span className="text-xs text-[var(--text-secondary)]">{quiz.mode}</span>
                                 </div>
-                                <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">{quiz.title}</h4>
-                                <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4">{quiz.desc}</p>
-                                <div className="flex items-center justify-between text-xs text-zinc-500">
+                                <h4 className="font-semibold text-[var(--text-primary)] mb-1">{quiz.title}</h4>
+                                <p className="text-sm text-[var(--text-secondary)] mb-4">{quiz.desc}</p>
+                                <div className="flex items-center justify-between text-xs text-[var(--text-secondary)]">
                                     <span>{quiz.questions} Questions</span>
                                     <Button
                                         variant="ghost"
@@ -133,7 +133,7 @@ export const AvailableQuizzes = ({ filterMode, onCreateQuiz }: AvailableQuizzesP
                             </Card>
                         ))
                     ) : (
-                        <div className="col-span-full text-center py-8 text-zinc-500">
+                        <div className="col-span-full text-center py-8 text-[var(--text-secondary)]">
                             No quizzes found for {filterMode}. Create one!
                         </div>
                     )}

@@ -35,14 +35,14 @@ const PerformanceMetrix = () => {
   // const [range, setrange] = useState(30);
   const _ = useApi()
 
-  const handeOffset = (e:any) => {
+  const handeOffset = (e: any) => {
     setOffset(e.target.value);
   };
 
-  const MetrixSetUpFunc = (offset:string) => {
+  const MetrixSetUpFunc = (offset: string) => {
 
     _.api.metrix.getScoreMetrixData(offset).then((data) => {
-      data =data.data;
+      data = data.data;
       // setrange(data.range)
       setdata(data);
     });
@@ -57,7 +57,7 @@ const PerformanceMetrix = () => {
 
   return (
     <motion.div
-      className="bg-s2 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-2 md:p-6 border border-gray-700"
+      className="bg-card bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-2 md:p-6 border border-border"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
@@ -73,7 +73,7 @@ const PerformanceMetrix = () => {
             id: "1",
             inputId: "input-Offcet",
             // placeholder: "Enter Ans ",
-            options: ["day","week", "month","hour","minute"],   // only display 20 -30 fileds/ rows 
+            options: ["day", "week", "month", "hour", "minute"],   // only display 20 -30 fileds/ rows 
             required: true,
             name: "offset",
           }]}

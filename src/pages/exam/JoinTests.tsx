@@ -17,7 +17,7 @@ const JoinExam = () => {
 
   let { todaysExam, tomorrowsExam, completedExam } = useExamTimetablehook(Test);
   const [loading, setLoading] = useState(true);
-  
+
 
   const fetchTests = async () => {
     setLoading(true);
@@ -27,8 +27,8 @@ const JoinExam = () => {
         charge?.data == "0"
           ? "free"
           : typeof charge?.data !== "string"
-          ? String(charge?.data)
-          : charge?.data
+            ? String(charge?.data)
+            : charge?.data
       );
     }
 
@@ -39,7 +39,7 @@ const JoinExam = () => {
       "desc"
     );
     if (data.success) {
-      
+
       let { exams, total } = data.data;
       setTest(exams);
       setTestsCount(total);
@@ -62,7 +62,7 @@ const JoinExam = () => {
       content: (
         <div
           key={`live-${TestsCount}`}
-          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card"
+          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-[var(--text-primary)] bg-[var(--card)]"
         >
           <p>Live Tab</p>
 
@@ -87,7 +87,7 @@ const JoinExam = () => {
       content: (
         <div
           key={`Upcoming-${TestsCount}`}
-          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl font-bold text-primary bg-card"
+          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl font-bold text-[var(--text-primary)] bg-[var(--card)]"
         >
           <p>Upcoming tab</p>
 
@@ -110,7 +110,7 @@ const JoinExam = () => {
       title: "Completed",
       value: "Completed",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl  font-bold text-primary bg-card">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl  font-bold text-[var(--text-primary)] bg-[var(--card)]">
           <p>Completed tab</p>
           {loading ? (
             <LoaderFive text="Loading..." />

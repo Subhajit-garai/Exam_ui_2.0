@@ -70,7 +70,7 @@ export const LeaderBoard = ({
       } else {
         if (examid) {
           _.api.metrix.getleaderboardMetrix(examid, String(offset)).then((response) => {
-            let processData = response.data.map((data:any) => {
+            let processData = response.data.map((data: any) => {
               return {
                 name: data.name,
                 score: data.score / 100,
@@ -94,7 +94,7 @@ export const LeaderBoard = ({
       transition={{ delay: 0.4 }}
     >
       <div className="flex  justify-around items-center mb-4">
-        <h2 className="md:text-lg font-medium  text-primary">Leaderboard</h2>
+        <h2 className="md:text-lg font-medium  text-[var(--text-primary)]">Leaderboard</h2>
 
         {/* <p className="text-xl font-semibold text-gray-100 mb-4">"--WEEKly"</p> */}
         <SelectionInput

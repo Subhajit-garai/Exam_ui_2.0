@@ -165,7 +165,7 @@ export const DisplayQuestionAnsCard = ({
   let number = questionAnsData.number;
 
   let status: "correct" | "incorrect" | "unattempted" = "unattempted";
-  let statusColor = "text-zinc-500 bg-zinc-100 border-zinc-200 dark:text-zinc-400 dark:bg-zinc-800 dark:border-zinc-700";
+  let statusColor = "text-[var(--text-secondary)] bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
 
   let currentUserAnswer = is_multiple_ans
     ? userAnswer
@@ -186,7 +186,7 @@ export const DisplayQuestionAnsCard = ({
     if (!userAnswer) console.log("user not attemp this question", number);
     if (isCorrectAnswerFn(currentUserAnswer, ["0"], map)) {
       status = "unattempted";
-      statusColor = "text-zinc-500 bg-zinc-100 border-zinc-200 dark:text-zinc-400 dark:bg-zinc-800 dark:border-zinc-700";
+      statusColor = "text-[var(--text-secondary)] bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
     } else {
       status = "incorrect";
       statusColor = "text-rose-600 bg-rose-50 border-rose-200 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800";
@@ -203,8 +203,8 @@ export const DisplayQuestionAnsCard = ({
         <div className={`  flex flex-col gap-4 justify-between h-full`}>
           <fieldset className="flex w-full  flex-col gap-4">
             <div className="flex justify-between items-start gap-4">
-              <legend className="font-semibold text-lg text-zinc-900 dark:text-zinc-100 leading-relaxed">
-                <span className="inline-block mr-2 text-zinc-500 dark:text-zinc-400">Q{number}.</span>
+              <legend className="font-semibold text-lg text-[var(--text-primary)] leading-relaxed">
+                <span className="inline-block mr-2 text-[var(--text-secondary)]">Q{number}.</span>
                 {title}
               </legend>
               <Badge variant="outline" className={cn("capitalize shrink-0", statusColor)}>
@@ -257,7 +257,7 @@ export const DisplayQuestionAnsCard = ({
                             "text-base leading-relaxed cursor-pointer select-none w-full",
                             isSelected && status === "correct" ? "text-emerald-700 dark:text-emerald-300 font-medium" :
                               isSelected && status === "incorrect" ? "text-rose-700 dark:text-rose-300 font-medium" :
-                                "text-zinc-700 dark:text-zinc-300"
+                                "text-[var(--text-primary)]"
                           )}
                         >
                           {option}
@@ -281,13 +281,13 @@ export const DisplayQuestionAnsCard = ({
             </DialogBox>
 
             <div className="infoSection hidden md:flex gap-2">
-              <Badge variant="outline" className="text-xs font-medium text-zinc-500 border-zinc-200 dark:border-zinc-800">
+              <Badge variant="outline" className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800">
                 {questionAnsData.part}
               </Badge>
-              <Badge variant="outline" className="text-xs font-medium text-zinc-500 border-zinc-200 dark:border-zinc-800">
+              <Badge variant="outline" className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800">
                 {Topic.shortName}
               </Badge>
-              <Badge variant="outline" className="text-xs font-medium text-zinc-500 border-zinc-200 dark:border-zinc-800">
+              <Badge variant="outline" className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800">
                 {is_multiple_ans ? "Multiple" : "Single"}
               </Badge>
             </div>
@@ -336,10 +336,10 @@ const SolutionDisplayCont = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="  text-white font-bold text-pretty">
+      <p className="  text-foreground font-bold text-pretty">
         Answer : - {isMultipleAns ? ans.map((title) => title + " | ") : ans}
       </p>
-      <p className="text-sm lg:text-lg  font-medium text-gray-800 text-pretty bg-gray-200 p-4 rounded-lg shadow-md">
+      <p className="text-sm lg:text-lg  font-medium text-[var(--text-primary)] text-pretty bg-gray-200 p-4 rounded-lg shadow-md">
         {Solution}
         {Solution === "no explanation added"
           ? "  (--->inform admin to add explanation)"

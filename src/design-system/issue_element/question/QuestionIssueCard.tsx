@@ -124,17 +124,16 @@ export const QuestionIssueCardCreate = ({
   return (
     <>
       <div
-        className={` p-2  lg:max-w-sm ${
-          mainDivColor || "bg-s2"
-        } lg:p-4  flex flex-col gap-4 rounded shadow-md  flex-wrap`}
+        className={` p-2  lg:max-w-sm ${mainDivColor || "bg-card"
+          } lg:p-4  flex flex-col gap-4 rounded shadow-md  flex-wrap`}
       >
         <div className="flex gap-2 items-center justify-between">
-          <p ref={textRef} className=" font-semibold text-sm text-white">
+          <p ref={textRef} className=" font-semibold text-sm text-card-foreground">
             {questionid ? questionid : "question id"}
           </p>
           <div className="actions flex">
             <CountBtn count={count} />
-            <Copybtn textMessage="Id copyed"  />
+            <Copybtn textMessage="Id copyed" />
             <Gotobtn link="/" />
           </div>
         </div>
@@ -201,9 +200,8 @@ export const QuestionIssueCardDisplay = ({
   return (
     <>
       <div
-        className={` p-2 lg:max-w-sm ${
-          mainDivColor || "bg-s2"
-        } lg:p-4  flex flex-col gap-4 rounded shadow-md  flex-wrap`}
+        className={` p-2 lg:max-w-sm ${mainDivColor || "bg-card"
+          } lg:p-4  flex flex-col gap-4 rounded shadow-md  flex-wrap`}
       >
         <div className="flex gap-2 items-center justify-between">
           <p className=" font-semibold text-sm">
@@ -211,7 +209,7 @@ export const QuestionIssueCardDisplay = ({
           </p>
           <div className="actions flex">
             <Trashbtn text="Trash" />
-            <Copybtn textMessage="Id copyed"  />
+            <Copybtn textMessage="Id copyed" />
             <Gotobtn link="/" />
           </div>
         </div>

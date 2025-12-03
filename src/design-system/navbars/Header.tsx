@@ -33,12 +33,12 @@ export const Header = ({
   let { islogin } = useAppSelector((state) => state.user);
 
   return (
-    <nav className=" header  top-0 right-0 left-0  border-b border-white/10 h-[5rem] max-w-full z-[8]">
+    <nav className=" header  top-0 right-0 left-0  border-b border-[var(--header-border)] h-[5rem] max-w-full z-[8]">
       <div className="  flex  gap-2 md:gap-4 items-center justify-between p-2 md:mx-20 h-full  ">
         <div className="h-fit  flex ">
           <Logo url={LogoUrl} />
 
-          <p className=" self md:whitespace-nowrap  md:text-xl font-semibold  ">
+          <p className=" self md:whitespace-nowrap  md:text-xl font-semibold text-[var(--text-primary)]  ">
             {BrandName}
           </p>
         </div>
@@ -109,7 +109,7 @@ export const Logo = ({
         <DropdownMenuContent>
           <DropdownMenuLabel>
             <span
-              className="block text-sm"
+              className="block text-sm text-[var(--text-primary)] "
               onClick={() => navigate("/user/profile")}
             >
               {name}
@@ -120,7 +120,16 @@ export const Logo = ({
             home
           </DropdownMenuLabel>
           <DropdownMenuLabel onClick={() => navigate("/user/profile")}>
-            Settings
+            profile
+          </DropdownMenuLabel>
+          <DropdownMenuLabel onClick={() => navigate("/user/balance")}>
+            balance
+          </DropdownMenuLabel>
+          <DropdownMenuLabel onClick={() => navigate("/user/activityhistory")}>
+            activity history
+          </DropdownMenuLabel>
+          <DropdownMenuLabel onClick={() => navigate("/user/validation")}>
+            validation
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuLabel onClick={userLogout}>Sign out</DropdownMenuLabel>

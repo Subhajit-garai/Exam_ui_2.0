@@ -19,10 +19,10 @@ const KbdTimer = ({
   let time_str = useRemainingTime(time);
 
   return (
-    <div className={cn("inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700", className)}>
-      <Icon className="text-zinc-500 dark:text-zinc-400" size={13} />
-      <span className="text-[10px] font-medium text-zinc-500 dark:text-zinc-400 uppercase">{message}</span>
-      <span className="text-xs font-bold font-mono text-zinc-900 dark:text-zinc-100 tabular-nums">
+    <div className={cn("inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-[var(--border)]", className)}>
+      <Icon className="text-[var(--text-secondary)]" size={13} />
+      <span className="text-[10px] font-medium text-[var(--text-secondary)] uppercase">{message}</span>
+      <span className="text-xs font-bold font-mono text-[var(--text-primary)] tabular-nums">
         {time_str}
       </span>
     </div>
@@ -49,8 +49,8 @@ export const Timer = ({
     <div className={cn("relative group", className)}>
       <div className={cn(
         "flex items-center gap-3 px-4 py-2 rounded-xl border shadow-sm transition-all duration-300",
-        "bg-white dark:bg-zinc-900",
-        "border-zinc-200 dark:border-zinc-800",
+        "bg-[var(--card)]",
+        "border-[var(--border)]",
         isUrgent ? "border-red-500/50 dark:border-red-500/50 bg-red-50/50 dark:bg-red-950/20" : "hover:border-blue-500/50 dark:hover:border-blue-500/50"
       )}>
         <div className={cn(
@@ -60,12 +60,12 @@ export const Timer = ({
           <Icon size={20} strokeWidth={2.5} />
         </div>
         <div className="flex flex-col">
-          <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+          <span className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider">
             {message}
           </span>
           <span className={cn(
             "text-lg font-bold font-mono tracking-tight tabular-nums leading-none",
-            isUrgent ? "text-red-600 dark:text-red-400" : "text-zinc-900 dark:text-zinc-100"
+            isUrgent ? "text-red-600 dark:text-red-400" : "text-[var(--text-primary)]"
           )}>
             {time_str}
           </span>

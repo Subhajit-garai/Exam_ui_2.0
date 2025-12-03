@@ -16,15 +16,15 @@ const ExamInfoDisplayCard = ({
   displayId,
   handleSeclect,
 }: {
-  imageurl:string;
-  Title:string;
-  particepents:string;
-  contestid:string;
-  timeStamp:string;
-  startTime:string;
-  joinTime:string;
-  displayId:string;
-  handleSeclect:any;
+  imageurl: string;
+  Title: string;
+  particepents: string;
+  contestid: string;
+  timeStamp: string;
+  startTime: string;
+  joinTime: string;
+  displayId: string;
+  handleSeclect: any;
 }) => {
   return (
     <div className=" flex flex-col gap-8">
@@ -47,8 +47,8 @@ const ExamInfoDisplayCard = ({
         </div>
         <div className=" flex font-semibold gap-2 justify-between  items-center ">
           <div className="p-2">
-            <p className=" text-white">{Title.slice(0, 20)}</p>
-            <p className="text-sm text-gray-500">
+            <p className=" text-foreground">{Title.slice(0, 20)}</p>
+            <p className="text-sm text-[var(--text-secondary)]">
               {dayjs(timeStamp).format("DD-MM-YYYY")}
             </p>
           </div>

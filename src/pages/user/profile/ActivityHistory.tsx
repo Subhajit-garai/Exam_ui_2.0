@@ -22,7 +22,7 @@ const ActivityIcon = ({ type, status }: { type: string; status: string }) => {
     if (type === "NOTE") return <FileText className="text-blue-500" size={20} />;
     if (status === "Completed") return <CheckCircle2 className="text-emerald-500" size={20} />;
     if (status === "Failed") return <XCircle className="text-rose-500" size={20} />;
-    return <Activity className="text-zinc-500" size={20} />;
+    return <Activity className="text-[var(--text-secondary)]" size={20} />;
 };
 
 export const ActivityHistory = () => {
@@ -56,8 +56,8 @@ export const ActivityHistory = () => {
         <Card className="p-6 border-zinc-200 dark:border-zinc-800">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Activity History</h3>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Your recent learning milestones.</p>
+                    <h3 className="text-xl font-bold text-[var(--text-primary)]">Activity History</h3>
+                    <p className="text-sm text-[var(--text-secondary)] mt-1">Your recent learning milestones.</p>
                 </div>
                 <Button variant="outline" size="sm" className="gap-2">
                     <Calendar size={14} />
@@ -87,16 +87,16 @@ export const ActivityHistory = () => {
                             <div className="flex-1 min-w-0">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h4 className="font-medium text-sm text-zinc-900 dark:text-zinc-100">{activity.title}</h4>
-                                        <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{activity.description}</p>
+                                        <h4 className="font-medium text-sm text-[var(--text-primary)]">{activity.title}</h4>
+                                        <p className="text-xs text-[var(--text-secondary)] mt-0.5">{activity.description}</p>
                                     </div>
-                                    <span className="text-xs text-zinc-400 shrink-0 ml-2">{activity.date}</span>
+                                    <span className="text-xs text-[var(--text-tertiary)] shrink-0 ml-2">{activity.date}</span>
                                 </div>
                             </div>
                         </motion.div>
                     ))
                 ) : (
-                    <div className="text-center py-8 text-zinc-500 text-sm">
+                    <div className="text-center py-8 text-[var(--text-secondary)] text-sm">
                         No recent activity found.
                     </div>
                 )}
