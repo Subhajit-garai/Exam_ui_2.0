@@ -279,7 +279,7 @@ export const ValidationForgotpassword = () => {
       newpassword: value.newpassword,
     };
     await _.api.user
-      .forgotpassword(data)
+      .forgotpasswordverify(data)
       .then((response: any) => {
         toast.success(response.data.message, ToastConfig());
         navigate("/login");

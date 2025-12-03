@@ -72,7 +72,8 @@ export const DailyChallenge = () => {
                             variant="secondary"
                             size="sm"
                             className="bg-white/10 hover:bg-white/20 text-white border-0"
-                            onClick={() => navigate(`/activity/challenge/${challenge.id}`)}
+                            // onClick={() => navigate(`/activity/challenge/${challenge.id}`)}
+                            onClick={() => navigate(`/activity/challenge`)}
                         >
                             Start Challenge
                         </Button>

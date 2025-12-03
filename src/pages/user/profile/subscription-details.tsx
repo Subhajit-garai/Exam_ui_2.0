@@ -4,6 +4,7 @@ import { IconPremiumRights, IconCheck, IconX, IconClock } from "@tabler/icons-re
 import type { ExamType, PrimeStatus as PrimeStatusType } from "@/lib/constants/question.constants.type";
 import { useEffect, useState } from "react";
 import { useApi } from "@/ApiProvider";
+import { useNavigate } from "react-router-dom";
 
 // Types matching the Prisma model
 export const PrimeStatus = {
@@ -47,6 +48,9 @@ export const SubscriptionDetails = () => {
     const { api } = useApi();
     const [subscription, setSubscription] = useState<SubscriptionDetailsResponse | null>(null);
     const [loading, setLoading] = useState(true);
+
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSubscription = async () => {
@@ -139,13 +143,13 @@ export const SubscriptionDetails = () => {
                                         <span className={benefit.access ? "text-foreground" : "text-muted-foreground"}>
                                             {benefit.feature} Access
                                         </span>
-                                        {benefit.limit && (
+                                        {benefit.limit && currentPlan !== PrimeStatus.None && (
                                             <span className="text-xs text-muted-foreground">
                                                 {benefit.used || 0} / {benefit.limit > 1000 ? "∞" : benefit.limit}
                                             </span>
                                         )}
                                     </div>
-                                    {benefit.limit && benefit.limit < 1000 && (
+                                    {benefit.limit && benefit.limit < 1000 && currentPlan !== PrimeStatus.None && (
                                         <div className="w-full bg-secondary h-1.5 rounded-full mt-1 overflow-hidden">
                                             <div
                                                 className={`h-full rounded-full ${benefit.access ? 'bg-green-500' : 'bg-gray-300'}`}
@@ -162,7 +166,9 @@ export const SubscriptionDetails = () => {
 
             <div className="relative z-10 mt-auto">
                 {currentPlan !== PrimeStatus.Gold && (
-                    <Button className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-md transition-all hover:shadow-lg">
+                    <Button className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-md transition-all hover:shadow-lg"
+                        onClick={() => { navigate('/payment') }}
+                    >
                         Upgrade Plan
                     </Button>
                 )}

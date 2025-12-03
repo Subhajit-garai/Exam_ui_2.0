@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { PaymentSubcriptionCard, PaymentTokenCard } from "./PaymentOfferCard";
+import { PaymentSubcriptionCard__2, PaymentTokenCard__2 } from "./PaymentOfferCard";
+import { Card } from "@repo/design-system/card/Card";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
 import { useAppSelector } from "@repo/store/hook";
@@ -156,9 +157,9 @@ const Payment = () => {
       title: "Subscription",
       value: "Subscription",
       content: (
-        <div
+        <Card
           key={`Subscription`}
-          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card "
+          className="w-full overflow-y-auto relative h-full px-2 py-4 rounded-xl font-bold text-primary bg-card"
         >
           {loading ? (
             <LoaderFive text="Loading..." />
@@ -169,16 +170,16 @@ const Payment = () => {
               checkoutFN={SubscriptionCheckoutfn}
             />
           )}
-        </div>
+        </Card>
       ),
     },
     {
       title: "Token",
       value: "Token",
       content: (
-        <div
+        <Card
           key={`Token`}
-          className="w-full overflow-hidden relative h-full rounded-xl p-10  font-bold text-primary bg-card"
+          className="w-full overflow-y-auto relative h-full px-2 py-4 rounded-xl font-bold text-primary bg-card"
         >
           {loading ? (
             <LoaderFive text="Loading..." />
@@ -189,7 +190,7 @@ const Payment = () => {
               checkoutFN={TokenCheckoutfn}
             />
           )}
-        </div>
+        </Card>
       ),
     },
   ];
@@ -197,7 +198,7 @@ const Payment = () => {
   return (
     <div className="main w-full h-full overflow-auto no-visible-scrollbar">
       <div className="flex-1 md:h-160  relative  mb-20 md:mb-0 ">
-        <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
+        <div className="h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
           <Tabs
             tabs={PaymentTabs}
             contentClassName="mt-10"
@@ -222,16 +223,16 @@ export const PaymentOptionsCont = ({
 }) => {
   return (
     <>
-      <div className=" flex flex-wrap  md:flex-row  items-center  justify-center  gap-2 md:gap-8 overflow-auto no-visible-scrollbar">
+      <div className=" flex  w-full h-full  py-8 flex-wrap  md:flex-row  items-center  justify-center  gap-2 overflow-auto no-visible-scrollbar">
         {data.map((sub: any, idx: any) => {
           return type == "SUBSCRIPTION" ? (
-            <PaymentSubcriptionCard
+            <PaymentSubcriptionCard__2
               key={idx}
               data={sub}
               checkout={checkoutFN}
             />
           ) : (
-            <PaymentTokenCard key={idx} data={sub} checkout={checkoutFN} />
+            <PaymentTokenCard__2 key={idx} data={sub} checkout={checkoutFN} />
           );
         })}
       </div>

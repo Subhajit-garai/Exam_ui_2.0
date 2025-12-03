@@ -27,15 +27,6 @@ let loginOptions: InputOption[] = [
     name: "email",
   },
   {
-    id: "3",
-    inputId: "input-telegram",
-    placeholder: "Enter telegram id",
-    required: true,
-    name: "telegram",
-    type: "number",
-
-  },
-  {
     id: "4",
     inputId: "input-password",
     placeholder: "Enter password",
@@ -50,7 +41,6 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    telegram: "",
   });
 
 
@@ -61,19 +51,17 @@ const Signup = () => {
 
   const signupfn = async () => {
 
-    let url = _.api.client.createUrl("/user/signup");
-    await axios
-      .post(url, value, { withCredentials: true })
-      .then((response) => {
-        if (response.status == 200) {
-          toast.success(response.data.message, ToastConfig());
-          _.api.user.fetchuser(dispatch);
-          navigate("/user/validation?email=" + value.email, { replace: true });
-        }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message, ToastConfig());
-      });
+
+
+    let response = await _.api.user.signup(value);
+    if (response.status == 200) {
+      toast.success(response.data.message, ToastConfig());
+      _.api.user.fetchuser(dispatch);
+      navigate("/user/validation?email=" + value.email, { replace: true });
+    } else {
+      toast.error(response.data.message, ToastConfig());
+    }
+
   };
   return (
     <>

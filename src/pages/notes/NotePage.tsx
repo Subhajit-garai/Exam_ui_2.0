@@ -8,13 +8,13 @@ import { useApi } from "@/ApiProvider";
 export function NotePage() {
   const { category, topic } = useParams();
 
-  if(!category || !topic){
+  if (!category || !topic) {
     throw console.log("subject or topic is not valid");
   }
 
   const dispatch = useAppDispatch();
   let { content } = useAppSelector((state) => state.note);
-  const _ =useApi()
+  const _ = useApi()
   useEffect(() => {
     _.api.notes.fetchNotes(dispatch, category, topic);
   }, []);

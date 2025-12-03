@@ -17,6 +17,7 @@ import { useApi } from "@/ApiProvider";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@/lib";
+import { BetaTag } from "@/design-system/DevComponents/BetaTag";
 
 const Home = () => {
   const { name } = useAppSelector((state) => state.user);
@@ -63,7 +64,7 @@ const Home = () => {
       const res = await _.api.user.getRecentActivity()
       if (res.success) {
         setrecentActivity(res.data)
-        toast.success(res.message, ToastConfig(800))
+        // toast.success(res.message, ToastConfig(800))
       } else {
         toast.error(res.message, ToastConfig(1000))
       }
@@ -76,7 +77,7 @@ const Home = () => {
       const res = await _.api.user.getExamTimeline()
       if (res.success) {
         setExamEvents(res.data)
-        toast.success(res.message, ToastConfig(800))
+        // toast.success(res.message, ToastConfig(800))
       } else {
         toast.error(res.message, ToastConfig(1000))
       }
@@ -87,16 +88,15 @@ const Home = () => {
     <div className="flex flex-col gap-6 p-4 max-w-7xl mx-auto w-full">
       <WelcomeHeader name={name} date={date} />
 
-      <StatsGrid stats={stats} />
-
+      <BetaTag variant="ribbon" text="BETA">
+        <StatsGrid stats={stats} />
+      </BetaTag>
       <ExamTimeline events={examEvents} />
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 flex flex-col gap-6">
           <QuickActions actions={quickActions} />
           <DailyChallenge />
         </div>
-
         <RecentActivity activities={recentActivity} />
       </div>
     </div>

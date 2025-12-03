@@ -10,6 +10,7 @@ import { userApi } from "./api_actions/user.actions";
 
 import { SocialLinksApi } from "./api_actions/socialLinks.actions";
 import { activityApi } from "./api_actions/activity.actions";
+import { quizApi } from "./api_actions/quiz.actions";
 
 export class AppApi {
   public client: ApiClient;
@@ -23,6 +24,7 @@ export class AppApi {
   public payment: paymentApi;
   public socialLinks: SocialLinksApi;
   public activity: activityApi;
+  public quiz: quizApi;
   //   public notes: NotesApi;
 
   constructor(baseUrl: string) {
@@ -37,5 +39,6 @@ export class AppApi {
     this.payment = new paymentApi();
     this.socialLinks = new SocialLinksApi();
     this.activity = new activityApi();
+    this.quiz = new quizApi();
   }
 }

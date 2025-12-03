@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useHandleinpute from "@repo/hooks/useHandleInpute";
 import { Button } from "@repo/ui/button";
 import { Card } from "@repo/design-system/card/Card";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastConfig } from "@repo/lib/utils/utils";
@@ -73,39 +72,32 @@ const Login = () => {
   };
 
   const Loginfn = async () => {
-    let url = _.api.client.createUrl("/user/signin");
-    await axios
-      .post(url, value, { withCredentials: true })
-      .then((response) => {
-        if (response.status == 200) {
-          toast.success(response.data.message, ToastConfig());
-          _.api.user.fetchuser(dispatch);
-          navigate(`/login/validate/email?email=${response.data.email}`);
-          // navigate("/home");
-        }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message, ToastConfig());
-        toast.info(<GotoSignUpPage />, ToastConfig());
-      });
+
+    let response = await _.api.user.login(value);
+    if (response.status == 200) {
+      toast.success(response.data.message, ToastConfig());
+      _.api.user.fetchuser(dispatch);
+      navigate(`/login/validate/email?email=${response.data.email}`);
+      // navigate("/home");
+    }
+
+    else {
+      toast.error(response.data.message, ToastConfig());
+      toast.info(<GotoSignUpPage />, ToastConfig());
+    }
   };
 
   const forgotpasswordFn = async () => {
-    let url = _.api.client.createUrl("/user/forgotpassword");
-    await axios
-      .post(url, value, { withCredentials: true })
-      .then((response) => {
-        if (response.status == 200) {
-          toast.success(response.data.message, ToastConfig());
 
-          navigate("/user/forgotpassword?email=" + value.email);
-        }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message, ToastConfig());
-
-        toast.info(<GotoSignUpPage />, ToastConfig());
-      });
+    let response = await _.api.user.forgotpassword(value);
+    if (response.status == 200) {
+      toast.success(response.data.message, ToastConfig());
+      navigate("/user/forgotpassword?email=" + value.email);
+    }
+    else {
+      toast.error(response.data.message, ToastConfig());
+      toast.info(<GotoSignUpPage />, ToastConfig());
+    }
   };
 
   return (
@@ -185,7 +177,7 @@ export const GotoSignUpPage = () => {
   return (
     <>
       <span className="flex gap-2 items-center">
-        <Button color="blue" onClick={() => {}}>
+        <Button color="blue" onClick={() => { }}>
           {/* //navigate("/signup") */}
           Go TO
         </Button>

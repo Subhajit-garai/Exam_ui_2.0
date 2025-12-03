@@ -10,6 +10,26 @@ export class userApi {
     this.api = ApiClient.getInstance();
   }
 
+
+  forgotpassword = (data: any) => {
+    let url = `/user/forgotpassword`;
+    return this.api.request(url, { method: "POST", data: data });
+  };
+
+  forgotpasswordverify = (data: any) => {
+    let url = `/user/forgotpassword/verify`;
+    return this.api.request(url, { method: "POST", data: data });
+  };
+  login = (data: any) => {
+    let url = `/user/signin`;
+    return this.api.request(url, { method: "POST", data: data });
+  };
+
+  signup = (data: any) => {
+    let url = `/user/signup`;
+    return this.api.request(url, { method: "POST", data: data });
+  };
+
   userLogout = () => {
     let url = `/user/logout`;
     return this.api.request(url);
@@ -35,10 +55,7 @@ export class userApi {
     let url = `/user/verify/telegramid`;
     return this.api.request(url, { method: "POST", data: data });
   };
-  forgotpassword = (data: any) => {
-    let url = `/user/forgotpassword/verify`;
-    return this.api.request(url, { method: "POST", data: data });
-  };
+
 
   getRecentActivity = () => {
     let url = `/user/activity/recent`;
@@ -57,6 +74,11 @@ export class userApi {
 
   getSubscriptionTiers = () => {
     let url = `/user/subscription/tiers`;
+    return this.api.request(url);
+  };
+
+  getWsToken = () => {
+    let url = `/user/ws-token`;
     return this.api.request(url);
   };
 }

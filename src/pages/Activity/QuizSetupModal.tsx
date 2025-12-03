@@ -1,6 +1,8 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@repo/ui/dialog";
 import { Button } from "@repo/ui/button";
 import { SelectionInput } from "@/design-system/inputs/InputComponents";
+import { Checkbox } from "@repo/ui/checkbox";
+import { Label } from "@repo/ui/label";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "@/ApiProvider";
@@ -38,6 +40,7 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
 
     const [loadingSubjects, setLoadingSubjects] = useState(false);
     const [loadingTopics, setLoadingTopics] = useState(false);
+    const [isAllTopics, setIsAllTopics] = useState(false);
 
     useEffect(() => {
         const fetchSubjects = async () => {
@@ -78,22 +81,39 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
     }, [value.subject]);
 
     const handleStart = async () => {
+        const selectedTopic = isAllTopics ? "All" : value.topic;
         try {
+            const response = await _.api.quiz.createQuiz({
+                mode: value.mode,
+                subject: value.subject,
+                topic: selectedTopic
+            });
+
+            if (response.success) {
+                toast.success("Quiz created successfully", ToastConfig());
+                // Assuming the response contains the created quiz ID
+                const quizId = response.data.id;
+                navigate(`/quiz/start?id=${quizId}&mode=${value.mode}&subject=${value.subject}&topic=${selectedTopic}`);
+                onClose();
+            } else {
+                toast.error(response.message || "Failed to create quiz", ToastConfig());
+            }
+
             await _.api.activity.logActivity({
-                type: "QUIZ_STARTED",
+                type: "QUIZ",
                 title: "Quiz Started",
-                description: `Started ${value.mode} quiz on ${value.subject} - ${value.topic}`,
+                status: "STARTED",
+                description: `Started ${value.mode} quiz on ${value.subject} - ${selectedTopic}`,
                 metadata: {
                     mode: value.mode,
                     subject: value.subject,
-                    topic: value.topic
+                    topic: selectedTopic
                 }
             });
         } catch (error) {
-            console.error("Failed to log activity", error);
+            console.error("Failed to create quiz", error);
+            toast.error("Something went wrong", ToastConfig());
         }
-        navigate(`/quiz/start?mode=${value.mode}&subject=${value.subject}&topic=${value.topic}`);
-        onClose();
     };
 
 
@@ -133,7 +153,28 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
                             required: true,
                             disabled: loadingSubjects
                         },
-                        {
+                        ]}
+                    />
+
+                    <div className="flex items-center space-x-2">
+                        <Checkbox
+                            id="all-topics"
+                            checked={isAllTopics}
+                            onCheckedChange={(checked) => {
+                                setIsAllTopics(checked as boolean);
+                                if (checked) {
+                                    setValue(prev => ({ ...prev, topic: "" }));
+                                }
+                            }}
+                            disabled={!value.subject}
+                        />
+                        <Label htmlFor="all-topics">Include all topics from {value.subject || "selected subject"}</Label>
+                    </div>
+
+                    <SelectionInput
+                        value={value}
+                        handleInputefn={handleInputefn}
+                        options={[{
                             id: "2",
                             inputId: "topic-select",
                             name: "topic",
@@ -141,14 +182,15 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
                             placeholder: loadingTopics ? "Loading..." : "Select Topic",
                             options: topicNames,
                             required: true,
-                            disabled: !value.subject || loadingTopics
+                            disabled: !value.subject || loadingTopics || isAllTopics
                         }]}
                     />
+
 
                 </div>
                 <DialogFooter>
                     <Button variant="outline" onClick={onClose}>Cancel</Button>
-                    <Button onClick={handleStart} disabled={!value.subject || !value.topic}>Start Quiz</Button>
+                    <Button onClick={handleStart} disabled={!value.subject || (!value.topic && !isAllTopics)}>Start Quiz</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

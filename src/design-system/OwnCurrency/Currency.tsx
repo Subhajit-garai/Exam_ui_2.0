@@ -8,9 +8,9 @@ import { Tooltip_one as Tooltip } from "@repo/design-system/tooltip/tooltip_one"
 import { Card } from "@repo/design-system/card/Card";
 import { Button } from "@repo/ui/button";
 
-export const Currencyicon = ({ size = 25, color = "#344CB7" }) => {
+export const Currencyicon = ({ size = 25, color = "#344CB7", className }: { size?: number, color?: string, className?: string }) => {
   let ismobile = useIsMobile();
-  return <Ticket size={ismobile ? 15 : size} color={color} />;
+  return <Ticket size={ismobile ? 15 : size} color={color} className={className} />;
 };
 export const Ticketicon = ({ size = 25, color = "#344CB7" }) => {
   let ismobile = useIsMobile();

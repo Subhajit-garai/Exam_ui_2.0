@@ -4,4 +4,5 @@
 
 export * from "./Icon";
 export * from "./Input";
+export * from "./DailyChallenge";
 // export * from "./react-syntax-highlighter";

@@ -17,7 +17,6 @@ export class activityApi {
     };
 
     logActivity = (data: { type: string; title: string; description?: string; status?: string; metadata?: any }) => {
-        console.log("--> logActivity");
 
         let url = `/user/activity/log`;
         return this.api.request(url, { method: "POST", data });
@@ -34,6 +33,10 @@ export class activityApi {
     };
     getDailyCompletedChallenge = () => {
         let url = `/user/activity/challenge/daily/completed`;
+        return this.api.request(url);
+    };
+    getPastChallenges = () => {
+        let url = `/user/activity/challenge/history`;
         return this.api.request(url);
     };
 }
