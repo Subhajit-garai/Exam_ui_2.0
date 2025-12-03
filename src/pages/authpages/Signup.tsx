@@ -2,7 +2,6 @@ import { Textinput } from "@repo/design-system/inputs";
 import useHandleinpute from "@repo/hooks/useHandleInpute";
 import { Button } from "@repo/ui/button";
 import { Card } from "@repo/design-system/card";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
 import { Link, useNavigate } from "react-router-dom";

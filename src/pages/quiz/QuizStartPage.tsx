@@ -21,7 +21,7 @@ export const QuizStartPage = () => {
         isConnected,
         connect,
         joinQuiz,
-        leaveQuiz,
+        // leaveQuiz,
         startQuiz,
         setStatus,
         currentQuestion,
