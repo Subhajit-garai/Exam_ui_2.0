@@ -52,6 +52,12 @@ export class ApiClient {
       data: {},
     });
 
-    dispatch(next(response.data));
+    if (response.success) {
+      dispatch(next(response.data));
+      return response
+    } else {
+      return response
+    }
+
   };
 }

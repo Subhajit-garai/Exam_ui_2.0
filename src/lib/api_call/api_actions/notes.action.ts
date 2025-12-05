@@ -15,13 +15,13 @@ export class noteApi {
 
   // notes
 
-  fetchAvalibleSubject = (dispatch: any) => {
-    let endpoint = `/notes/allsubject`;
-    this.api.apiDispatcher(endpoint, dispatch, setSubjects);
+  fetchAvalibleSubjectforUser = (dispatch: any) => {
+    let endpoint = `/user/notes/allsubject`;
+    return this.api.apiDispatcher(endpoint, dispatch, setSubjects);
   };
   fetchSubject_topics = (dispatch: any, Subject: string) => {
     let endpoint = `/notes/alltopic/${Subject}`;
-    this.api.apiDispatcher(endpoint, dispatch, setTopics);
+    return this.api.apiDispatcher(endpoint, dispatch, setTopics);
   };
 
   fetchNotes = (dispatch: any, Subject: string, topic: string) => {
