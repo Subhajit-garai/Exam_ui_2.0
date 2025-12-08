@@ -24,7 +24,7 @@ export const MyBadges = () => {
                 const response = await _.api.activity.getRewards();
                 if (response.success) {
                     // Filter for badges if the API returns mixed rewards
-                    const userBadges = response.data.filter((r: Reward) => r.type === "BADGE" || !r.type);
+                    const userBadges = response.data.badges.filter((r: Reward) => r.type === "BADGE" || !r.type);
                     setBadges(userBadges);
                 }
             } catch (error) {

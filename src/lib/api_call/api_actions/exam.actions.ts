@@ -30,7 +30,7 @@ export class examApi {
   // exam actions
 
   fetchCategorys = (dispatch: any) => {
-    let endpoint = `/exam/category`;
+    let endpoint = `/exam/categorys`;
     this.api.apiDispatcher(endpoint, dispatch, setCategorys);
   };
   fetchAvalibleExam = (dispatch: any, category: string) => {

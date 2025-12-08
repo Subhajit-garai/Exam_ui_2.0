@@ -165,7 +165,7 @@ export const AcademicProfile = () => {
                                                 lable: "Select category",
                                                 placeholder: "Select exam category",
                                                 required: true,
-                                                options: examCategorys,
+                                                options: examCategorys.map((e) => e.name),
                                                 name: "category",
                                             },
                                             {

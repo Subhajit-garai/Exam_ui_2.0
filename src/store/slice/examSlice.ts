@@ -28,6 +28,17 @@ export type target_exam_type = {
   updatedAt: Date;
 };
 
+export type Category = {
+  id: string;
+  name: string;
+  slug: string;
+  shortName: string | null;
+  description: string | null;
+  iconUrl: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 type ExamStatus =
   | "REGISTRATION_OPEN"
   | "REGISTRATION_CLOSED"
@@ -66,7 +77,7 @@ export type exam_type = {
   syllabus: [];
   ExamYear: exam_year_type[];
   ExamYear_year: string[];
-  examCategorys: string[];
+  examCategorys: Category[];
   Availableexampatterns: string[];
   Availableexampatternsinfo: any[];
   total_questions: [];
@@ -238,15 +249,12 @@ let examSlice = createSlice({
     },
 
     //checked 2.0
-    setCategorys: (state, actions) => {
-      let categorys: string[] = actions.payload;
 
-      if (categorys.length > 0) {
-        state.examCategorys = categorys;
-      } else {
-        state.examCategorys = ["no category"];
-      }
+    setCategorys: (state, actions) => {
+      const categorys: Category[] = actions.payload;
+      state.examCategorys = categorys;
     },
+
   },
 });
 
