@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 type user_type = {
   name: string | null;
   email: string | null;
-  blance: number | null;
+  balance: number | null;
   ticket: number | null;
   isprime: string | null;
   status: "none";
@@ -38,7 +38,7 @@ type user_type = {
 const initialState: user_type = {
   name: "",
   email: "",
-  blance: 0,
+  balance: 0,
   ticket: 0,
   isprime: "",
   status: "none",
@@ -71,13 +71,13 @@ let userSlice = createSlice({
   reducers: {
     setUser: (state, actions) => {
       console.log("user set...");
-      let { name, blance, email, prime, social, target_exam, academicProfile, standard, stream, school } =
+      let { name, balance, email, prime, social, target_exam, academicProfile, standard, stream, school } =
         actions.payload;
 
       state.name = name;
       state.email = email;
-      state.blance = blance.amount;
-      state.ticket = blance.ticket;
+      state.balance = balance.amount;
+      state.ticket = balance.ticket;
       state.isprime = prime.status;
       state.social = social;
       state.status = prime.status;
@@ -98,7 +98,7 @@ let userSlice = createSlice({
     logout: (state) => {
       state.name = null;
       state.email = null;
-      state.blance = null;
+      state.balance = null;
       state.ticket = null;
       state.isprime = null;
       state.islogin = false;

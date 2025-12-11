@@ -64,8 +64,8 @@ const FloatingDockMobile = ({
                 }}
                 transition={{ delay: (items.length - 1 - idx) * 0.05 }}
               >
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   key={item.name}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900"
                 >
@@ -74,7 +74,7 @@ const FloatingDockMobile = ({
                     size={20}
                     style={{ color: item.color, minWidth: "20px" }}
                   />
-                </a>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
@@ -163,13 +163,13 @@ function IconContainer({
   Icon,
   href,
   color
-  
+
 }: {
   mouseX: MotionValue;
   name: string;
   Icon: LucideIcon;
   href: string;
-    color: string;
+  color: string;
 
 }) {
   let ref = useRef<HTMLDivElement>(null);

@@ -7,7 +7,7 @@ export class activityApi {
     }
 
     getActivities = (page: number = 1, limit: number = 10) => {
-        let url = `/user/activity?page=${page}&limit=${limit}`;
+        let url = `/user/activity/history/recent?page=${page}&limit=${limit}`;
         return this.api.request(url);
     };
 

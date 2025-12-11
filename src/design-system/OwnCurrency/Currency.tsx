@@ -19,7 +19,7 @@ export const Ticketicon = ({ size = 25, color = "#344CB7" }) => {
 };
 
 export const CurrencyComp = () => {
-  let { blance } = useAppSelector((state) => state.user);
+  let { balance } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   return (
     <motion.div
@@ -41,7 +41,7 @@ export const CurrencyComp = () => {
             onClick={() => navigate("/payment")}
           >
             <div className=" flex  justify-center items-center font-bold text-sm gap-1  md:text-[22px] md:gap-4">
-              <h2>{blance}</h2>
+              <h2>{balance}</h2>
               <Currencyicon />
             </div>
             <span className="sr-only">currency count</span>

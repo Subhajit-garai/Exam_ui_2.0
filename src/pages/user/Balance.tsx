@@ -19,7 +19,7 @@ import { Card } from "@repo/design-system/card";
 // };
 
 export const Balance = () => {
-  let { blance, ticket } = useAppSelector((state) => state.user);
+  let { balance, ticket } = useAppSelector((state) => state.user);
 
   // const [data, setdata] = useState<transition_type>({ head: [], body: [] });
 
@@ -33,9 +33,9 @@ export const Balance = () => {
   //   ],
   // };
 
-  useEffect(()=>{
+  useEffect(() => {
     // setdata(demo_data)
-  },[])
+  }, [])
 
   return (
     <>
@@ -43,7 +43,7 @@ export const Balance = () => {
         <div className=" grid grid-cols-2 md:flex gap-2 md:gap-4 justify-between">
           <CurrencyCard
             title={"Token"}
-            balance={blance ? blance : undefined}
+            balance={balance ? balance : undefined}
             Icon={Currencyicon}
             size={30}
           />
