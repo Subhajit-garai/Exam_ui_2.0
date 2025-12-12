@@ -16,6 +16,8 @@ export type Category = "CS" | "BMLT";
 
 export type ExamScope = "NATIONAL" | "STATE" | "COLLEGE" | "OTHER";
 
+export type SocialPlatform = "email" | "telegram" | "whatsApp" | "linkedIn" | "gitHub" | "twitter" | "instagram" | "facebook" | "website"
+
 
 
 export type ChatType = "group" | "private" | "channel" | "supergroup";

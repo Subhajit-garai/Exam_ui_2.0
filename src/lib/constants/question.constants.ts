@@ -16,6 +16,7 @@ export const Categorys = ["CS", "BMLT"];
 export const examScope = ["NATIONAL", "STATE", "COLLEGE", "OTHER"];
 export const chat_type = ["group", "private", "channel", "supergroup"]
 export const purchaseType = ["subcription", "token"]
+export const SocialPlatform = ["email", "telegram", "whatsApp", "linkedIn", "gitHub", "twitter", "instagram", "facebook", "website"]
 
 export const PrimeStatus = ["None", "Bronze", "Silver", "Gold"]
 

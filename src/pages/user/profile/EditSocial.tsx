@@ -8,19 +8,11 @@ import {
 } from "@repo/ui/dialog";
 import { Input } from "@repo/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@repo/ui/select";
-import { IconBrandTelegram, IconBrandLinkedin, IconBrandGithub, IconBrandTwitter, IconBrandInstagram, IconBrandFacebook, IconWorld, IconPencil, IconTrash, IconPlus } from "@tabler/icons-react";
+import { IconPencil, IconTrash, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
-import type { SocialHandle_type } from "./SocialLinks";
+import { SOCIAL_PLATFORMS, type SocialHandle_type } from "./SocialLinks";
 
-const SOCIAL_PLATFORMS = [
-    { label: "Telegram", value: "Telegram", icon: <IconBrandTelegram size={20} />, color: "text-blue-500 bg-blue-500/10" },
-    { label: "LinkedIn", value: "Linkedin", icon: <IconBrandLinkedin size={20} />, color: "text-blue-700 bg-blue-700/10" },
-    { label: "GitHub", value: "GitHub", icon: <IconBrandGithub size={20} />, color: "text-gray-900 dark:text-gray-100 bg-gray-500/10" },
-    { label: "Twitter", value: "Twitter", icon: <IconBrandTwitter size={20} />, color: "text-sky-500 bg-sky-500/10" },
-    { label: "Instagram", value: "Instagram", icon: <IconBrandInstagram size={20} />, color: "text-pink-500 bg-pink-500/10" },
-    { label: "Facebook", value: "Facebook", icon: <IconBrandFacebook size={20} />, color: "text-blue-600 bg-blue-600/10" },
-    { label: "Website", value: "Website", icon: <IconWorld size={20} />, color: "text-emerald-500 bg-emerald-500/10" },
-];
+
 
 interface EditSocialProps {
     socialHandles: SocialHandle_type[];
@@ -38,9 +30,9 @@ export const EditSocial = ({ socialHandles, onAdd, onDelete }: EditSocialProps) 
             if (platform) {
                 onAdd({
                     Icon: platform.icon,
-                    title: platform.label,
+                    platform: platform.label,
                     iconText: platform.label,
-                    value: newValue,
+                    link: newValue,
                     ActionIcon: null,
                 });
                 setNewPlatform("");
@@ -70,8 +62,8 @@ export const EditSocial = ({ socialHandles, onAdd, onDelete }: EditSocialProps) 
                                         {handle.Icon}
                                     </div>
                                     <div className="flex flex-col min-w-0">
-                                        <span className="text-xs font-medium truncate">{handle.title}</span>
-                                        <span className="text-xs text-muted-foreground truncate">{handle.value}</span>
+                                        <span className="text-xs font-medium truncate">{handle.platform}</span>
+                                        <span className="text-xs text-muted-foreground truncate">{handle.link}</span>
                                     </div>
                                 </div>
                                 {onDelete && (

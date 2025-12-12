@@ -47,11 +47,17 @@ export class userApi {
     let url = `/user/validate/telegramid`;
     return this.api.request(url, { method: "POST", data: data });
   };
-  veryfyTockenFroEmail = (data: any) => {
+  veryfyTockenFroEmail = (data: {
+    token: string;
+    email?: string | undefined;
+  }) => {
     let url = `/user/verify/email`;
     return this.api.request(url, { method: "POST", data: data });
   };
-  veryfyTockenFroTelegram = (data: any) => {
+  veryfyTockenFroTelegram = (data: {
+    token: string;
+    email: string;
+  }) => {
     let url = `/user/verify/telegramid`;
     return this.api.request(url, { method: "POST", data: data });
   };

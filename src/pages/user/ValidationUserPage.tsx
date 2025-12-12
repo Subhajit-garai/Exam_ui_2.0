@@ -13,18 +13,45 @@ import { ShieldCheck, ShieldX } from "lucide-react";
 import { useApi } from "@/ApiProvider.js";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import type { InputOption } from "@repo/types/Input.js";
+import type { user_social_type } from "@/store/index.js";
 
 const ValidationUserPage = () => {
-  let { email, social } = useAppSelector(
+  let { social } = useAppSelector(
     (state) => state.user
   );
+
+
+  let [telegram, settelegram] = useState<user_social_type>({
+    platform: "telegram",
+    link: "",
+    isVerified: false
+  })
+  let [email, setemail] = useState<user_social_type>({
+    platform: "telegram",
+    link: "",
+    isVerified: false
+  })
+  useEffect(() => {
+
+    if (social) {
+      social.map((link) => {
+        if (link.platform === "telegram") {
+          settelegram(link)
+        }
+        if (link.platform === "email") {
+          setemail(link)
+        }
+      })
+
+    }
+  }, [social])
 
   let [sendTokengen, setsendTokengen] = useState(false);
   let telegramidOption: InputOption[] = [
     {
       id: "1",
       inputId: "input-telegramid",
-      placeholder: social?.telegram,
+      placeholder: telegram.link,
       required: true,
       name: "token",
       disabled: sendTokengen ? false : true,
@@ -34,7 +61,7 @@ const ValidationUserPage = () => {
     {
       id: "1",
       inputId: "input-email",
-      placeholder: email ? email : "",
+      placeholder: email ? email.link : "",
       required: true,
       name: "token",
       disabled: sendTokengen ? false : true,
@@ -46,7 +73,7 @@ const ValidationUserPage = () => {
   const dispatch = useAppDispatch();
   let { value, handleInputefn, setValue } = useHandleinpute({
     token: "",
-    email: email ? email : "",
+    email: email ? email.link : "",
   });
 
   useEffect(() => {
@@ -55,21 +82,21 @@ const ValidationUserPage = () => {
 
   return (
     <div className=" flex gap-4">
-      {social?.isEmailVerified ? (
+      {email.isVerified ? (
         <>
           <VerificationSuccessDisplayinfoCont
             title={"email verified"}
             Icon={ShieldCheck}
-            data={email}
+            data={email.link}
           // btntext={"Validate agin"}
           />
 
-          {social?.isTelegramVerified ? (
+          {telegram.isVerified ? (
             <>
               <VerificationSuccessDisplayinfoCont
                 title={"Telegram id verified"}
                 Icon={ShieldCheck}
-                data={social.telegram}
+                data={telegram.link}
               // btntext={"Validate agin"}
               />
             </>
@@ -85,7 +112,7 @@ const ValidationUserPage = () => {
                 Icon={ShieldX}
                 otpsendfn={() => {
                   _.api.user
-                    .genTockenFroTelegram({ telegramid: social?.telegram })
+                    .genTockenFroTelegram({ telegramid: telegram.link })
                     .then((response: any) => {
                       if (response?.success) {
                         toast.success(response.message, ToastConfig());
@@ -101,7 +128,7 @@ const ValidationUserPage = () => {
                 }}
                 submitfn={() => {
                   _.api.user
-                    .veryfyTockenFroTelegram(value)
+                    .veryfyTockenFroTelegram({ email: email.link, token: value.token })
                     .then((response: any) => {
                       if (response?.success) {
                         toast.success(response.message, ToastConfig());
@@ -131,7 +158,7 @@ const ValidationUserPage = () => {
             isotpSend={sendTokengen}
             otpsendfn={() => {
               _.api.user
-                .genTockenFroEmail({ email: email })
+                .genTockenFroEmail({ email: email.link })
                 .then((response: any) => {
                   if (response.success) {
                     toast.success(response.message, ToastConfig());
@@ -146,7 +173,7 @@ const ValidationUserPage = () => {
             }}
             submitfn={() => {
               _.api.user
-                .veryfyTockenFroEmail(value)
+                .veryfyTockenFroEmail({ email: email.link, token: value.token })
                 .then((response: any) => {
                   if (response.success) {
                     toast.success(response.message, ToastConfig());

@@ -1,3 +1,4 @@
+import type { SocialPlatform } from "@/lib/constants/question.constants.type";
 import { ApiClient } from "../ApiClient";
 
 export class SocialLinksApi {
@@ -12,21 +13,16 @@ export class SocialLinksApi {
         return this.api.request(url);
     };
 
-    addSocialLink = (data: any) => {
-        console.log("Adding social link:", data);
-        let url = `/user/sociallinks`;
-        return this.api.request(url, { method: "POST", data: data });
-    };
 
-    updateSocialLink = (id: string, data: any) => {
-        console.log(`Updating social link ${id}:`, data);
-        let url = `/user/sociallinks/${id}`;
+    createOrupdateSocialLink = (data: { platform: SocialPlatform, link: string }) => {
+        console.log(`Updating social link ${data.platform}:`, data);
+        let url = `/user/profile/sociallinks`;
         return this.api.request(url, { method: "PUT", data: data });
     };
 
-    deleteSocialLink = (id: string) => {
-        console.log(`Deleting social link ${id}`);
-        let url = `/user/sociallinks/${id}`;
+    deleteSocialLink = ({ platform }: { platform: SocialPlatform }) => {
+        console.log("platform ---> ", platform);
+        let url = `/user/profile/sociallinks/${platform}`;
         return this.api.request(url, { method: "DELETE" });
     };
 }

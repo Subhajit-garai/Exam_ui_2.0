@@ -1,5 +1,14 @@
+import type { SocialPlatform } from "@/lib/constants/question.constants.type";
 import { createSlice } from "@reduxjs/toolkit";
 
+
+
+
+export type user_social_type = {
+  platform: SocialPlatform;
+  link: string;
+  isVerified: boolean;
+}
 type user_type = {
   name: string | null;
   email: string | null;
@@ -10,20 +19,7 @@ type user_type = {
   islogin: boolean;
   isverify: boolean;
   contact: string;
-  social: {
-    telegram?: string;
-    whatsapp?: string;
-    linkedin?: string;
-    github?: string;
-    twitter?: string;
-    instagram?: string;
-    facebook?: string;
-    website?: string;
-    isContactVerified: boolean;
-    isEmailVerified: boolean;
-    isTelegramVerified: boolean;
-    isWhatsappVerified: boolean;
-  };
+  social: user_social_type[],
   target_exam?: string;
   academicProfile?: {
     category: string;
@@ -45,20 +41,7 @@ const initialState: user_type = {
   islogin: false,
   isverify: false,
   contact: "xxxxxxxx",
-  social: {
-    telegram: "0000000000",
-    whatsapp: "",
-    linkedin: "",
-    github: "",
-    twitter: "",
-    instagram: "",
-    facebook: "",
-    website: "",
-    isContactVerified: false,
-    isEmailVerified: false,
-    isTelegramVerified: false,
-    isWhatsappVerified: false,
-  },
+  social: [],
   academicProfile: null,
   standard: null,
   stream: null,
@@ -73,7 +56,6 @@ let userSlice = createSlice({
       console.log("user set...");
       let { name, balance, email, prime, social, target_exam, academicProfile, standard, stream, school } =
         actions.payload;
-
       state.name = name;
       state.email = email;
       state.balance = balance.amount;
