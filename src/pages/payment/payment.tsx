@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { PaymentSubcriptionCard__2, PaymentTokenCard__2 } from "./PaymentOfferCard";
+import { useNavigate } from "react-router-dom";
 import { Card } from "@repo/design-system/card/Card";
-import { toast } from "react-toastify";
-import { ToastConfig } from "@repo/lib/utils/utils";
-import { useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import { LoaderFive } from "@/design-system/loader/loader";
 import { Tabs } from "@/design-system/tabs/Tabs";
@@ -52,83 +50,12 @@ const Payment = () => {
     })();
   }, []);
 
-  let { name, email, contact } = useAppSelector((state) => state.user);
+  // let { name, email, contact } = useAppSelector((state) => state.user);
+
+  const navigate = useNavigate();
 
   const checkout = async (amount: number, plan: string, type: string) => {
-
-
-    let key_res = await _.api.payment.getKey();
-    if (!key_res) {
-      return toast.error(key_res.message, ToastConfig());
-    }
-    const { key } = key_res;
-
-    let responce;
-
-    switch (type) {
-
-      case "SUBSCRIPTION":
-        {
-          responce = await _.api.payment.SubscriptionCheckout({
-            amount: String(amount),
-            plan: plan,
-            type: type,
-          });
-        }
-        break;
-      case "TOKEN":
-        {
-          responce = await _.api.payment.TokenCheckout({
-            amount: String(amount),
-            plan: plan,
-            type: type,
-          });
-
-          if (!responce.success) {
-            return toast.error(responce.message, ToastConfig());
-          }
-        }
-        break;
-      default:
-        break;
-    }
-
-    if (!responce.success) {
-      return toast.error(responce.message, ToastConfig());
-    }
-
-    const { order } = responce;
-
-    let PaymentSuccessurl = _.api.client.createUrl(
-      "/payment/paymentverification"
-    );
-
-    var options = {
-      key: key, // Enter the Key ID generated from the Dashboard
-      amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: order.currency,
-      name: "exambuddys", //your business name
-      description: "exambuddys  Transaction",
-      image: "./assets/logo/logo-svg.svg",
-      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      callback_url: PaymentSuccessurl,
-      prefill: {
-        //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-        name: name, //your customer's name
-        email: email,
-        contact: contact, //Provide the customer's phone number for better conversion rates
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-
-    const razor = new window.Razorpay(options);
-
-    razor.open();
+    navigate("/payment/checkout", { state: { plan, price: amount, type } });
   };
 
   const SubscriptionCheckoutfn = async (

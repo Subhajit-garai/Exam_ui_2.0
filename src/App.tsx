@@ -59,6 +59,7 @@ import {
 import { store } from "@repo/store/store.js";
 import { Provider } from "react-redux";
 import Payment from "./pages/payment/payment.js";
+import Checkout from "./pages/payment/Checkout.js";
 import PaymentSuccess from "./pages/payment/PaymentSuccess.js";
 import Profile from "./pages/user/profile/Profile.js";
 import { Balance } from "./pages/user/Balance.js";
@@ -269,6 +270,7 @@ const App = () => {
                   <Route path="/" element={<ProtectedRoute />}>
                     <Route path="examportal" element={<Examportal />} />
                     <Route path="payment" element={<Payment />} />
+                    <Route path="payment/checkout" element={<Checkout />} />
                     <Route path="paymentsuccess" element={<PaymentSuccess />} />
                   </Route>
 
