@@ -115,7 +115,11 @@ let noteSlice = createSlice({
       state.currentTopic = actions.payload;
     },
     setContentData: (state, actions) => {
-      state.content = actions.payload.data.content;
+      state.content = actions.payload.content;
+
+      if (actions.payload.id) {
+        state.currentTopic = actions.payload.name;
+      }
     },
     setNotes: (state, actions) => {
       state.note = actions.payload;

@@ -134,7 +134,7 @@ export const JoinMock = () => {
   return (
     <>
       <div className="flex-1 md:h-160  relative  mb-20 md:mb-0 ">
-        <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
+        <div className="h-[40rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start ">
           <Tabs tabs={tabs} contentClassName="mt-10" activeTabClassName="" />
         </div>
       </div>

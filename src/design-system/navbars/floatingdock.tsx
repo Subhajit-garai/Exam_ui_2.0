@@ -82,7 +82,7 @@ const FloatingDockMobile = ({
       </AnimatePresence>
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800"
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800 border-2 border-slate-200 dark:border-slate-800"
       >
         <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
       </button>
@@ -118,7 +118,7 @@ const FloatingDockDesktop = ({
                 },
               }}
               className={cn(
-                " h-16 items-end gap-4 rounded-2xl bg-gray-50 px-4 pb-3 md:flex dark:bg-neutral-900",
+                " h-16 items-end gap-4 rounded-2xl bg-gray-50 dark:bg-neutral-900  border-2 border-slate-200 dark:border-slate-800  px-4 pb-3 md:flex ",
                 className
               )}
             >
@@ -148,7 +148,7 @@ const FloatingDockDesktop = ({
 
         <button
           onClick={() => setOpen(!open)}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800  border-2 border-slate-200 dark:border-slate-800"
         >
           <IconLayoutNavbarCollapse className="h-6 w-6 text-neutral-500 dark:text-neutral-400" />
         </button>

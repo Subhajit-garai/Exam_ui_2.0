@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Card } from "@repo/design-system/card";
 import { useAppDispatch } from "@/store/hook";
-import { setCurrentSubject } from "@/store/slice/noteSlice";
+import { setCurrentSubject, setCurrentTopic } from "@/store/slice/noteSlice";
 import { motion } from "motion/react";
 import { Book, FileText } from "lucide-react";
 
@@ -66,9 +66,11 @@ export const SubjectListCard = ({
 export const TopicListCard = ({ data, link }: { data: any; link?: string }) => {
   const { category } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const color = getColor(data.name || "");
 
   const handleClick = () => {
+    dispatch(setCurrentTopic((data.name && data.name) ?? null));
     navigate(link || `/notes/${category}/${data.slug}`);
   };
   return (
