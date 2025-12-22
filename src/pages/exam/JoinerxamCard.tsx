@@ -108,7 +108,7 @@ const JoinerxamCard = ({
               timeStamp={timeStamp}
               startTime={startTime}
               joinTime={joinTime}
-              timerClass={"absolute right-0 mr-5 "}
+              timerClass={"absolute right-0 mr-2 "}
             />
           )}
           <Badge className=" bg-[var(--primary-foreground)]">

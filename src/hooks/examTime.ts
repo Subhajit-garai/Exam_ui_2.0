@@ -44,7 +44,7 @@ const useExamTimetablehook = (Exams: any[], type = "Test") => {
     settomorrowsExam(sortExamNames(tomorrowExams, "@", "name", "desc"));
     setupcomingExam(sortExamNames(upcomingExams, "@", "name", "desc"));
     setcompletedExam(sortExamNames(completedExams, "@", "name", "desc"))
-  }, [Exams,type]);
+  }, [Exams, type]);
   return { todaysExam, tomorrowsExam, upcomingExam, completedExam };
 };
 
@@ -53,39 +53,42 @@ export const calculateExamJoinRemainingTime = (
   time: string,
   jointime: string | any
 ) => {
-  let now = dayjs();
-  let startTime = dayjs(`${date} ${time}`, "DD-MM-YYYY hh:mm a");
-  // jointime = startTime.add(dayjs.duration(jointime))
-  // console.log("type of jointime",dayjs.duration(jointime));
+  const now = dayjs();
+  const startTime = dayjs(`${date} ${time}`, "DD-MM-YYYY hh:mm a");
 
-  if (jointime == "no limit") {
-    jointime = "00:15 m";
+  let validJoinDuration = jointime;
+  if (validJoinDuration === "no limit") {
+    validJoinDuration = "00:15 m";
   }
-  const minutesMatch = jointime.match(/(\d+):(\d+)/); // Matches "00:15"
+
+  // Ensure validJoinDuration is a string before matching
+  if (typeof validJoinDuration !== 'string') {
+    console.error("Invalid jointime format (not a string):", jointime);
+    return { remainingSecondsForStart: 0, remainingSecondsForjoin: 0 };
+  }
+
+  const minutesMatch = validJoinDuration.match(/(\d+):(\d+)/); // Matches "00:15"
+
+  let joinDeadline = startTime;
 
   if (minutesMatch) {
     const [_, hours, minutes] = minutesMatch.map(Number);
-    jointime = startTime.add(hours, "hour").add(minutes, "minute");
+    joinDeadline = startTime.add(hours, "hour").add(minutes, "minute");
   } else {
-    console.error("Invalid jointime format:", jointime);
+    console.error("Invalid jointime format:", validJoinDuration);
   }
 
-  let started = now.isAfter(startTime);
+  const hasStarted = now.isAfter(startTime);
   let remainingSecondsForStart = 0;
   let remainingSecondsForjoin = 0;
 
-  if (started) {
-    let isjoiningTimeExecd = now.isAfter(jointime);
-    // console.log("joining time is execd", isjoiningTimeExecd);
-
-    if (!isjoiningTimeExecd) {
-      remainingSecondsForjoin = Math.max(jointime.diff(now, "seconds"), 0);
+  if (hasStarted) {
+    if (now.isBefore(joinDeadline)) {
+      remainingSecondsForjoin = Math.max(joinDeadline.diff(now, "seconds"), 0);
     }
   } else {
     remainingSecondsForStart = Math.max(startTime.diff(now, "seconds"), 0);
   }
-
-  // console.log(`${remainingSecondsForStart + " " + remainingSecondsForjoin} seconds`);
 
   return { remainingSecondsForStart, remainingSecondsForjoin };
 };
@@ -134,14 +137,22 @@ export const useRemainingTime = (initialTime: any, action?: any) => {
   }, [time]);
 
   // Convert seconds to "HH:MM:SS" format
+  // Convert seconds to "D" or "HHh:MMm:SSs" format
   const formatTime = (timeInSeconds: number) => {
-    const hours = Math.floor(timeInSeconds / 3600);
-    const minutes = Math.floor((timeInSeconds % 3600) / 60);
-    const seconds = timeInSeconds % 60;
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    const days = Math.floor(timeInSeconds / 86400);
+    const remainingSecondsAfterDays = timeInSeconds % 86400;
+    const hours = Math.floor(remainingSecondsAfterDays / 3600);
+    const minutes = Math.floor((remainingSecondsAfterDays % 3600) / 60);
+    const seconds = remainingSecondsAfterDays % 60;
+
+    if (days > 0) {
+      return `${days}d`;
+    }
+
+    return `${String(hours).padStart(2, "0")}h:${String(minutes).padStart(
       2,
       "0"
-    )}:${String(seconds).padStart(2, "0")}`;
+    )}m:${String(seconds).padStart(2, "0")}s`;
   };
 
   return formatTime(time);

@@ -13,8 +13,6 @@ export const QuestionSection = ({
   options,
   setans,
   extra,
-  // formate,
-  // topic,
   ismultiple = false,
 }: {
   number: number;
@@ -23,8 +21,6 @@ export const QuestionSection = ({
   options: string[];
   setans: React.Dispatch<React.SetStateAction<string[]>>;
   extra: any;
-  // formate?: string;
-  // topic?: string;
   ismultiple?: boolean | undefined;
 }) => {
   let { ansset } = useAppSelector((state) => state.exam);
@@ -60,7 +56,7 @@ export const QuestionSection = ({
       <div className="md:py-4 md:px-8  ">
         <fieldset className="flex w-full  flex-col gap-2">
           <legend
-            className={`mb-2 md:mb-4 md:text-lg font-semibold  text-pretty text-primary`}
+            className={`mb-2 md:mb-4 md:text-lg font-semibold  text-pretty text-[var(--text-primary)]`}
           >
             {number}) {title}
           </legend>
@@ -92,11 +88,10 @@ export const QuestionSection = ({
                             value={i + 1}
                             onClick={() => ans(String(i + 1))}
                             checked={currentAnswer.includes(String(i + 1))}
-                            // readOnly={true}
                           />
                           <Label
                             htmlFor={`option${i + 1}`}
-                            className="text-md  text-primary"
+                            className="text-md  text-[var(--text-primary)]"
                           >
                             {option}
                           </Label>
@@ -114,11 +109,10 @@ export const QuestionSection = ({
                         id={`option${i + 1}`}
                         name={`question${number}`}
                         value={i + 1}
-                        onClick={() =>  {ans(String(i + 1))}}
+                        onClick={() => { ans(String(i + 1)) }}
                         checked={currentAnswer.includes(String(i + 1))}
-                        // readOnly={true}
                       />
-                      <Label htmlFor={`option${i + 1}`} className="text-md text-primary">
+                      <Label htmlFor={`option${i + 1}`} className="text-md text-[var(--text-primary)]">
                         {option}
                       </Label>{" "}
                     </>

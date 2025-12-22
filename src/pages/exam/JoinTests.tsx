@@ -15,8 +15,10 @@ const JoinExam = () => {
 
   const _ = useApi();
 
-  let { todaysExam, tomorrowsExam, completedExam } = useExamTimetablehook(Test);
+  let { todaysExam, tomorrowsExam, upcomingExam, completedExam } = useExamTimetablehook(Test);
   const [loading, setLoading] = useState(true);
+
+
 
 
   const fetchTests = async () => {
@@ -95,7 +97,7 @@ const JoinExam = () => {
             <LoaderFive text="Loading..." />
           ) : (
             <ExamDisplay
-              Data={tomorrowsExam}
+              Data={[...tomorrowsExam, ...upcomingExam]}
               entryChange={entryChange}
               type={"Test"}
               setCurrentPage={setCurrentPage}

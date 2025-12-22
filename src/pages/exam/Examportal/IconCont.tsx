@@ -109,7 +109,7 @@ export const InfoCont = () => {
         if (response.success) {
           try {
             await _.api.activity.logActivity({
-              type: "TEST_COMPLETED",
+              type: "TEST",
               title: "Test Completed",
               description: `Completed exam ${Examid}`,
               metadata: { examId: Examid }

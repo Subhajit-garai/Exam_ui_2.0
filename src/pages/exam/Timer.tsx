@@ -19,7 +19,7 @@ const KbdTimer = ({
   let time_str = useRemainingTime(time);
 
   return (
-    <div className={cn("inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-[var(--border)]", className)}>
+    <div className={cn("inline-flex items-center gap-1 px-1 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-[var(--border)]", className)}>
       <Icon className="text-[var(--text-secondary)]" size={13} />
       <span className="text-[10px] font-medium text-[var(--text-secondary)] uppercase">{message}</span>
       <span className="text-xs font-bold font-mono text-[var(--text-primary)] tabular-nums">
