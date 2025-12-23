@@ -16,6 +16,11 @@ export class activityApi {
         return this.api.request(url);
     };
 
+    getActivityHeatmap = () => {
+        let url = `/user/activity/heatmap`;
+        return this.api.request(url);
+    };
+
     logActivity = (data: { type: string; title: string; description?: string; status?: string; metadata?: any }) => {
 
         let url = `/user/activity/log`;

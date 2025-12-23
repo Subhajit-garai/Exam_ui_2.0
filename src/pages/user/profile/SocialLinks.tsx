@@ -3,7 +3,7 @@ import { Tooltip_two } from "@/design-system/tooltip/tooltip_two";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { Button } from "@repo/ui/button";
-import { IconBrandTelegram, IconBrandLinkedin, IconBrandGithub, IconBrandTwitter, IconBrandInstagram, IconBrandFacebook, IconWorld, IconBrandWhatsapp } from "@tabler/icons-react";
+import { IconBrandTelegram, IconBrandLinkedin, IconBrandGithub, IconBrandTwitter, IconBrandInstagram, IconBrandFacebook, IconWorld, IconBrandWhatsapp, IconBrandGmail } from "@tabler/icons-react";
 import { EditSocial } from "./EditSocial";
 import { useApi } from "@/ApiProvider";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
@@ -23,6 +23,7 @@ export type SocialHandle_type = {
 
 export const SOCIAL_PLATFORMS = [
     { label: "telegram", value: "telegram", icon: <IconBrandTelegram size={20} />, color: "text-blue-500 bg-blue-500/10" },
+    { label: "email", value: "email", icon: <IconBrandGmail size={20} />, color: "text-blue-600 bg-blue-600/10" },
     { label: "whatsapp", value: "whatsapp", icon: <IconBrandWhatsapp size={20} />, color: "text-green-500 bg-green-500/10" },
     { label: "linkedIn", value: "linkedIn", icon: <IconBrandLinkedin size={20} />, color: "text-blue-700 bg-blue-700/10" },
     { label: "github", value: "github", icon: <IconBrandGithub size={20} />, color: "text-[var(--text-primary)] bg-gray-500/10" },

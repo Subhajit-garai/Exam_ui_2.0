@@ -40,4 +40,14 @@ export class progressApi {
     getUserStats = async () => {
         return await this.api.request(`${this.BASE_URL}/dashboard-stats`);
     };
+
+    // Topic: Fetch specific topic progress
+    getTopicProgress = async (topicId: string) => {
+        return await this.api.request(`${this.BASE_URL}/topic/${topicId}`);
+    };
+
+    // Topics: Fetch all user topics progress
+    getUserTopicsProgress = async () => {
+        return await this.api.request(`${this.BASE_URL}/user/topics`);
+    };
 }

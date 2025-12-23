@@ -3,9 +3,11 @@ import { AcademicProfile } from "./academic-profile";
 import { PerformanceStats } from "./performance-stats";
 import { SubscriptionDetails } from "./subscription-details";
 import { Achievements } from "./Achievements";
-import { ReferEarnCard } from "./ReferEarnCard";
+// import { ReferEarnCard } from "./ReferEarnCard";
 import { UserInfoCard } from "./userinfo-card";
 
+import { ActivityHeatmap } from "./ActivityHeatmap";
+import { TopicProgressCard } from "./TopicProgressCard";
 
 const Profile = () => {
   return (
@@ -16,15 +18,19 @@ const Profile = () => {
           <UserInfoCard />
           <SocialLinks />
           <SubscriptionDetails />
-          <ReferEarnCard />
+          <TopicProgressCard />
+          {/* <ReferEarnCard /> */}
         </div>
 
         {/* Right Column: Academic & Performance */}
         <div className="flex flex-col gap-6 lg:col-span-2">
-          <AcademicProfile />
-          <PerformanceStats />
+          <div className="flex flex-col lg:flex-row gap-6">
+            <AcademicProfile />
+            <PerformanceStats />
+          </div>
+          <ActivityHeatmap />
           <Achievements />
-          {/* <ActivityHistory /> */}
+
         </div>
       </div>
     </div>

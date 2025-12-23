@@ -19,3 +19,5 @@ export * from "./dropdown/index";
 export * from "./datepicker/index";
 export * from "./pagenation/index";
 export * from "./alert/index";
+export * from "./heatmap/Heatmap";
+export * from "./progress/ProgressBar";

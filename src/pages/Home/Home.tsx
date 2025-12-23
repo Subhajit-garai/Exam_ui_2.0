@@ -1,4 +1,4 @@
-import { useAppSelector } from "@repo/store/hook";
+import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import {
   IconBook,
   IconChartBar,
@@ -18,29 +18,19 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@/lib";
 import { BetaTag } from "@/design-system/DevComponents/BetaTag";
+import { fetchUserStats } from "@/store/slice/userSlice";
 
 const Home = () => {
-  const { name } = useAppSelector((state) => state.user);
+  const { name, stats: userStats } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const date = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-  // Stats State
-  const [statsData, setStatsData] = useState<{
-    testsAttempted: { value: number; trend: any };
-    avgScore: { value: string; trend: any };
-    studyHours: { value: string; trend: any };
-    accuracy: { value: string; trend: any };
-  }>({
-    testsAttempted: { value: 0, trend: null },
-    avgScore: { value: "0%", trend: null },
-    studyHours: { value: "0h", trend: null },
-    accuracy: { value: "0%", trend: null },
-  });
 
   const stats: StatItem[] = [
-    { label: "Tests Attempted", value: statsData.testsAttempted.value.toString(), icon: <IconBook size={24} />, color: "text-[var(--color-blue)]", bg: "bg-[var(--color-blue-soft)]", trend: statsData.testsAttempted.trend },
-    { label: "Avg Score", value: statsData.avgScore.value, icon: <IconTrophy size={24} />, color: "text-[var(--color-yellow)]", bg: "bg-[var(--color-yellow-soft)]", trend: statsData.avgScore.trend },
-    { label: "Study Hours", value: statsData.studyHours.value, icon: <IconClock size={24} />, color: "text-[var(--color-purple)]", bg: "bg-[var(--color-purple-soft)]", trend: statsData.studyHours.trend },
-    { label: "Accuracy", value: statsData.accuracy.value, icon: <IconChartBar size={24} />, color: "text-[var(--color-green)]", bg: "bg-[var(--color-green-soft)]", trend: statsData.accuracy.trend },
+    { label: "Tests Attempted", value: userStats.testsAttempted.value.toString(), icon: <IconBook size={24} />, color: "text-[var(--color-blue)]", bg: "bg-[var(--color-blue-soft)]", trend: userStats.testsAttempted.trend },
+    { label: "Avg Score", value: userStats.avgScore.value, icon: <IconTrophy size={24} />, color: "text-[var(--color-yellow)]", bg: "bg-[var(--color-yellow-soft)]", trend: userStats.avgScore.trend },
+    { label: "Study Hours", value: userStats.studyHours.value, icon: <IconClock size={24} />, color: "text-[var(--color-purple)]", bg: "bg-[var(--color-purple-soft)]", trend: userStats.studyHours.trend },
+    { label: "Accuracy", value: userStats.accuracy.value, icon: <IconChartBar size={24} />, color: "text-[var(--color-green)]", bg: "bg-[var(--color-green-soft)]", trend: userStats.accuracy.trend },
   ];
 
 
@@ -80,28 +70,11 @@ const Home = () => {
       if (res.success) {
         setrecentActivity(res.data)
       } else {
-        toast.error(res.message, ToastConfig(1000))
+        // toast.error(res.message, ToastConfig(1000))
       }
 
-      // Fetch Dashboard Stats
-      try {
-        const statsRes = await _.api.progress.getUserStats();
-        if (statsRes && statsRes.data) {
-          // Flatten nested structure
-          const { stats } = statsRes.data;
-
-          if (stats) {
-            setStatsData({
-              testsAttempted: { value: stats.testsAttempted.testsAttempted, trend: stats.testsAttempted.trend },
-              avgScore: { value: stats.avgScore.avgScore, trend: stats.avgScore.trend },
-              studyHours: { value: stats.studyHours.hours, trend: stats.studyHours.trend },
-              accuracy: { value: stats.accuracy.accuracy, trend: stats.accuracy.trend }
-            });
-          }
-        }
-      } catch (err) {
-        console.error("Failed to load stats", err);
-      }
+      // Fetch Dashboard Stats Redux
+      dispatch(fetchUserStats());
 
     })()
   }, [])

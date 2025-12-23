@@ -1,14 +1,20 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SocialPlatform } from "@/lib/constants/question.constants.type";
-import { createSlice } from "@reduxjs/toolkit";
-
-
-
+import { progressApi } from "@/lib/api_call/api_actions/progress.action";
 
 export type user_social_type = {
   platform: SocialPlatform;
   link: string;
   isVerified: boolean;
 }
+
+export type UserStats = {
+  testsAttempted: { value: number; trend: any };
+  avgScore: { value: string; trend: any };
+  studyHours: { value: string; trend: any };
+  accuracy: { value: string; trend: any };
+};
+
 type user_type = {
   name: string | null;
   email: string | null;
@@ -29,6 +35,14 @@ type user_type = {
   standard?: string | null;
   stream?: string | null;
   school?: string | null;
+  stats: UserStats;
+};
+
+const initialStats: UserStats = {
+  testsAttempted: { value: 0, trend: null },
+  avgScore: { value: "0%", trend: null },
+  studyHours: { value: "0h", trend: null },
+  accuracy: { value: "0%", trend: null },
 };
 
 const initialState: user_type = {
@@ -46,7 +60,24 @@ const initialState: user_type = {
   standard: null,
   stream: null,
   school: null,
+  stats: initialStats,
 };
+
+export const fetchUserStats = createAsyncThunk(
+  "user/fetchStats",
+  async (_, { rejectWithValue }) => {
+    try {
+      const api = new progressApi();
+      const res = await api.getUserStats();
+      if (res && res.data && res.data.stats) {
+        return res.data.stats;
+      }
+      return rejectWithValue("Invalid response format");
+    } catch (error) {
+      return rejectWithValue("Failed to fetch user stats");
+    }
+  }
+);
 
 let userSlice = createSlice({
   name: "user",
@@ -84,7 +115,19 @@ let userSlice = createSlice({
       state.ticket = null;
       state.isprime = null;
       state.islogin = false;
+      state.stats = initialStats;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUserStats.fulfilled, (state, action) => {
+      const stats = action.payload;
+      state.stats = {
+        testsAttempted: { value: stats.testsAttempted.testsAttempted, trend: stats.testsAttempted.trend },
+        avgScore: { value: stats.avgScore.avgScore, trend: stats.avgScore.trend },
+        studyHours: { value: stats.studyHours.hours, trend: stats.studyHours.trend },
+        accuracy: { value: stats.accuracy.accuracy, trend: stats.accuracy.trend }
+      };
+    });
   },
 });
 
