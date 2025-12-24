@@ -17,7 +17,7 @@ import { useApi } from "@/ApiProvider";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@/lib";
-import { BetaTag } from "@/design-system/DevComponents/BetaTag";
+// import { BetaTag } from "@/design-system/DevComponents/BetaTag";
 import { fetchUserStats } from "@/store/slice/userSlice";
 
 const Home = () => {
@@ -96,9 +96,9 @@ const Home = () => {
     <div className="flex flex-col gap-6 p-4 max-w-7xl mx-auto w-full">
       <WelcomeHeader name={name} date={date} />
 
-      <BetaTag variant="ribbon" text="BETA">
-        <StatsGrid stats={stats} />
-      </BetaTag>
+      {/* <BetaTag variant="ribbon" text="BETA">
+      </BetaTag> */}
+      <StatsGrid stats={stats} />
       <ExamTimeline events={examEvents} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 flex flex-col gap-6">

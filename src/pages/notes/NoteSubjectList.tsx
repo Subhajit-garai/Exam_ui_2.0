@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { SubjectListCard } from "./ListCard";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
-import { BetaTag } from "@repo/design-system/DevComponents/BetaTag";
 import { StatusAlert } from "@/design-system";
 
 
@@ -36,15 +35,15 @@ export default function NoteSubjectList() {
 
   return (
     <>
-      <BetaTag>
 
-        {errorMessage.type && <StatusAlert type={errorMessage.type} title={errorMessage.type} message={errorMessage.message} />}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-          {Subjects?.map((subject, idx) => {
-            return <SubjectListCard key={idx} data={subject} />;
-          })}
-        </div>
-      </BetaTag>
+
+      {errorMessage.type && <StatusAlert type={errorMessage.type} title={errorMessage.type} message={errorMessage.message} />}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+        {Subjects?.map((subject, idx) => {
+          return <SubjectListCard key={idx} data={subject} />;
+        })}
+      </div>
+
     </>
   );
 }
