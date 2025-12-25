@@ -25,12 +25,12 @@ const ValidationUserPage = () => {
     platform: "telegram",
     link: "",
     isVerified: false
-  })
+  });
   let [email, setemail] = useState<user_social_type>({
     platform: "telegram",
     link: "",
     isVerified: false
-  })
+  });
   useEffect(() => {
 
     if (social) {
@@ -47,7 +47,7 @@ const ValidationUserPage = () => {
   }, [social])
 
   let [sendTokengen, setsendTokengen] = useState(false);
-  let telegramidOption: InputOption[] = [
+  let telegramIdOption: InputOption[] = [
     {
       id: "1",
       inputId: "input-telegramid",
@@ -57,7 +57,7 @@ const ValidationUserPage = () => {
       disabled: sendTokengen ? false : true,
     },
   ];
-  let EmailOption: InputOption[] = [
+  let emailOption: InputOption[] = [
     {
       id: "1",
       inputId: "input-email",
@@ -85,7 +85,7 @@ const ValidationUserPage = () => {
       {email.isVerified ? (
         <>
           <VerificationSuccessDisplayinfoCont
-            title={"email verified"}
+            title={"Email Verified"}
             Icon={ShieldCheck}
             data={email.link}
           // btntext={"Validate agin"}
@@ -94,7 +94,7 @@ const ValidationUserPage = () => {
           {telegram.isVerified ? (
             <>
               <VerificationSuccessDisplayinfoCont
-                title={"Telegram id verified"}
+                title={"Telegram ID Verified"}
                 Icon={ShieldCheck}
                 data={telegram.link}
               // btntext={"Validate agin"}
@@ -102,10 +102,10 @@ const ValidationUserPage = () => {
             </>
           ) : (
             <>
-              <TokenValidationCard
-                title={"Telegram  verification"}
-                btntext={"validate"}
-                option={telegramidOption}
+              <VerificationRequirdCard
+                title={"Telegram Verification"}
+                btntext={"Validate"}
+                option={telegramIdOption}
                 value={value}
                 handleInputefn={handleInputefn}
                 isotpSend={sendTokengen}
@@ -148,10 +148,10 @@ const ValidationUserPage = () => {
         </>
       ) : (
         <>
-          <TokenValidationCard
-            title={"Email verification"}
-            btntext={"validate"}
-            option={EmailOption}
+          <VerificationRequirdCard
+            title={"Email Verification"}
+            btntext={"Validate"}
+            option={emailOption}
             value={value}
             Icon={ShieldX}
             handleInputefn={handleInputefn}
@@ -199,7 +199,7 @@ const ValidationUserPage = () => {
   );
 };
 
-export const TokenValidationCard = ({
+export const VerificationRequirdCard = ({
   title,
   handleInputefn,
   value,
@@ -221,22 +221,33 @@ export const TokenValidationCard = ({
   isotpSend: boolean;
 }) => {
   return (
-    <Card className="w-fit p-4  gap-4 items-center">
-      <span className="flex gap-2 items-center justify-center">
-        <Icon color="red" />
-        <h1 className=" text-center text-lg">{title} </h1>
-      </span>
+    <Card className="w-full min-w-[20rem] max-w-[24rem] p-6 gap-6 items-center flex flex-col shadow-sm border-red-500/30">
+      <div className="flex flex-col gap-3 items-center justify-center text-red-600 dark:text-red-400">
+        <div className="p-3 bg-red-100 dark:bg-red-900/20 rounded-full">
+          <Icon size={32} strokeWidth={2.5} />
+        </div>
+        <h1 className="text-center text-xl font-bold tracking-tight">{title}</h1>
+      </div>
 
-      <Textinput
-        options={option}
-        handleInputefn={handleInputefn}
-        value={value}
-      />
-      {isotpSend ? (
-        <Button onClick={submitfn}>Submit</Button>
-      ) : (
-        <Button onClick={otpsendfn}>{btntext}</Button>
-      )}
+      <div className="w-full flex flex-col gap-4">
+        <div className="w-full">
+          <Textinput
+            options={option}
+            handleInputefn={handleInputefn}
+            value={value}
+          />
+        </div>
+
+        {isotpSend ? (
+          <Button onClick={submitfn} className="w-full" variant="default">
+            Submit
+          </Button>
+        ) : (
+          <Button onClick={otpsendfn} className="w-full" variant="outline">
+            {btntext}
+          </Button>
+        )}
+      </div>
     </Card>
   );
 };
@@ -245,25 +256,23 @@ export const VerificationSuccessDisplayinfoCont = ({
   title,
   Icon,
   data,
-  // btntext,
 }: {
   title: string;
   Icon: ElementType;
   data: any;
-  // btntext: string;
 }) => {
   return (
-    <>
-      <Card className="card p-4  gap-4 items-center">
-        <span className="flex gap-2 justify-center">
-          <h1 className=" text-center text-lg">{title} </h1>
-          <Icon color="lightgreen" />
-        </span>
-        <input type="text" size={30} value={data} />
-
-        {/* <Button onClick={() => {}}>{btntext}</Button> */}
-      </Card>
-    </>
+    <Card className="w-full min-w-[20rem] max-w-[24rem] p-6 gap-5 items-center flex flex-col shadow-sm border-green-500/30">
+      <div className="flex flex-col gap-3 items-center justify-center text-green-600 dark:text-green-400">
+        <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-full">
+          <Icon size={32} strokeWidth={2.5} />
+        </div>
+        <h1 className="text-center text-xl font-bold tracking-tight">{title}</h1>
+      </div>
+      <div className="w-full bg-secondary/50 p-3 rounded-md border border-border text-center font-medium text-sm text-muted-foreground break-all">
+        {data}
+      </div>
+    </Card>
   );
 };
 
@@ -271,14 +280,14 @@ export const ValidationForgotpassword = () => {
   const navigate = useNavigate();
   const _ = useApi();
 
-  let [serchparems] = useSearchParams();
-  let email = serchparems.get("email");
+  let [searchParams] = useSearchParams();
+  let email = searchParams.get("email");
 
-  let EmailOption: InputOption[] = [
+  let emailOption: InputOption[] = [
     {
       id: "1",
       inputId: "input-Forgotpassword",
-      placeholder: "your Forgot password token",
+      placeholder: "Your Forgot Password Token",
       required: true,
       name: "ForgotpasswordToken",
       disabled: false,
@@ -286,7 +295,7 @@ export const ValidationForgotpassword = () => {
     {
       id: "2",
       inputId: "input-newpassword",
-      placeholder: "your newpassword ",
+      placeholder: "Your New Password",
       required: true,
       name: "newpassword",
       disabled: false,
@@ -323,9 +332,9 @@ export const ValidationForgotpassword = () => {
     <div className="flex-1 overflow-auto relative flex  flex-col items-center ">
       <div className="cont w-[25rem]">
         <Card>
-          <h1 className=" text-center"> verify Forgotpassword Token </h1>
+          <h1 className=" text-center"> Verify Forgot Password Token </h1>
           <Textinput
-            options={EmailOption}
+            options={emailOption}
             handleInputefn={handleInputefn}
             value={value}
           />

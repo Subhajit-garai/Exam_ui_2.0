@@ -334,7 +334,7 @@ const App = () => {
                     path="/test"
                     element={<SplitOutlet SIDEBAR_ITEMS={EXAM_SIDEBAR_ITEMS} />}
                   >
-                    <Route index element={<Navigate to="join" replace />} />
+                    <Route index element={<Navigate to="dpp" replace />} />
                     <Route path="join" element={<JoinTests />} />
                     <Route path="dpp" element={<JoinDpp />} />
                     {/* <Route path="contest" element={<JoinContest />} /> */}

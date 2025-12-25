@@ -74,13 +74,13 @@ export const Logo = ({
   const userLogout = async () => {
     if (islogin) {
       dispatch(logout());
-      let responce = await api.user.userLogout()
+      let response = await api.user.userLogout()
 
       if (
-        responce.success
+        response.success
       ) {
-        toast.success(responce.message, ToastConfig()),
-          console.log("removed  cached.."),
+        toast.success(response.message, ToastConfig());
+        console.log("removed  cached.."),
           navigate("/login")
       } else {
         toast.info("processing", ToastConfig());
@@ -108,19 +108,19 @@ export const Logo = ({
             <span className="block truncate text-sm font-medium">{email}</span>
           </DropdownMenuLabel>
           <DropdownMenuLabel onClick={() => navigate("/home")}>
-            home
+            Home
           </DropdownMenuLabel>
           <DropdownMenuLabel onClick={() => navigate("/user/profile")}>
-            profile
+            Profile
           </DropdownMenuLabel>
           <DropdownMenuLabel onClick={() => navigate("/user/balance")}>
-            balance
+            Balance
           </DropdownMenuLabel>
           <DropdownMenuLabel onClick={() => navigate("/user/activityhistory")}>
-            activity history
+            Activity History
           </DropdownMenuLabel>
           <DropdownMenuLabel onClick={() => navigate("/user/validation")}>
-            validation
+            Validation
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuLabel onClick={userLogout}>Sign out</DropdownMenuLabel>

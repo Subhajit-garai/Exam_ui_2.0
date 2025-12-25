@@ -1,13 +1,13 @@
-import React, { useEffect, useState, type SetStateAction } from "react";
-import JoinerxamCard from "./JoinerxamCard";
+import { useEffect, useState } from "react";
 import useExamTimetablehook from "@repo/hooks/examTime";
-import { useIsMobile } from "@repo/hooks/isMobile";
-import { SimplePagination as Pagination } from "@repo/design-system/pagenation";
 import { Tabs } from "@repo/design-system/tabs/Tabs";
 import { useApi } from "@/ApiProvider";
 import { LoaderFive } from "@repo/design-system/loader/loader";
+import { ExamDisplay } from "./testDisplay";
 
 const JoinExam = () => {
+
+  const imageurl = "/assets/cardbg/background2.jpg"
   const [Test, setTest] = useState([]);
   const [entryChange, setEntryChange] = useState<string>("99");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -73,6 +73,7 @@ const JoinExam = () => {
           ) : (
             <ExamDisplay
               Data={todaysExam}
+              imageurl={imageurl}
               entryChange={entryChange}
               type={"Test"}
               setCurrentPage={setCurrentPage}
@@ -98,6 +99,7 @@ const JoinExam = () => {
           ) : (
             <ExamDisplay
               Data={[...tomorrowsExam, ...upcomingExam]}
+              imageurl={imageurl}
               entryChange={entryChange}
               type={"Test"}
               setCurrentPage={setCurrentPage}
@@ -119,6 +121,7 @@ const JoinExam = () => {
           ) : (
             <ExamDisplay
               Data={completedExam}
+              imageurl={imageurl}
               entryChange={entryChange}
               type={"Test"}
               setCurrentPage={setCurrentPage}
@@ -144,83 +147,4 @@ const JoinExam = () => {
 
 export default JoinExam;
 
-const ExamDisplay = ({
-  Data,
-  entryChange,
-  type,
-  noTitle = " No Tests",
-  currentPage,
-  setCurrentPage,
-  TestCount,
-}: {
-  Data: any;
-  entryChange: string;
-  type: string;
-  noTitle?: string;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<SetStateAction<number>>;
-  TestCount: number;
-}) => {
-  const EXAMS_PER_PAGE = 12;
-  const isMobile = useIsMobile();
 
-  return (
-    <>
-      {TestCount ? (
-        <div className=" flex  h-full w-full flex-col justify-between p-2 gap-4 overflow-auto no-visible-scrollbar">
-
-          <div className="exams flex gap-2 justify-center flex-wrap">
-            {Data?.length ? (
-              Data.map((exam: any) => {
-                if (exam.examtype == type) {
-                  return (
-                    <JoinerxamCard
-                      key={exam.id}
-                      imageurl={"/assets/cardbg/background2.jpg"}
-                      contestid={exam?.id}
-                      displayId={exam?.display_id}
-                      Title={exam?.name}
-                      timeStamp={exam?.date}
-                      startTime={exam?.starttime}
-                      joinTime={exam?.jointime}
-                      particepents={exam?.ContestRegister?.count}
-                      entryChange={entryChange}
-                      status={exam?.creationstatus}
-                      examtype={exam?.examtype}
-                    />
-                  );
-                }
-              })
-            ) : (
-              <p> {noTitle} </p>
-            )}
-          </div>
-
-          {/* Middle: Pagination */}
-          <div className="w-full flex justify-center ">
-            {isMobile ? (
-              <Pagination
-                layout="center"
-                currentPage={currentPage}
-                itemsPerPage={EXAMS_PER_PAGE}
-                totalItems={TestCount}
-                onPageChange={setCurrentPage}
-              />
-            ) : (
-              <Pagination
-                layout="center"
-                currentPage={currentPage}
-                itemsPerPage={EXAMS_PER_PAGE}
-                totalItems={TestCount}
-                //totalPages={Math.max(1, Math.ceil(TestCount / EXAMS_PER_PAGE || 0))}
-                onPageChange={setCurrentPage}
-              />
-            )}
-          </div>
-        </div>
-      ) : (
-        <LoaderFive text="Loading..." />
-      )}
-    </>
-  );
-};

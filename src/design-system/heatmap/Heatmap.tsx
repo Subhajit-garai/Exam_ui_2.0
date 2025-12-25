@@ -40,7 +40,7 @@ export const Heatmap = ({ data, startDate, endDate, className }: HeatmapProps) =
             case 2: return "bg-green-400 dark:bg-green-700";
             case 3: return "bg-green-600 dark:bg-green-500";
             case 4: return "bg-green-800 dark:bg-green-300";
-            default: return "bg-secondary/50";
+            default: return "bg-secondary/90";
         }
     };
 

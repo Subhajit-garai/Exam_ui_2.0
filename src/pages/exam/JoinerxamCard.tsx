@@ -84,7 +84,7 @@ const JoinerxamCard = ({
       className={` flex flex-col gap-8  ${isDisabled ? "opacity-55 pointer-events-none" : "opacity-100"
         }`}
     >
-      <div className="w-60 relative bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-62 relative bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <img className="rounded-t-lg" src={imageurl} alt="" />
 
         <div className="info flex gap-2  absolute w-full top-0 left-0 py-4 px-2">
@@ -131,8 +131,8 @@ const JoinerxamCard = ({
             </span>
           </Badge>
         </div>
-        <div className=" flex font-semibold gap-2 justify-between  items-center ">
-          <div className="p-2">
+        <div className=" flex font-semibold gap-1 justify-between  items-center ">
+          <div className="p-1">
             <p className="text-[var(--text-primary)]">{Title.slice(0, 20)}</p>
             <p className="text-sm text-[var(--text-secondary)]">{timeStamp}</p>
           </div>
