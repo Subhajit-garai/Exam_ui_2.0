@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@repo/ui/button";
-import { QuizLeaderboard } from "./components/QuizLeaderboard";
-import { XPLeaderboard } from "./components/XPLeaderboard";
-import { StreakLeaderboard } from "./components/StreakLeaderboard";
+import { QuizLeaderboard } from "./components/leaderboard/QuizLeaderboard";
+import { XPLeaderboard } from "./components/leaderboard/XPLeaderboard";
+import { StreakLeaderboard } from "./components/leaderboard/StreakLeaderboard";
 import { BrainCircuit, Star, Flame } from "lucide-react";
 
 export const LeaderboardPage = () => {

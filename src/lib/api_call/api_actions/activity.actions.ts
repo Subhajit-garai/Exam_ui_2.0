@@ -44,4 +44,13 @@ export class activityApi {
         let url = `/user/activity/challenge/history`;
         return this.api.request(url);
     };
+
+
+
+    getLeaderboard = (type: "xp" | "quiz" | "streak", timeframe: string = 'weekly', limit: number = 10) => {
+        let url = `/user/activity/leaderboard/${type}?timeframe=${timeframe}&limit=${limit}`;
+        return this.api.request(url);
+    };
+
+
 }

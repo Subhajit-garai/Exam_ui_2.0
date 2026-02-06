@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@repo/ui/dialog";
 import { Button } from "@repo/ui/button";
-import { SelectionInput } from "@/design-system/inputs/InputComponents";
+import Textinput, { SelectionInput } from "@/design-system/inputs/InputComponents";
 import { Checkbox } from "@repo/ui/checkbox";
 import { Label } from "@repo/ui/label";
 import { useState, useEffect } from "react";
@@ -23,7 +23,10 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
     const init = {
         mode: mode,
         subject: "",
-        topic: ""
+        topic: "",
+        total_questions: "",
+        nextQuestionTime: "",
+        quizOpenFor: "",
     };
 
     const { value, handleInputefn, setValue } = useHandleinpute(init);
@@ -84,9 +87,9 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
         const selectedTopic = isAllTopics ? "All" : value.topic;
         try {
             const response = await _.api.quiz.createQuiz({
-                mode: value.mode,
+                ...value,
                 subject: value.subject,
-                topic: selectedTopic
+                topic: selectedTopic,
             });
 
             if (response.success) {
@@ -115,10 +118,6 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
             toast.error("Something went wrong", ToastConfig());
         }
     };
-
-
-
-
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
@@ -181,6 +180,43 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
                             lable: "Topic",
                             placeholder: loadingTopics ? "Loading..." : "Select Topic",
                             options: topicNames,
+                            required: true,
+                            disabled: !value.subject || loadingTopics || isAllTopics
+                        }]}
+                    />
+
+
+
+                    <Textinput
+                        value={value}
+                        handleInputefn={handleInputefn}
+                        options={[{
+                            id: "1",
+                            inputId: "total-questions",
+                            type: "number",
+                            name: "total_questions",
+                            lable: "Total Questions",
+                            placeholder: "Enter Total Questions",
+                            required: true,
+                            disabled: !value.subject || loadingTopics || isAllTopics
+                        },
+                        {
+                            id: "2",
+                            inputId: "next-question-time",
+                            name: "nextQuestionTime",
+                            type: "number",
+                            lable: "Next Question Time",
+                            placeholder: "Enter Next Question Time in seconds",
+                            required: true,
+                            disabled: !value.subject || loadingTopics || isAllTopics
+                        },
+                        {
+                            id: "3",
+                            inputId: "quiz-open-for",
+                            name: "quizOpenFor",
+                            type: "number",
+                            lable: "Quiz Open For",
+                            placeholder: "Enter Quiz Open For",
                             required: true,
                             disabled: !value.subject || loadingTopics || isAllTopics
                         }]}
