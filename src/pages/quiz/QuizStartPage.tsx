@@ -30,7 +30,7 @@ export const QuizStartPage = () => {
         submitAnswer,
         quizResult,
         leaderboard
-    } = useQuizSocket(wsUrl + "/quiz");
+    } = useQuizSocket(wsUrl);
 
     const [countdown, setCountdown] = useState(3);
     const scrollRef = useRef<HTMLDivElement>(null);

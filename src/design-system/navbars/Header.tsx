@@ -21,9 +21,9 @@ export const Header = ({
   BrandName,
 }: {
   LogoUrl: string;
-  BrandName: string;
+  BrandName?: string;
 }) => {
-  let { islogin } = useAppSelector((state) => state.user);
+  let { islogin, academicProfile } = useAppSelector((state) => state.user);
   return (
     <nav className=" header  top-0 right-0 left-0  border-b border-[var(--header-border)] h-[5rem] max-w-full z-[8]">
       <div className="  flex  gap-2 md:gap-4 items-center justify-between p-2 md:mx-20 h-full  ">
@@ -31,7 +31,7 @@ export const Header = ({
           <Logo url={LogoUrl} />
 
           <p className=" self md:whitespace-nowrap  md:text-xl font-semibold text-[var(--text-primary)]  ">
-            {BrandName}
+            { academicProfile?.exam ?? BrandName}
           </p>
         </div>
 

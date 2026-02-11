@@ -95,6 +95,9 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
             if (response.success) {
                 toast.success("Quiz created successfully", ToastConfig());
                 // Assuming the response contains the created quiz ID
+
+                console.log("response.data.id0", response.data.id);
+
                 const quizId = response.data.id;
                 navigate(`/quiz/start?id=${quizId}&mode=${value.mode}&subject=${value.subject}&topic=${selectedTopic}`);
                 onClose();

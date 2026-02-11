@@ -244,7 +244,7 @@ const App = () => {
               <Appbar />
               <Header
                 LogoUrl={"/assets/logo/logo-png.png"}
-                BrandName={"Jeca"}
+                BrandName={"exambuddys"}
               />
 
               <div className="main flex  flex-col text-[var(--text-primary)]   lg:pl-[5rem]  w-screen pb-24 md:pb-0 ">

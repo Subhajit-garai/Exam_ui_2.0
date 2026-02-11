@@ -64,7 +64,8 @@ export const useQuizSocket = (url: string) => {
     const _ = useApi();
 
     const connect = useCallback(async () => {
-        if (socketRef.current) return;
+        if (socketRef.current?.readyState === WebSocket.OPEN || socketRef.current?.readyState === WebSocket.CONNECTING) return;
+
 
         try {
             // Fetch WS token
@@ -78,7 +79,7 @@ export const useQuizSocket = (url: string) => {
                 return;
             }
 
-            const wsUrl = new URL(url);
+            let wsUrl = new URL(url);
             if (token) {
                 wsUrl.searchParams.append("token", token);
             }
@@ -105,10 +106,6 @@ export const useQuizSocket = (url: string) => {
                 setIsConnected(false);
                 addLog("Disconnected from server", "info");
                 socketRef.current = null;
-
-                // Optional: Implement auto-reconnect logic here if needed
-                // For now, we rely on the component to call connect() again if needed
-                // or we could retry fetching token and connecting
             };
 
             socket.onerror = (error) => {
