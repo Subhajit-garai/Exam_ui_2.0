@@ -7,6 +7,7 @@ import {
   FullpageOutlet,
   SplitOutlet,
   ProtectedRoute,
+  QuizLayout,
 } from "@repo/design-system/outlets/index";
 
 // pages
@@ -219,19 +220,17 @@ const ISSUE_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
     href: "/issue/dashboard",
   },
 ];
-const QUIZ_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
-  {
-    id: 1,
-    name: "Quiz",
-    Icon: BarChart2,
-    color: "var(--color-red)", // Red color for issues
-    href: "/quiz/start",
-  },
-];
+// const QUIZ_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
+//   {
+//     id: 1,
+//     name: "Quiz",
+//     Icon: BarChart2,
+//     color: "var(--color-red)", // Red color for issues
+//     href: "/quiz/start",
+//   },
+// ];
 
 let baseUrl = import.meta.env.VITE_API_BASE_URL;
-
-
 
 const App = () => {
   return (
@@ -260,21 +259,18 @@ const App = () => {
                     <Route path="/refund" element={<LegalPages />} />
                     <Route path="/contact" element={<LegalPages />} />
 
-
                     <Route
                       path="/login/validate/email"
                       element={<ValidateEmailwhileLogin />}
                     />
                     <Route path="/signup" element={<Signup />} />
                   </Route>
-
                   <Route path="/" element={<ProtectedRoute />}>
                     <Route path="examportal" element={<Examportal />} />
                     <Route path="payment" element={<Payment />} />
                     <Route path="payment/checkout" element={<Checkout />} />
                     <Route path="paymentsuccess" element={<PaymentSuccess />} />
                   </Route>
-
                   <Route
                     path="/notes"
                     element={<SplitOutlet SIDEBAR_ITEMS={NotesOtions} />}
@@ -284,7 +280,6 @@ const App = () => {
                     <Route path=":category" element={<NoteTopicList />} />
                     <Route path=":category/:topic" element={<NotePage />} />
                   </Route>
-
                   <Route
                     path="/user"
                     element={<SplitOutlet SIDEBAR_ITEMS={USER_SIDEBAR_ITEMS} />}
@@ -292,7 +287,10 @@ const App = () => {
                     <Route index element={<Navigate to="balance" replace />} />
                     <Route path="balance" element={<Balance />} />
                     <Route path="profile" element={<Profile />} />
-                    <Route path="activityhistory" element={<ActivityHistory />} />
+                    <Route
+                      path="activityhistory"
+                      element={<ActivityHistory />}
+                    />
                     <Route path="validation" element={<ValidationUserPage />} />
                     <Route path="security" element={<SecurityUserPage />} />
                     <Route
@@ -304,20 +302,28 @@ const App = () => {
                     path="/activity"
                     element={<SplitOutlet SIDEBAR_ITEMS={ActivityOptions} />}
                   >
-                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route
+                      index
+                      element={<Navigate to="dashboard" replace />}
+                    />
                     <Route path="dashboard" element={<ActivityPage />} />
                     <Route path="challenge" element={<ChallengePage />} />
                     <Route path="contest" element={<ContestPage />} />
-                    <Route path="quiz" element={<QuizPage />} />
+
+                    <Route path="quiz" element={<QuizLayout />}>
+                      <Route index element={<QuizPage />} />
+                      <Route path="start" element={<QuizStartPage />} />
+                    </Route>
+
                     <Route path="leaderboard" element={<LeaderboardPage />} />
                   </Route>
-
-
-                  <Route path="/quiz" element={<SplitOutlet SIDEBAR_ITEMS={QUIZ_SIDEBAR_ITEMS} />}>
+                  {/* <Route
+                    path="/quiz"
+                    element={<SplitOutlet SIDEBAR_ITEMS={QUIZ_SIDEBAR_ITEMS} />}
+                  >
                     <Route index element={<Navigate to="start" replace />} />
                     <Route path="start" element={<QuizStartPage />} />
-                  </Route>
-
+                  </Route> */}
                   <Route
                     path="/analysis"
                     element={
@@ -346,12 +352,16 @@ const App = () => {
                       element={<ExamSubmitSuccess />}
                     />
                   </Route>
-
                   <Route
                     path="/issue"
-                    element={<SplitOutlet SIDEBAR_ITEMS={ISSUE_SIDEBAR_ITEMS} />}
+                    element={
+                      <SplitOutlet SIDEBAR_ITEMS={ISSUE_SIDEBAR_ITEMS} />
+                    }
                   >
-                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route
+                      index
+                      element={<Navigate to="dashboard" replace />}
+                    />
                     <Route path="dashboard" element={<IssueDashboard />} />
                   </Route>
                   <Route path="*" element={<ErrorPage />} />

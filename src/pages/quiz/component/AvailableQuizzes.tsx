@@ -64,13 +64,14 @@ export const AvailableQuizzes = ({ filterMode, onCreateQuiz }: AvailableQuizzesP
             await _.api.activity.logActivity({
                 type: "QUIZ",
                 title: "Quiz Started",
-                description: `Joined quiz: ${quiz.title}`,
+                description: `Joined quiz: ${quiz?.title ?? "not title"}`,
+                status: "",
                 metadata: { quizId: quiz.id, title: quiz.title }
             });
         } catch (error) {
             console.error("Failed to log activity", error);
         }
-        navigate(`/quiz/start?id=${quiz.id}`);
+        navigate(`/activity/quiz/start?id=${quiz.id}`);
     };
 
     return (

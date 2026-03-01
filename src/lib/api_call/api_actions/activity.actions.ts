@@ -22,7 +22,7 @@ export class activityApi {
     };
 
     logActivity = (data: { type: string; title: string; description?: string; status?: string; metadata?: any }) => {
-
+        data.status = data.status ?? "Pending";
         let url = `/user/activity/log`;
         return this.api.request(url, { method: "POST", data });
     };

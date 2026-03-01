@@ -1,10 +1,11 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { AvailableQuizzes } from "../quiz/component/AvailableQuizzes";
 import { QuizModesCard } from "./components/QuizModesCard";
 import { QuizLeaderboard } from "./components/leaderboard/QuizLeaderboard";
 import { OfficialQuizzes } from "./components/OfficialQuizzes";
 import { QuizSetupModal } from "./QuizSetupModal";
 import { BetaTag } from "@/design-system/DevComponents/BetaTag";
+
 
 export const QuizPage = () => {
     const [isQuizSetupOpen, setIsQuizSetupOpen] = useState(false);

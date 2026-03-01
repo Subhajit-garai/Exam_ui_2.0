@@ -5,3 +5,4 @@
 export * from "./FullpageOutlet";
 export * from "./ProtectedRoute";
 export * from "./SplitOutlet";
+export * from "./QuizLayout";
