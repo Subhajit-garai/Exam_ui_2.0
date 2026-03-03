@@ -83,17 +83,17 @@ let userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, actions) => {
+    setUser: (state, actions) => {      
       console.log("user set...");
       let { name, balance, email, prime, social, target_exam, academicProfile, standard, stream, school } =
         actions.payload;
       state.name = name;
       state.email = email;
-      state.balance = balance.amount;
-      state.ticket = balance.ticket;
-      state.isprime = prime.status;
+      state.balance = balance?.amount ?? 0;
+      state.ticket = balance?.ticket ?? 0;
+      state.isprime = prime?.status ?? null;
       state.social = social;
-      state.status = prime.status;
+      state.status = prime?.status ?? "none";
       state.target_exam = target_exam;
       state.academicProfile = academicProfile;
       state.standard = standard;
