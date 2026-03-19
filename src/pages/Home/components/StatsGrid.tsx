@@ -35,7 +35,7 @@ export const StatsGrid = ({ stats }: StatsGridProps) => {
                         className="rounded-xl"
                     >
                         <Card className="p-4 flex flex-col gap-2 hover:border-primary/20 transition-colors h-full">
-                            <div className="flex justify-between items-start">
+                            <div className="flex justify-between items-start gap-2">
                                 <div className={cn("p-2 rounded-lg", stat.bg, stat.color)}>
                                     {stat.icon}
                                 </div>

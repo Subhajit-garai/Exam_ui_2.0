@@ -53,7 +53,8 @@ export const Balance = () => {
             Icon={Ticketicon}
             size={30}
           />
-          <AddTotenCard />
+          <AddTokenCard title="Subscription" path="/payment" />
+          <AddTokenCard title="Token" path="/payment" />
         </div>
         <div className="transtion  max-h-120 overflow-auto  ">
           {/* <TabledataDisplay
@@ -64,7 +65,7 @@ export const Balance = () => {
     </>
   );
 };
-export const AddTotenCard = () => {
+export const AddTokenCard = ({ title, path }: { title: string, path: string }) => {
   const navigate = useNavigate();
 
   return (
@@ -81,12 +82,12 @@ export const AddTotenCard = () => {
         }}
       >
         <Card
-          onClick={() => navigate("/payment")}
+          onClick={() => navigate(path)}
           className=" hover:cursor-pointer p-2"
         >
           <div className="flex gap-2  items-center ">
             <Plus size={45} color="#10B981" />
-            <p>Add Token Or Ticket</p>
+            <p>{title}</p>
           </div>
         </Card>
       </motion.div>

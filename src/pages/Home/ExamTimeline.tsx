@@ -43,7 +43,7 @@ export const ExamTimeline = ({ events, className }: ExamTimelineProps) => {
 
     return (
         <Card className={cn("flex flex-col gap-4 p-4 w-full overflow-hidden", className)}>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center lg:gap-4 gap-2">
                 <h3 className="text-xl font-semibold flex items-center gap-2">
                     <IconCalendarEvent className="text-primary" /> Exam Timeline
                 </h3>

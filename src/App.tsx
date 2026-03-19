@@ -314,7 +314,6 @@ const App = () => {
                       <Route index element={<QuizPage />} />
                       <Route path="start" element={<QuizStartPage />} />
                     </Route>
-
                     <Route path="leaderboard" element={<LeaderboardPage />} />
                   </Route>
                   {/* <Route

@@ -41,7 +41,7 @@ export const StreakLeaderboard = () => {
     return (
         <Card className="p-6 border-zinc-200 dark:border-zinc-800">
             <div className="flex items-center justify-between mb-6 gap-4">
-                <Flame className="text-orange-500 fill-orange-500" size={28} />
+                <Flame className="text-orange-500 fill-orange-200" size={28} />
                 <div>
                     <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Streak Leaderboard</h3>
                     <p className="text-sm text-zinc-500">Longest active daily streaks</p>

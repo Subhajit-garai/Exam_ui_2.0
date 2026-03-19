@@ -192,7 +192,7 @@ export function PaymentSubcriptionCard__2({
 
   return (
     <Card className={cn(
-      "min-w-[18rem] max-w-xs relative flex flex-col overflow-hidden border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group",
+      "min-w-[18rem] max-w-xs relative flex flex-col p-5 overflow-hidden border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group",
       isPremium
         ? "border-amber-500/30 bg-gradient-to-br from-background via-background to-amber-500/5"
         : "border-border bg-card"

@@ -21,11 +21,12 @@ const ValidationUserPage = () => {
   );
 
 
-  let [telegram, settelegram] = useState<user_social_type>({
-    platform: "telegram",
-    link: "",
-    isVerified: false
-  });
+  // let [telegram, settelegram] = useState<user_social_type>({
+  //   platform: "telegram",
+  //   link: "",
+  //   isVerified: false
+  // });
+
   let [email, setemail] = useState<user_social_type>({
     platform: "telegram",
     link: "",
@@ -35,9 +36,9 @@ const ValidationUserPage = () => {
 
     if (social) {
       social.map((link) => {
-        if (link.platform === "telegram") {
-          settelegram(link)
-        }
+        // if (link.platform === "telegram") {
+        //   settelegram(link)
+        // }
         if (link.platform === "email") {
           setemail(link)
         }
@@ -47,16 +48,17 @@ const ValidationUserPage = () => {
   }, [social])
 
   let [sendTokengen, setsendTokengen] = useState(false);
-  let telegramIdOption: InputOption[] = [
-    {
-      id: "1",
-      inputId: "input-telegramid",
-      placeholder: telegram.link,
-      required: true,
-      name: "token",
-      disabled: sendTokengen ? false : true,
-    },
-  ];
+
+  // let telegramIdOption: InputOption[] = [
+  //   {
+  //     id: "1",
+  //     inputId: "input-telegramid",
+  //     placeholder: telegram.link,
+  //     required: true,
+  //     name: "token",
+  //     disabled: sendTokengen ? false : true,
+  //   },
+  // ];
   let emailOption: InputOption[] = [
     {
       id: "1",
@@ -91,7 +93,7 @@ const ValidationUserPage = () => {
           // btntext={"Validate agin"}
           />
 
-          {telegram.isVerified ? (
+          {/* {telegram.isVerified ? (
             <>
               <VerificationSuccessDisplayinfoCont
                 title={"Telegram ID Verified"}
@@ -144,7 +146,10 @@ const ValidationUserPage = () => {
                 }}
               />
             </>
-          )}
+          )} */}
+
+
+
         </>
       ) : (
         <>

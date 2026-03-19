@@ -105,7 +105,7 @@ const Home = () => {
           <QuickActions actions={quickActions} />
           <DailyChallenge />
         </div>
-        <RecentActivity activities={recentActivity} />
+        <RecentActivity activities={recentActivity.slice(0, 5)} />
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
         topic: "",
         total_questions: "",
         nextQuestionTime: "",
-        quizOpenFor: "",
+        ttl: "",
     };
 
     const { value, handleInputefn, setValue } = useHandleinpute(init);
@@ -96,7 +96,7 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
                 toast.success("Quiz created successfully", ToastConfig());
                 // Assuming the response contains the created quiz ID
 
-                console.log("response.data.id0", response.data.id);
+                console.log("response.data", response.data);
 
                 const quizId = response.data.id;
                 navigate(`/quiz/start?id=${quizId}&mode=${value.mode}&subject=${value.subject}&topic=${selectedTopic}`);
@@ -216,7 +216,7 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
                         {
                             id: "3",
                             inputId: "quiz-open-for",
-                            name: "quizOpenFor",
+                            name: "ttl",
                             type: "number",
                             lable: "Quiz Open For",
                             placeholder: "Enter Quiz Open For",

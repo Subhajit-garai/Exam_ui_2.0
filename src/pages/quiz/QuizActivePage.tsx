@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import { Badge } from "@repo/ui/badge";
 import { Timer } from "lucide-react";
 import { QuizLeaderboard } from "../Activity/components/leaderboard/QuizLeaderboard";
+import type { LeaderboardEntry } from "@/hooks/useQuizSocket";
 
 interface QuizActivePageProps {
     question: {
@@ -17,6 +18,8 @@ interface QuizActivePageProps {
     leaderboard?: any[];
 }
 
+
+
 export const QuizActivePage = ({ question, timer, onAnswer, onExit, leaderboard }: QuizActivePageProps) => {
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
@@ -27,9 +30,9 @@ export const QuizActivePage = ({ question, timer, onAnswer, onExit, leaderboard 
 
     const mappedLeaderboard = useMemo(() => {
         if (!leaderboard) return [];
-        return leaderboard.map((item, index) => ({
-            userId: item.user,
-            userName: item.user,
+        return leaderboard.map((item, index): LeaderboardEntry => ({
+            name: item.name,
+            avatar: item.avatar,
             score: Number(item.score) * 100, // Compensation for QuizLeaderboard division
             rank: index + 1
         }));

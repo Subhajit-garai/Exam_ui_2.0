@@ -28,6 +28,12 @@ interface Question {
   isMultiple: boolean;
 }
 
+export interface LeaderboardEntry {
+    name: string,
+    avatar: string,
+    score: number,
+    rank: number
+}
 interface ServerQuestionPayload {
   quizId: string;
   question: {
@@ -52,7 +58,7 @@ export interface QuizLeaderboardPayload {
 }
 
 export const useQuizSocket = (url: string) => {
-  const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [status, setStatus] = useState<QuizStatus>("waiting");
   const [logs, setLogs] = useState<LogMessage[]>([]);
   const [isConnected, setIsConnected] = useState(false);
@@ -172,6 +178,7 @@ export const useQuizSocket = (url: string) => {
         break;
 
       case "QUIZ_LEADERBOARD":
+        console.log( "[QUIZ_LEADERBOARD] " , data.payload.leaderboard);
         setLeaderboard(data.payload.leaderboard);
         break;
 

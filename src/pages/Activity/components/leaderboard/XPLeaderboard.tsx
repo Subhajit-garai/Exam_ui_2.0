@@ -44,7 +44,7 @@ export const XPLeaderboard = () => {
         <Card className="p-6 border-zinc-200 dark:border-zinc-800">
 
             <div className="flex items-center justify-between mb-6 gap-4">
-                <Star className="text-yellow-500 fill-yellow-500" size={28} />
+                <Star className="text-yellow-500 fill-yellow-200" size={28} />
                 <div>
                     <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">XP Leaderboard</h3>
                     <p className="text-sm text-zinc-500">Highest experience points</p>

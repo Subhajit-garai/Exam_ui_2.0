@@ -27,7 +27,7 @@ export class quizApi {
         topic: string;
         total_questions: string;
         nextQuestionTime: string;
-        quizOpenFor: string;
+        ttl: string;
     }) => {
         let url = `/quiz/user/create`;
         return this.api.request(url, { method: "POST", data });
