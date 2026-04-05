@@ -13,7 +13,7 @@ export const JoinMock = () => {
 
   const _ = useApi();
 
-  let { todaysExam, tomorrowsExam, completedExam } = useExamTimetablehook(Test);
+  let { todaysExam, completedExam } = useExamTimetablehook(Test);
   const [loading, setLoading] = useState(true);
 
   const fetchTests = async () => {
@@ -42,7 +42,6 @@ export const JoinMock = () => {
     } else {
       setTest([]);
     }
-    console.log("loading setting-- to false");
     setLoading(false);
   };
 
@@ -50,9 +49,7 @@ export const JoinMock = () => {
     fetchTests();
   }, [currentPage]);
 
-  useEffect(() => {
-    console.log("Hook updated:", { todaysExam, tomorrowsExam, completedExam });
-  }, [todaysExam, tomorrowsExam, completedExam]);
+
 
 
   const tabs = [
