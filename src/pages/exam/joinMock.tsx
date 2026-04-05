@@ -13,7 +13,7 @@ export const JoinMock = () => {
 
   const _ = useApi();
 
-  let { todaysExam, completedExam } = useExamTimetablehook(Test);
+  let { todaysExam, completedExam } = useExamTimetablehook(Test, "Mock");
   const [loading, setLoading] = useState(true);
 
   const fetchTests = async () => {
