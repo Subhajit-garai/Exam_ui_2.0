@@ -17,6 +17,7 @@ import Home from "./pages/Home/Home.js";
 import ErrorPage from "./pages/DefaultPages/ErrorPage.js";
 //authpages
 import Login from "./pages/authpages/Login.js";
+import ForgotPassword from "./pages/authpages/ForgotPassword.js";
 import Signup from "./pages/authpages/Signup.js";
 import ValidateEmailwhileLogin from "./pages/authpages/ValidateEmailwhileLogin.js";
 
@@ -254,6 +255,8 @@ const App = () => {
                   <Route path="/" element={<FullpageOutlet />}>
                     <Route path="/home" element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/forgotpassword" element={<ForgotPassword />} />
+                    <Route path="/forgotpassword/verify" element={<ValidationForgotpassword />} />
                     <Route path="/term" element={<LegalPages />} />
                     <Route path="/privacy" element={<LegalPages />} />
                     <Route path="/refund" element={<LegalPages />} />
@@ -293,10 +296,7 @@ const App = () => {
                     />
                     <Route path="validation" element={<ValidationUserPage />} />
                     <Route path="security" element={<SecurityUserPage />} />
-                    <Route
-                      path="forgotpassword"
-                      element={<ValidationForgotpassword />}
-                    />
+
                   </Route>
                   <Route
                     path="/activity"
@@ -316,13 +316,6 @@ const App = () => {
                     </Route>
                     <Route path="leaderboard" element={<LeaderboardPage />} />
                   </Route>
-                  {/* <Route
-                    path="/quiz"
-                    element={<SplitOutlet SIDEBAR_ITEMS={QUIZ_SIDEBAR_ITEMS} />}
-                  >
-                    <Route index element={<Navigate to="start" replace />} />
-                    <Route path="start" element={<QuizStartPage />} />
-                  </Route> */}
                   <Route
                     path="/analysis"
                     element={

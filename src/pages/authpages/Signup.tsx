@@ -61,7 +61,7 @@ const Signup = () => {
   };
   return (
     <>
-      <div className="main flex justify-center">
+      <div className="flex justify-center items-center min-h-[85vh] w-full p-4">
         <Card className="inputCont w-fit flex-col p-8 rounded-lg">
           <div className="gap-2 flex-col flex">
             <h2 className="text-center font-bold capitalize  text-primary ">Sign up now</h2>

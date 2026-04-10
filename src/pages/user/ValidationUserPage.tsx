@@ -9,7 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GotoSignUpPage } from "../authpages/Login.js";
 import { ToastConfig } from "@repo/lib/utils/utils";
-import { ShieldCheck, ShieldX } from "lucide-react";
+import { ShieldCheck, ShieldX, CheckCircle2 } from "lucide-react";
 import { useApi } from "@/ApiProvider.js";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import type { InputOption } from "@repo/types/Input.js";
@@ -319,33 +319,54 @@ export const ValidationForgotpassword = () => {
       ForgotpasswordToken: value.ForgotpasswordToken,
       newpassword: value.newpassword,
     };
-    await _.api.user
-      .forgotpasswordverify(data)
-      .then((response: any) => {
-        toast.success(response.data.message, ToastConfig());
+    try {
+      let response = await _.api.user.forgotpasswordverify(data);
+      if (response && response.success) {
+        toast.success(response.message, ToastConfig());
         navigate("/login");
-      })
-      .catch((error: any) => {
-        toast.error(error.response.data.message, ToastConfig());
-        toast.info(<GotoSignUpPage />, ToastConfig());
-      });
+      } else {
+        toast.error(response?.message || "Failed to verify token", ToastConfig());
+      }
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error?.message || "An error occurred", ToastConfig());
+      toast.info(<GotoSignUpPage />, ToastConfig());
+    }
   };
 
-  useEffect(() => { }, []);
-
   return (
-    <div className="flex-1 overflow-auto relative flex  flex-col items-center ">
-      <div className="cont w-[25rem]">
-        <Card>
-          <h1 className=" text-center"> Verify Forgot Password Token </h1>
+    <div className="flex justify-center items-center min-h-[85vh] p-4 w-full mt-10 lg:mt-0">
+      <Card className="w-full min-w-[20rem] max-w-[24rem] p-8 gap-6 flex flex-col shadow-lg border-primary/20 rounded-xl relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500" />
+        
+        <div className="flex flex-col gap-3 items-center justify-center mt-2">
+          <div className="p-4 bg-green-500/10 dark:bg-green-500/20 rounded-full text-green-600 dark:text-green-400 shadow-inner">
+            <CheckCircle2 size={36} strokeWidth={2} />
+          </div>
+          <div className="text-center">
+            <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
+              Verify Token
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2 px-2">
+              Enter the reset token sent to your email and your new password.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col w-full gap-5 mt-2">
           <Textinput
             options={emailOption}
             handleInputefn={handleInputefn}
             value={value}
           />
-          <Button onClick={forgotpasswordToken_verify}>verify</Button>
-        </Card>
-      </div>
+          <Button 
+            onClick={forgotpasswordToken_verify} 
+            className="w-full font-semibold flex items-center justify-center gap-2 py-6 text-md bg-green-600 hover:bg-green-700 text-white"
+            variant="default"
+          >
+            Verify & Update
+          </Button>
+        </div>
+      </Card>
     </div>
   );
 };
