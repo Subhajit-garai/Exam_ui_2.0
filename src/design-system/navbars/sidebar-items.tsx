@@ -23,8 +23,8 @@ export const SidebarItems = ({
                 <Link
                   to={item.href}
                   className={`flex items-center rounded-lg p-3 text-center transition-all duration-300 ${isActive
-                      ? `bg-secondary/20 ${item.color || "text-blue-500"}`
-                      : `hover:bg-secondary/20 ${item.color ? `hover:${item.color}` : "hover:text-blue-500"}`
+                    ? `bg-secondary/20 ${item.color || "text-blue-500"}`
+                    : `hover:bg-secondary/20 ${item.color ? `hover:${item.color}` : "hover:text-blue-500"}`
                     } ${isCollapsed ? "justify-center" : "gap-2"}`}
                   onClick={() => setCollapsed && setCollapsed(true)}
                 >
