@@ -38,11 +38,7 @@ const Home = () => {
   //ref
   //  const examEvents: TimelineEvent[] = [
   //     { id: "1", title: "Registration Starts", date: "Nov 01, 2025", description: "Online application form opens.", status: "completed" },
-  //     { id: "2", title: "Form Correction", date: "Nov 15, 2025", description: "Last date for form corrections.", status: "completed" },
-  //     { id: "3", title: "Admit Card Release", date: "Dec 10, 2025", description: "Download admit card from portal.", status: "current", notification: "Admit Card is Live!" },
-  //     { id: "4", title: "Mock Test Series", date: "Dec 20, 2025", description: "Official mock tests begin.", status: "upcoming" },
-  //     { id: "5", title: "Final Exam", date: "Jan 05, 2026", description: "All India Entrance Examination.", status: "upcoming" },
-  //     { id: "6", title: "Result Declaration", date: "Feb 10, 2026", description: "Check results online.", status: "upcoming" },
+  //    id: "6", title: "Result Declaration", date: "Feb 10, 2026", description: "Check results online.", status: "upcoming" },
   //   ];
   const [examEvents, setExamEvents] = useState<TimelineEvent[]>([]);
 
@@ -54,8 +50,7 @@ const Home = () => {
 
   // const recentActivity: ActivityItem[] = [
   //   { title: "Physics Mock Test 1", score: "82/100", date: "2 hours ago", status: "Completed" },
-  //   { title: "Chemistry Chapter 4", score: "Pending", date: "Yesterday", status: "In Progress" },
-  //   { title: "Maths Weekly Quiz", score: "95/100", date: "2 days ago", status: "Completed" },
+  //  {title: "Maths Weekly Quiz", score: "95/100", date: "2 days ago", status: "Completed" },
   // ];
   const [recentActivity, setrecentActivity] = useState<ActivityItem[]>([])
 
@@ -91,9 +86,9 @@ const Home = () => {
       }
     })()
   }, [])
-
   return (
     <div className="flex flex-col gap-6 p-4 max-w-7xl mx-auto w-full">
+
       <WelcomeHeader name={name} date={date} />
 
       {/* <BetaTag variant="ribbon" text="BETA">

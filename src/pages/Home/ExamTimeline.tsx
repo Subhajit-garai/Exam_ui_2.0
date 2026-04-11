@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Card, NestedCard } from "@/design-system/card";
 import { Button } from "@repo/ui/button";
 import { cn } from "@/lib/utils";
-import { IconLayoutList, IconLayoutColumns, IconCalendarEvent, IconBell, IconCheck, IconCircle } from "@tabler/icons-react";
+import { IconLayoutList, IconLayoutColumns, IconCalendarEvent, IconBell, IconCheck, IconCircle, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { Tooltip_two } from "@/design-system/tooltip/tooltip_two";
 import { motion } from "motion/react";
 import type { ExamStatus } from "@/lib/constants/question.constants.type";
@@ -36,9 +36,34 @@ export const ExamTimeline = ({ events, className }: ExamTimelineProps) => {
         }
     };
 
+    const scroll = (direction: "left" | "right") => {
+        if (scrollContainerRef.current) {
+            const { current } = scrollContainerRef;
+            const scrollAmount = direction === "left" ? -400 : 400;
+            current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        }
+    };
+
     useEffect(() => {
         // Scroll to current event on mount and when orientation changes
         setTimeout(scrollToCurrent, 300);
+    }, [orientation]);
+
+    // Handle mouse wheel scrolling for horizontal view
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container || orientation !== "horizontal") return;
+
+        const handleWheel = (e: WheelEvent) => {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                container.scrollLeft += e.deltaY;
+            }
+        };
+
+        // passive: false is required to preventDefault
+        container.addEventListener("wheel", handleWheel, { passive: false });
+        return () => container.removeEventListener("wheel", handleWheel);
     }, [orientation]);
 
     return (
@@ -80,13 +105,35 @@ export const ExamTimeline = ({ events, className }: ExamTimelineProps) => {
                 </div>
             </div>
 
-            <div
-                ref={scrollContainerRef}
-                className={cn(
-                    "relative p-4 overflow-auto scrollbar-hide min-h-[400px]",
-                    orientation === "horizontal" ? "flex flex-row items-center overflow-x-auto" : "flex flex-col items-start overflow-y-auto h-[600px]"
+            <div className="relative group/timeline w-full">
+                {orientation === "horizontal" && (
+                    <>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 rounded-full shadow-md bg-background/80 backdrop-blur opacity-0 group-hover/timeline:opacity-100 transition-opacity"
+                            onClick={() => scroll("left")}
+                        >
+                            <IconChevronLeft size={20} />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 rounded-full shadow-md bg-background/80 backdrop-blur opacity-0 group-hover/timeline:opacity-100 transition-opacity"
+                            onClick={() => scroll("right")}
+                        >
+                            <IconChevronRight size={20} />
+                        </Button>
+                    </>
                 )}
-            >
+
+                <div
+                    ref={scrollContainerRef}
+                    className={cn(
+                        "relative p-4 overflow-auto scrollbar-hide min-h-[400px] scroll-smooth",
+                        orientation === "horizontal" ? "flex flex-row items-center overflow-x-auto" : "flex flex-col items-start overflow-y-auto h-[600px]"
+                    )}
+                >
                 {/* Connecting Line */}
                 <div
                     className={cn(
@@ -168,6 +215,7 @@ export const ExamTimeline = ({ events, className }: ExamTimelineProps) => {
                         </div>
                     );
                 })}
+            </div>
             </div>
         </Card>
     );

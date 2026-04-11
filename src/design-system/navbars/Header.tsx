@@ -31,7 +31,7 @@ export const Header = ({
           <Logo url={LogoUrl} />
 
           <p className=" self md:whitespace-nowrap  md:text-xl font-semibold text-[var(--text-primary)]  ">
-            { academicProfile?.exam ?? BrandName}
+            {academicProfile?.exam ?? BrandName}
           </p>
         </div>
 
