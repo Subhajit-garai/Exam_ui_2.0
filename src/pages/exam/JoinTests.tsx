@@ -23,16 +23,16 @@ const JoinExam = () => {
 
   const fetchTests = async () => {
     setLoading(true);
-    if (!entryChange) {
-      let charge = await _.api.exam.getTokensystem();
-      setEntryChange(
-        charge?.data == "0"
-          ? "free"
-          : typeof charge?.data !== "string"
-            ? String(charge?.data)
-            : charge?.data
-      );
-    }
+
+    let charge = await _.api.exam.getTokensystem();
+    setEntryChange(
+      charge?.data == "0"
+        ? "free"
+        : typeof charge?.data !== "string"
+          ? String(charge?.data)
+          : charge?.data
+    );
+
 
     let data = await _.api.exam.fetchExams_by_type(
       "Test",

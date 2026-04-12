@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { setlastExam, setTotal_Questions } from "@repo/store/slice/examSlice";
 import { useApi } from "@/ApiProvider.js";
 import { ExamJoinBtn } from "@repo/design-system/buttons";
+import { Tooltip_one } from "@repo/design-system/tooltip/tooltip_one.js";
 
 type props = {
   imageurl: string;
@@ -133,7 +134,9 @@ const JoinerxamCard = ({
         </div>
         <div className=" flex font-semibold gap-1 justify-between  items-center ">
           <div className="p-1">
-            <p className="text-[var(--text-primary)]">{Title.slice(0, 20)}</p>
+            <Tooltip_one text={Title}>
+              <p className="text-[var(--text-primary)]">{Title.length > 15 ? Title.slice(0, 12) + "..." : Title}</p>
+            </Tooltip_one>
             <p className="text-sm text-[var(--text-secondary)]">{timeStamp}</p>
           </div>
           <div className="p-1">
