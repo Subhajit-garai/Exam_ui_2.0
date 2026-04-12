@@ -25,6 +25,7 @@ type props = {
   examtype: string;
   entryChange: string;
   status: string;
+  access_type: string;
 };
 
 const JoinerxamCard = ({
@@ -36,10 +37,10 @@ const JoinerxamCard = ({
   timeStamp,
   startTime,
   joinTime,
-
   examtype,
   entryChange,
   status,
+  access_type,
 }: props) => {
   const _ = useApi();
   timeStamp = dayjs(timeStamp).format("DD-MM-YYYY");
@@ -145,6 +146,7 @@ const JoinerxamCard = ({
                 <ExamJoinBtn
                   handleJoinExam={handleJoinExam}
                   entryChange={entryChange}
+                  access_type={access_type}
                   isDisabled={isDisabled}
                 />
               </>
@@ -168,6 +170,7 @@ const JoinerxamCard = ({
                   <ExamJoinBtn
                     handleJoinExam={handleJoinExam}
                     entryChange={entryChange}
+                    access_type={access_type}
                     isDisabled={isDisabled}
                   />
                 )}

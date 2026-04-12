@@ -50,6 +50,7 @@ export const ExamDisplay = ({
                                             entryChange={entryChange}
                                             status={exam?.creationstatus}
                                             examtype={exam?.examtype}
+                                            access_type={exam?.access_type}
                                         />
                                     );
                                 }
