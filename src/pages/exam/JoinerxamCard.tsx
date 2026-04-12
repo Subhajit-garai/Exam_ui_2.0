@@ -135,7 +135,7 @@ const JoinerxamCard = ({
         <div className=" flex font-semibold gap-1 justify-between  items-center ">
           <div className="p-1">
             <Tooltip_one text={Title}>
-              <p className="text-[var(--text-primary)]">{Title.length > 15 ? Title.slice(0, 12) + "..." : Title}</p>
+              <p className="text-[var(--text-primary)]">{Title.length > 6 ? Title.slice(0, 6) + "..." : Title}</p>
             </Tooltip_one>
             <p className="text-sm text-[var(--text-secondary)]">{timeStamp}</p>
           </div>
