@@ -44,7 +44,6 @@ const JoinExam = () => {
     } else {
       setTest([]);
     }
-    console.log("loading setting-- to false");
     setLoading(false);
   };
   useEffect(() => {

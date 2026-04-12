@@ -70,7 +70,7 @@ const JoinerxamCard = ({
         });
         navigator(`/examportal?id=${encodeURIComponent(contestid)}`);
       } else {
-        console.log("error res -> ", responce);
+        // console.log("error res -> ", responce);
       }
     } else {
       toast.error(res.message, ToastConfig());

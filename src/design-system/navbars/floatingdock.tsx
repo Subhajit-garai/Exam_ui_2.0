@@ -84,12 +84,37 @@ const FloatingDockMobile = ({
           </motion.div>
         )}
       </AnimatePresence>
-      <button
+      <motion.button
         onClick={() => setOpen(!open)}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800 shadow-md"
+        animate={{
+          scale: open ? 1 : [1, 1.15, 1],
+          boxShadow: open
+            ? "0px 0px 0px rgba(0,0,0,0)"
+            : [
+                "0px 0px 0px rgba(99, 102, 241, 0.4)",
+                "0px 0px 15px rgba(99, 102, 241, 0.8)",
+                "0px 0px 0px rgba(99, 102, 241, 0.4)",
+              ],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: open ? 0 : Infinity,
+          ease: "easeInOut",
+        }}
+        className={cn(
+          "flex h-10 w-10 items-center justify-center rounded-full shadow-md z-50 relative",
+          open 
+            ? "bg-gray-50 dark:bg-neutral-800" 
+            : "bg-gradient-to-tr from-indigo-500 to-purple-500 text-white"
+        )}
       >
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-      </button>
+        <IconLayoutNavbarCollapse 
+          className={cn(
+            "h-5 w-5",
+            open ? "text-neutral-500 dark:text-neutral-400" : "text-white"
+          )} 
+        />
+      </motion.button>
     </div>
   );
 };
@@ -150,12 +175,37 @@ const FloatingDockDesktop = ({
           )}
         </AnimatePresence>
 
-        <button
+        <motion.button
           onClick={() => setOpen(!open)}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800"
+          animate={{
+            scale: open ? 1 : [1, 1.15, 1],
+            boxShadow: open
+              ? "0px 0px 0px rgba(0,0,0,0)"
+              : [
+                  "0px 0px 0px rgba(99, 102, 241, 0.4)",
+                  "0px 0px 20px rgba(99, 102, 241, 0.8)",
+                  "0px 0px 0px rgba(99, 102, 241, 0.4)",
+                ],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: open ? 0 : Infinity,
+            ease: "easeInOut",
+          }}
+          className={cn(
+            "flex h-12 w-12 items-center justify-center rounded-full shadow-lg z-50 relative",
+            open 
+              ? "bg-gray-50 dark:bg-neutral-800" 
+              : "bg-gradient-to-tr from-indigo-500 to-purple-500 text-white"
+          )}
         >
-          <IconLayoutNavbarCollapse className="h-6 w-6 text-neutral-500 dark:text-neutral-400" />
-        </button>
+          <IconLayoutNavbarCollapse 
+            className={cn(
+              "h-6 w-6",
+              open ? "text-neutral-500 dark:text-neutral-400" : "text-white"
+            )} 
+          />
+        </motion.button>
       </div>
     </>
   );
