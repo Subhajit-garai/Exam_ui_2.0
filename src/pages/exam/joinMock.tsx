@@ -52,7 +52,28 @@ export const JoinMock = () => {
 
 
   const tabs = [
+
     {
+      title: "MOCKs",
+      value: "MOCKs",
+      content: (
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl  font-bold text-[var(--text-primary)] bg-[var(--card)]">
+          <p>MOCKs</p>
+          {loading ? (
+            <LoaderFive text="Loading..." />
+          ) : (
+            <ExamDisplay
+              Data={completedExam}
+              entryChange={entryChange}
+              type={"Mock"}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              TestCount={TestsCount}
+            />
+          )}
+        </div>
+      ),
+    }, {
       title: "Recently Added MOCKs",
       value: "Recently Added MOCKs",
       content: (
@@ -67,27 +88,6 @@ export const JoinMock = () => {
           ) : (
             <ExamDisplay
               Data={todaysExam}
-              entryChange={entryChange}
-              type={"Mock"}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              TestCount={TestsCount}
-            />
-          )}
-        </div>
-      ),
-    },
-    {
-      title: "MOCKs",
-      value: "MOCKs",
-      content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl  font-bold text-[var(--text-primary)] bg-[var(--card)]">
-          <p>MOCKs</p>
-          {loading ? (
-            <LoaderFive text="Loading..." />
-          ) : (
-            <ExamDisplay
-              Data={completedExam}
               entryChange={entryChange}
               type={"Mock"}
               setCurrentPage={setCurrentPage}
