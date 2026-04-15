@@ -52,7 +52,7 @@ const initialState: user_type = {
   ticket: 0,
   isprime: "",
   status: "none",
-  islogin: false,
+  islogin: true,
   isverify: false,
   contact: "xxxxxxxx",
   social: [],
@@ -83,7 +83,7 @@ let userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, actions) => {      
+    setUser: (state, actions) => {
       console.log("user set...");
       let { name, balance, email, prime, social, target_exam, academicProfile, standard, stream, school } =
         actions.payload;

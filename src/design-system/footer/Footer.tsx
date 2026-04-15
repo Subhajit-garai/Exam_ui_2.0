@@ -33,7 +33,7 @@ export const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/test/join" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
+                                <Link to="/exam/test" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
                                     Exams
                                 </Link>
                             </li>

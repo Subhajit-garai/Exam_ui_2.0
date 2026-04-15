@@ -102,7 +102,7 @@ Fetches exams filtered by time range.
 
 #### `joinExams(id)`
 Joins an exam.
-- **Endpoint**: `/exam/join`
+- **Endpoint**: `/exam/test`
 - **Method**: GET
 - **Parameters**:
     - `id` (query, string): Exam ID.

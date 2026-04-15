@@ -39,6 +39,8 @@ import { AnalysesTest } from "./pages/Analyses/AnalysesTest.js";
 import { AnalysesPYQMock } from "./pages/Analyses/AnalysesPYQMock.js";
 import { AnalysesContest } from "./pages/Analyses/AnalysesContest.js";
 import { AnalysesQuiz } from "./pages/Analyses/AnalysesQuiz.js";
+import AnalysesDashboard from "./pages/Analyses/AnalysesDashboard.js";
+import ExamDashboard from "./pages/exam/ExamDashboard.js";
 //components
 import { Appbar } from "@repo/design-system/navbars/Appbar";
 import { type SIDEBAR_ITEMS_types } from "@repo/design-system/navbars/Sidebar";
@@ -77,7 +79,7 @@ import { ApiProvider } from "./ApiProvider.js";
 import { JoinMock } from "./pages/exam/joinMock.js";
 import { JoinPYQ } from "./pages/exam/JoinPYQ.js";
 import { IssueDashboard } from "./pages/issue/IssueDashboard.js";
-import ActivityPage from "./pages/Activity/ActivityPage.js";
+import ActivityDashboard from "./pages/Activity/ActivityDashboard.js";
 import ChallengePage from "./pages/Activity/ChallengePage.js";
 import ContestPage from "./pages/Activity/ContestPage.js";
 import QuizPage from "./pages/Activity/QuizPage.js";
@@ -88,20 +90,27 @@ import { ActivityHistory } from "./pages/user/profile/ActivityHistory.js";
 let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
     id: 1,
+    name: "Dashboard",
+    Icon: BarChart2,
+    color: "var(--color-indigo)",
+    href: "/analysis/dashboard",
+  },
+  {
+    id: 2,
     href: "/analysis/pyqmock",
     Icon: Trophy,
     color: "var(--color-purple)",
     name: "PYQ Mock",
   },
   {
-    id: 2,
+    id: 3,
     href: "/analysis/test",
     color: "var(--color-yellow)",
     Icon: ChartLine,
     name: "Test",
   },
   {
-    id: 3,
+    id: 4,
     name: "Overview",
     Icon: BarChart2,
     color: "var(--color-indigo)",
@@ -112,31 +121,38 @@ let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
 const EXAM_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
     id: 1,
-    name: "Tests",
-    Icon: ListChecks,
-    color: "var(--color-indigo)", // Indigo
-    href: "/test/join",
+    name: "Dashboard",
+    Icon: BarChart2,
+    color: "var(--color-indigo)",
+    href: "/exam/dashboard",
   },
   {
     id: 2,
-    name: "DPP",
-    Icon: Pencil,
-    color: "var(--color-pink)", // Pink
-    href: "/test/dpp",
+    name: "Tests",
+    Icon: ListChecks,
+    color: "var(--color-indigo)", // Indigo
+    href: "/exam/test",
   },
   {
     id: 3,
-    name: "Mock",
-    Icon: AlarmClockCheck,
-    color: "var(--color-green)", // Emerald
-    href: "/test/mock",
+    name: "DPP",
+    Icon: Pencil,
+    color: "var(--color-pink)", // Pink
+    href: "/exam/dpp",
   },
   {
     id: 4,
+    name: "Mock",
+    Icon: AlarmClockCheck,
+    color: "var(--color-green)", // Emerald
+    href: "/exam/mock",
+  },
+  {
+    id: 5,
     name: "PYQ",
     Icon: FileQuestion,
     color: "var(--color-yellow)", // Amber
-    href: "/test/PYQ",
+    href: "/exam/pyq",
   },
 ];
 
@@ -306,7 +322,7 @@ const App = () => {
                       index
                       element={<Navigate to="dashboard" replace />}
                     />
-                    <Route path="dashboard" element={<ActivityPage />} />
+                    <Route path="dashboard" element={<ActivityDashboard />} />
                     <Route path="challenge" element={<ChallengePage />} />
                     <Route path="contest" element={<ContestPage />} />
 
@@ -322,7 +338,8 @@ const App = () => {
                       <SplitOutlet SIDEBAR_ITEMS={ANALYSIS_SIDEBAR_ITEMS} />
                     }
                   >
-                    <Route index element={<Navigate to="test" replace />} />
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<AnalysesDashboard />} />
                     <Route path="overview" element={<Overview />} />
                     <Route path="test" element={<AnalysesTest />} />
                     <Route path="pyqmock" element={<AnalysesPYQMock />} />
@@ -330,15 +347,16 @@ const App = () => {
                     <Route path="quiz" element={<AnalysesQuiz />} />
                   </Route>
                   <Route
-                    path="/test"
+                    path="/exam"
                     element={<SplitOutlet SIDEBAR_ITEMS={EXAM_SIDEBAR_ITEMS} />}
                   >
-                    <Route index element={<Navigate to="dpp" replace />} />
-                    <Route path="join" element={<JoinTests />} />
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<ExamDashboard />} />
+                    <Route path="test" element={<JoinTests />} />
                     <Route path="dpp" element={<JoinDpp />} />
                     {/* <Route path="contest" element={<JoinContest />} /> */}
                     <Route path="mock" element={<JoinMock />} />
-                    <Route path="PYQ" element={<JoinPYQ />} />
+                    <Route path="pyq" element={<JoinPYQ />} />
                     <Route
                       path="submitsuccess"
                       element={<ExamSubmitSuccess />}
