@@ -52,7 +52,7 @@ const initialState: user_type = {
   ticket: 0,
   isprime: "",
   status: "none",
-  islogin: true,
+  islogin: false,
   isverify: false,
   contact: "xxxxxxxx",
   social: [],
