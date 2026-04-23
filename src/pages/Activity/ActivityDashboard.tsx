@@ -1,7 +1,6 @@
 import { Card } from "@/design-system/card";
 import { Trophy, Swords, BrainCircuit, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { DailyChallengeCard } from "./components/DailyChallengeCard";
 import { BetaTag } from "@repo/design-system/DevComponents/BetaTag";
 
 export const ActivityDashboard = () => {
@@ -16,22 +15,22 @@ export const ActivityDashboard = () => {
             bg: "bg-indigo-100 dark:bg-indigo-900/30",
             path: "/activity/quiz"
         },
-        {
-            title: "Contests",
-            description: "Compete in scheduled contests and win prizes.",
-            icon: Trophy,
-            color: "text-amber-500",
-            bg: "bg-amber-100 dark:bg-amber-900/30",
-            path: "/activity/contest"
-        },
-        {
-            title: "Challenges",
-            description: "Daily challenges to keep your streak alive.",
-            icon: Swords,
-            color: "text-rose-500",
-            bg: "bg-rose-100 dark:bg-rose-900/30",
-            path: "/activity/challenge"
-        }
+        // {
+        //     title: "Contests",
+        //     description: "Compete in scheduled contests and win prizes.",
+        //     icon: Trophy,
+        //     color: "text-amber-500",
+        //     bg: "bg-amber-100 dark:bg-amber-900/30",
+        //     path: "/activity/contest"
+        // },
+        // {
+        //     title: "Challenges",
+        //     description: "Daily challenges to keep your streak alive.",
+        //     icon: Swords,
+        //     color: "text-rose-500",
+        //     bg: "bg-rose-100 dark:bg-rose-900/30",
+        //     path: "/activity/challenge"
+        // }
     ];
 
     return (
@@ -90,7 +89,6 @@ export const ActivityDashboard = () => {
                 </div>
                 <BetaTag>
                     <div className="space-y-6">
-                        <DailyChallengeCard />
 
                         <Card className="p-6 bg-zinc-900 text-white border-none">
                             <h3 className="font-bold text-lg mb-2">Leaderboard</h3>

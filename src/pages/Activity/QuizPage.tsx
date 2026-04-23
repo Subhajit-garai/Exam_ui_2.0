@@ -1,8 +1,7 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { AvailableQuizzes } from "../quiz/component/AvailableQuizzes";
 import { QuizModesCard } from "./components/QuizModesCard";
-import { QuizLeaderboard } from "./components/leaderboard/QuizLeaderboard";
-import { OfficialQuizzes } from "./components/OfficialQuizzes";
+import { QuizLeaderboard } from "./leaderboard/QuizLeaderboard";
 import { QuizSetupModal } from "./QuizSetupModal";
 import { BetaTag } from "@/design-system/DevComponents/BetaTag";
 
@@ -46,9 +45,6 @@ export const QuizPage = () => {
                             <QuizLeaderboard />
                         </div>
                     </div>
-
-                    {/* Middle Section: Official Quizzes */}
-                    <OfficialQuizzes />
 
                     {/* Bottom Section: Available Quizzes */}
                     <AvailableQuizzes filterMode={filterMode} onCreateQuiz={handleCreateQuiz} />

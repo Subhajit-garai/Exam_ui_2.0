@@ -2,8 +2,8 @@ import { useState, useMemo, useEffect } from "react";
 import { Trophy, Medal, BrainCircuit } from "lucide-react";
 import { useApi } from "@/ApiProvider";
 import type { LeaderboardEntry } from "@/hooks/useQuizSocket";
-import { LeaderboardComponent } from "./LeaderboardComponent";
-import type { activity_time_range } from "./LeaderboardComponent";
+import { LeaderboardComponent } from "../components/LeaderboardComponent";
+import type { activity_time_range } from "../components/LeaderboardComponent";
 
 export type { activity_time_range };
 
@@ -42,7 +42,7 @@ export const QuizLeaderboard = ({ results, quizId }: QuizLeaderboardProps) => {
 
     const currentData = useMemo(() => {
         const sourceData = results || fetchedData;
-        
+
         console.log("Fetched Data:", sourceData);
 
         if (sourceData && sourceData.length > 0) {

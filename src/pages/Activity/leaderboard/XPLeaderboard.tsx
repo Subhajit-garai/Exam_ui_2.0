@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Trophy, Medal, Flame } from "lucide-react";
+import { Trophy, Medal, Star } from "lucide-react";
 import { useApi } from "@/ApiProvider";
-import { LeaderboardComponent, type activity_time_range } from "./LeaderboardComponent";
+import { LeaderboardComponent, type activity_time_range } from "../components/LeaderboardComponent";
 
-export const StreakLeaderboard = () => {
+export const XPLeaderboard = () => {
     const [users, setUsers] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [timeframe, setTimeframe] = useState<activity_time_range>('weekly');
@@ -11,19 +11,21 @@ export const StreakLeaderboard = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        api.activity.getLeaderboard("streak", timeframe)
+        api.activity.getLeaderboard('xp', timeframe, 10)
             .then((response: any) => {
                 const data = response.data || [];
+                // Map API data to component structure
                 const mappedUsers = data.map((item: any, index: number) => ({
                     id: item.user?.id || index,
                     name: item.user?.name || "User",
                     score: item.score || 0,
                     avatar: (item.user?.name || "U").substring(0, 2).toUpperCase(),
-                    rank: item.rank || index + 1
+                    rank: item.rank || index + 1,
+                    level: Math.floor(Math.sqrt((item.score || 0) / 100)) + 1 // Rough level calc based on XP
                 }));
                 setUsers(mappedUsers);
             })
-            .catch((err: any) => console.error("Failed to fetch Streak leaderboard", err))
+            .catch((err: any) => console.error("Failed to fetch XP leaderboard", err))
             .finally(() => setIsLoading(false));
     }, [api, timeframe]);
 
@@ -38,9 +40,9 @@ export const StreakLeaderboard = () => {
 
     return (
         <LeaderboardComponent
-            title="Streak Leaderboard"
-            description="Longest active daily streaks"
-            icon={<Flame className="text-orange-500 fill-orange-200" size={28} />}
+            title="XP Leaderboard"
+            description="Highest experience points"
+            icon={<Star className="text-yellow-500 fill-yellow-200" size={28} />}
             timeframe={timeframe}
             onTimeframeChange={setTimeframe}
             isLoading={isLoading}
@@ -51,17 +53,16 @@ export const StreakLeaderboard = () => {
                         <div className="flex items-center justify-center w-8">
                             {getRankIcon(user.rank)}
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center text-sm font-bold text-orange-700 dark:text-orange-300 border-2 border-white dark:border-zinc-800 shadow-sm">
+                        <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-sm font-bold text-indigo-700 dark:text-indigo-300 border-2 border-white dark:border-zinc-800 shadow-sm">
                             {user.avatar}
                         </div>
                         <div>
                             <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">{user.name}</h4>
-                            <p className="text-xs text-zinc-500">Active</p>
+                            <p className="text-xs text-zinc-500">Level {user.level}</p>
                         </div>
                     </div>
-                    <div className="text-right flex items-center gap-1">
-                        <Flame size={16} className="text-orange-500 fill-orange-500" />
-                        <span className="block font-bold text-orange-600 dark:text-orange-400">{user.score} Days</span>
+                    <div className="text-right">
+                        <span className="block font-bold text-indigo-600 dark:text-indigo-400">{user.score.toLocaleString()} XP</span>
                     </div>
                 </div>
             )}

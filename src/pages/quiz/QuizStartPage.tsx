@@ -7,7 +7,7 @@ import { Badge } from "@repo/ui/badge";
 import { Loader2, User, Play } from "lucide-react";
 import { QuizActivePage } from "./QuizActivePage";
 
-import { QuizLeaderboard } from "../Activity/components/leaderboard/QuizLeaderboard";
+import { QuizLeaderboard } from "../Activity/leaderboard/QuizLeaderboard";
 import { useQuizSocketContext } from "@/QuizSocketProvider";
 
 export const QuizStartPage = () => {
@@ -33,7 +33,7 @@ export const QuizStartPage = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasJoined = useRef(false);
 
- 
+
 
   // Reset join flag on disconnect
   useEffect(() => {
@@ -166,7 +166,7 @@ export const QuizStartPage = () => {
                     </p>
                   )}
 
-                  {logs.map((log:any) => (
+                  {logs.map((log: any) => (
                     <div
                       key={log.id}
                       className="flex items-center gap-2 text-sm"
