@@ -57,7 +57,6 @@ import {
   ListChecks,
   AlarmClockCheck,
   FileQuestion,
-  Swords,
   BrainCircuit,
 } from "lucide-react";
 import { store } from "@repo/store/store.js";
@@ -80,10 +79,7 @@ import { JoinMock } from "./pages/exam/joinMock.js";
 import { JoinPYQ } from "./pages/exam/JoinPYQ.js";
 import { IssueDashboard } from "./pages/issue/IssueDashboard.js";
 import ActivityDashboard from "./pages/Activity/ActivityDashboard.js";
-import ChallengePage from "./pages/Activity/ChallengePage.js";
-import ContestPage from "./pages/Activity/ContestPage.js";
 import QuizPage from "./pages/Activity/QuizPage.js";
-import LeaderboardPage from "./pages/Activity/LeaderboardPage.js";
 import QuizStartPage from "./pages/quiz/QuizStartPage.js";
 import { ActivityHistory } from "./pages/user/profile/ActivityHistory.js";
 
@@ -205,20 +201,20 @@ let ActivityOptions: SIDEBAR_ITEMS_types[] = [
     name: "Dashboard",
     color: "var(--color-indigo)",
   },
-  {
-    id: 2,
-    href: "/activity/challenge",
-    Icon: Swords,
-    name: "Challenge",
-    color: "var(--color-red)",
-  },
-  {
-    id: 3,
-    href: "/activity/contest",
-    Icon: Trophy,
-    name: "Contest",
-    color: "var(--color-yellow)",
-  },
+  // {
+  //   id: 2,
+  //   href: "/activity/challenge",
+  //   Icon: Swords,
+  //   name: "Challenge",
+  //   color: "var(--color-red)",
+  // },
+  // {
+  //   id: 3,
+  //   href: "/activity/contest",
+  //   Icon: Trophy,
+  //   name: "Contest",
+  //   color: "var(--color-yellow)",
+  // },
   {
     id: 4,
     href: "/activity/quiz",
@@ -296,8 +292,8 @@ const App = () => {
                   >
                     <Route index element={<Navigate to="notes" replace />} />
                     <Route path="notes" element={<NoteSubjectList />} />
-                    <Route path=":category" element={<NoteTopicList />} />
-                    <Route path=":category/:topic" element={<NotePage />} />
+                    <Route path=":subject" element={<NoteTopicList />} />
+                    <Route path=":subject/:topic" element={<NotePage />} />
                   </Route>
                   <Route
                     path="/user"
@@ -323,14 +319,14 @@ const App = () => {
                       element={<Navigate to="dashboard" replace />}
                     />
                     <Route path="dashboard" element={<ActivityDashboard />} />
-                    <Route path="challenge" element={<ChallengePage />} />
-                    <Route path="contest" element={<ContestPage />} />
+                    {/* <Route path="challenge" element={<ChallengePage />} /> */}
+                    {/* <Route path="contest" element={<ContestPage />} /> */}
 
                     <Route path="quiz" element={<QuizLayout />}>
                       <Route index element={<QuizPage />} />
                       <Route path="start" element={<QuizStartPage />} />
                     </Route>
-                    <Route path="leaderboard" element={<LeaderboardPage />} />
+                    {/* <Route path="leaderboard" element={<LeaderboardPage />} /> */}
                   </Route>
                   <Route
                     path="/analysis"

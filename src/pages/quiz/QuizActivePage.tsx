@@ -3,7 +3,7 @@ import { Button } from "@repo/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import { Badge } from "@repo/ui/badge";
 import { Timer } from "lucide-react";
-import { QuizLeaderboard } from "../Activity/components/leaderboard/QuizLeaderboard";
+import { QuizLeaderboard } from "../Activity/leaderboard/QuizLeaderboard";
 import type { LeaderboardEntry } from "@/hooks/useQuizSocket";
 
 interface QuizActivePageProps {

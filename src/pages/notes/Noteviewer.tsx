@@ -33,7 +33,10 @@ export function NoteViewer({ content }: { content: string }) {
   const { name, email } = useAppSelector((state) => state.user);
 
   const extensions = [
-    StarterKit,
+    StarterKit.configure({
+      link: false,       // disable default
+      underline: false,  // disable default
+    }),
     CustomImage,
     Highlight.configure({ multicolor: true }),
     Table.configure({

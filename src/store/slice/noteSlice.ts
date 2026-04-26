@@ -51,12 +51,8 @@ type note_type = {
   currentSubject: string;
   subjectNames: string[];
   topicNames: string[];
-  content: string;
-  currentTopic: string;
-  currentTopicVersion: string;
   currentSubjectid: string;
   currentTopicid: string;
-  note: {};
 };
 
 const initialState: note_type = {
@@ -66,12 +62,8 @@ const initialState: note_type = {
   currentSubject: "",
   subjectNames: ["no subjects"],
   topicNames: ["no topics"],
-  content: "",
-  currentTopic: "",
-  currentTopicVersion: "",
   currentSubjectid: "",
   currentTopicid: "",
-  note: {},
 };
 
 let noteSlice = createSlice({
@@ -111,20 +103,6 @@ let noteSlice = createSlice({
       state.topicNames = topicnames && topicnames.length > 0 ? topicnames : ["no topics"];
 
     },
-    setCurrentTopic: (state, actions) => {
-      state.currentTopic = actions.payload;
-    },
-    setContentData: (state, actions) => {
-      state.content = actions.payload.content;
-
-      if (actions.payload.id) {
-        state.currentTopic = actions.payload.name;
-      }
-    },
-    setNotes: (state, actions) => {
-      state.note = actions.payload;
-      state.content = actions.payload.content;
-    },
     setCurrentTopicid: (state, actions) => {
       state.currentTopicid = actions.payload;
     },
@@ -139,9 +117,6 @@ export let {
   setActiveNoteTab,
   setSubjects,
   setTopics,
-  setContentData,
-  setCurrentTopic,
-  setNotes,
   setCurrentSubject,
   setCurrentTopicid,
 } = noteSlice.actions;

@@ -1,8 +1,7 @@
 // NotePage.jsx
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NoteViewer } from "./Noteviewer";
-import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import { useReadingTracker } from "@/hooks/useReadingTracker";
 
@@ -14,24 +13,24 @@ import { ToastConfig } from "@/lib";
 import { IconClock } from "@tabler/icons-react";
 
 export function NotePage() {
-  const { category, topic } = useParams();
+  const { subject, topic } = useParams();
+  const [content, setContent] = useState("");
 
-  if (!category || !topic) {
+  if (!subject || !topic) {
     throw console.log("subject or topic is not valid");
   }
 
-  const dispatch = useAppDispatch();
-  let { content, currentTopic } = useAppSelector((state) => state.note);
+
   const _ = useApi()
 
-  const { timeSpent, formatTime } = useReadingTracker(currentTopic);
+  const { timeSpent, formatTime } = useReadingTracker(topic);
 
   const handleMarkComplete = async () => {
-    console.log("currentTopic --->", currentTopic);
+    console.log("currentTopic --->", topic);
 
-    if (!currentTopic) return;
+    if (!topic) return;
     try {
-      await _.api.progress.markComplete(currentTopic);
+      await _.api.progress.markComplete(topic);
       toast.success("Progress updated successfully!", ToastConfig(2000));
     } catch (error) {
       console.error("Failed to mark topic as completed", error);
@@ -40,7 +39,12 @@ export function NotePage() {
   };
 
   useEffect(() => {
-    _.api.notes.fetchNotes(dispatch, category, topic);
+    (async () => {
+      let note_cont = await _.api.notes.fetchNotes(subject, topic);
+      if (note_cont?.success && note_cont.data) {
+        setContent(note_cont.data.content)
+      }
+    })()
   }, []);
 
   return (

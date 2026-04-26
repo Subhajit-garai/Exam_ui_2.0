@@ -23,9 +23,7 @@ type props = {
   startTime: string;
   joinTime: string;
   examtype: string;
-  entryChange: string;
   status: string;
-  access_type: string;
 };
 
 const JoinerxamCard = ({
@@ -38,9 +36,7 @@ const JoinerxamCard = ({
   startTime,
   joinTime,
   examtype,
-  entryChange,
   status,
-  access_type,
 }: props) => {
   const _ = useApi();
   timeStamp = dayjs(timeStamp).format("DD-MM-YYYY");
@@ -50,7 +46,7 @@ const JoinerxamCard = ({
   const isDisabled = status !== "Done";
 
   const handleJoinExam = async () => {
-    let res = await _.api.exam.requestTojoinExam(contestid);
+    let res = await _.api.exam.joinExams(contestid);
     // .then((res) => {
     if (res.success == true) {
       toast.success(res.message, ToastConfig());
@@ -145,8 +141,6 @@ const JoinerxamCard = ({
               <>
                 <ExamJoinBtn
                   handleJoinExam={handleJoinExam}
-                  entryChange={entryChange}
-                  access_type={access_type}
                   isDisabled={isDisabled}
                 />
               </>
@@ -169,8 +163,6 @@ const JoinerxamCard = ({
                 ) : (
                   <ExamJoinBtn
                     handleJoinExam={handleJoinExam}
-                    entryChange={entryChange}
-                    access_type={access_type}
                     isDisabled={isDisabled}
                   />
                 )}
