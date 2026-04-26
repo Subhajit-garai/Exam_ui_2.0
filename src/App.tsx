@@ -57,7 +57,6 @@ import {
   ListChecks,
   AlarmClockCheck,
   FileQuestion,
-  Swords,
   BrainCircuit,
 } from "lucide-react";
 import { store } from "@repo/store/store.js";
@@ -293,8 +292,8 @@ const App = () => {
                   >
                     <Route index element={<Navigate to="notes" replace />} />
                     <Route path="notes" element={<NoteSubjectList />} />
-                    <Route path=":category" element={<NoteTopicList />} />
-                    <Route path=":category/:topic" element={<NotePage />} />
+                    <Route path=":subject" element={<NoteTopicList />} />
+                    <Route path=":subject/:topic" element={<NotePage />} />
                   </Route>
                   <Route
                     path="/user"

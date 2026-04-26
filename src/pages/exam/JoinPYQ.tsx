@@ -7,7 +7,6 @@ import { ExamDisplay } from "./testDisplay";
 
 export const JoinPYQ = () => {
   const [Test, setTest] = useState([]);
-  const [entryChange, setEntryChange] = useState<string>("99");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [TestsCount, setTestsCount] = useState<number>(0);
 
@@ -19,14 +18,7 @@ export const JoinPYQ = () => {
   const fetchTests = async () => {
     setLoading(true);
 
-    let charge = await _.api.exam.getTokensystem("PYQ");
-    setEntryChange(
-      charge?.data == "0"
-        ? "free"
-        : typeof charge?.data !== "string"
-          ? String(charge?.data)
-          : charge?.data
-    );
+
 
 
     let data = await _.api.exam.fetchExams_by_type(
@@ -66,7 +58,6 @@ export const JoinPYQ = () => {
           ) : (
             <ExamDisplay
               Data={[...todaysExam, ...tomorrowsExam, ...upcomingExam]}
-              entryChange={entryChange}
               type={"PYQ"}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -87,7 +78,6 @@ export const JoinPYQ = () => {
           ) : (
             <ExamDisplay
               Data={completedExam}
-              entryChange={entryChange}
               type={"PYQ"}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}

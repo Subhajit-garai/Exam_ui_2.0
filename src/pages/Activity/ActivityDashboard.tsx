@@ -1,5 +1,5 @@
 import { Card } from "@/design-system/card";
-import { Trophy, Swords, BrainCircuit, ChevronRight } from "lucide-react";
+import { Trophy, BrainCircuit, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BetaTag } from "@repo/design-system/DevComponents/BetaTag";
 

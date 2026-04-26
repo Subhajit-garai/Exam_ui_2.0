@@ -69,17 +69,10 @@ export type exam_type = {
   lastexam: string;
   Availableexams: Availableexams_type;
   AvailableexamsShortCode: string[];
-  Exams: [];
-  Dpps: [];
-  Mocks: [];
-  FilterExams: [];
-  examPatters: [];
   syllabus: [];
   ExamYear: exam_year_type[];
   ExamYear_year: string[];
   examCategorys: Category[];
-  Availableexampatterns: string[];
-  Availableexampatternsinfo: any[];
   total_questions: [];
   ansset: {
     examid: string;
@@ -92,17 +85,10 @@ const initialState: exam_type = {
   lastexam: "",
   Availableexams: [],
   AvailableexamsShortCode: [],
-  Exams: [],
-  Dpps: [],
-  Mocks: [],
   ExamYear: [],
   ExamYear_year: [],
-  FilterExams: [],
-  examPatters: [],
   syllabus: [], // move to syllabusSlic
   examCategorys: [],
-  Availableexampatterns: [],
-  Availableexampatternsinfo: [],
   total_questions: [],
   ansset: {
     examid: "",
@@ -154,6 +140,7 @@ let examSlice = createSlice({
         }
       }
     }, // update view of box colors
+
     updateisAns: (state, actions) => {
       let { part, number, data } = actions.payload;
       if (
@@ -210,28 +197,8 @@ let examSlice = createSlice({
         state.AvailableexamsShortCode.push(exam.shortCode)
       );
     },
-    setExams: (state, actions) => {
-      state.Exams = actions.payload.exams;
-      state.total_questions =
-        actions.payload.exams[0].exam_pattern.total_questions;
-    },
     setTotal_Questions: (state, actions) => {
       state.total_questions = actions.payload;
-    },
-    setDpps: (state, actions) => {
-      state.Dpps = actions.payload.exams;
-    },
-    setMocks: (state, actions) => {
-      state.Mocks = actions.payload.exams;
-    },
-    setFilterExams: (state, actions) => {
-      state.FilterExams = actions.payload;
-    },
-
-    setExamPatterns: (state, actions) => {
-      if (!actions.payload) return;
-      state.Availableexampatterns = actions.payload.map((t: any) => t.title);
-      state.Availableexampatternsinfo = [...actions.payload];
     },
     setSyllabus: (state, actions) => {
       state.syllabus = actions.payload;
@@ -259,10 +226,7 @@ let examSlice = createSlice({
 });
 
 export let {
-  setFilterExams,
-  setExams,
   setTotal_Questions,
-  setExamPatterns,
   setSyllabus,
   setCategorys,
   setAvailableexams,
@@ -274,8 +238,6 @@ export let {
   setCurrentPart,
   setanssetInit,
   setlastExam,
-  setDpps,
   setExamYear,
-  setMocks,
 } = examSlice.actions;
 export default examSlice.reducer;

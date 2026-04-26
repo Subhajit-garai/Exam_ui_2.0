@@ -2,14 +2,17 @@ import { useEffect } from "react";
 import { TopicListCard } from "./ListCard";
 import { useApi } from "@/ApiProvider";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
+import { useParams } from "react-router-dom";
 
 export default function NoteTopicList() {
   const dispatch = useAppDispatch();
-  let { Topics, currentSubject } = useAppSelector((state) => state.note);
+  const { subject } = useParams();
+  let { Topics } = useAppSelector((state) => state.note);
   const _ = useApi()
-
   useEffect(() => {
-    _.api.notes.fetchSubject_topics(dispatch, currentSubject);
+    if (subject) {
+      _.api.notes.fetchSubject_topics(dispatch, subject);
+    }
   }, []);
 
   return (

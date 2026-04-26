@@ -7,7 +7,6 @@ import { ExamDisplay } from "./testDisplay";
 
 export const JoinMock = () => {
   const [Test, setTest] = useState([]);
-  const [entryChange, setEntryChange] = useState<string>("99");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [TestsCount, setTestsCount] = useState<number>(0);
 
@@ -19,14 +18,7 @@ export const JoinMock = () => {
   const fetchTests = async () => {
     setLoading(true);
 
-    let charge = await _.api.exam.getTokensystem("Mock");
-    setEntryChange(
-      charge?.data == "0"
-        ? "free"
-        : typeof charge?.data !== "string"
-          ? String(charge?.data)
-          : charge?.data
-    );
+
 
     let data = await _.api.exam.fetchExams_by_type(
       "Mock",
@@ -64,7 +56,6 @@ export const JoinMock = () => {
           ) : (
             <ExamDisplay
               Data={completedExam}
-              entryChange={entryChange}
               type={"Mock"}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -88,7 +79,6 @@ export const JoinMock = () => {
           ) : (
             <ExamDisplay
               Data={todaysExam}
-              entryChange={entryChange}
               type={"Mock"}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}

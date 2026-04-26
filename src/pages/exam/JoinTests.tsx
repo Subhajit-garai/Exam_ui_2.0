@@ -9,7 +9,6 @@ const JoinExam = () => {
 
   const imageurl = "/assets/cardbg/background2.jpg"
   const [Test, setTest] = useState([]);
-  const [entryChange, setEntryChange] = useState<string>("99");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [TestsCount, setTestsCount] = useState<number>(0);
 
@@ -23,17 +22,6 @@ const JoinExam = () => {
 
   const fetchTests = async () => {
     setLoading(true);
-
-    let charge = await _.api.exam.getTokensystem();
-    setEntryChange(
-      charge?.data == "0"
-        ? "free"
-        : typeof charge?.data !== "string"
-          ? String(charge?.data)
-          : charge?.data
-    );
-
-
     let data = await _.api.exam.fetchExams_by_type(
       "Test",
       currentPage,
@@ -74,7 +62,6 @@ const JoinExam = () => {
             <ExamDisplay
               Data={todaysExam}
               imageurl={imageurl}
-              entryChange={entryChange}
               type={"Test"}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -100,7 +87,6 @@ const JoinExam = () => {
             <ExamDisplay
               Data={[...tomorrowsExam, ...upcomingExam]}
               imageurl={imageurl}
-              entryChange={entryChange}
               type={"Test"}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -122,7 +108,6 @@ const JoinExam = () => {
             <ExamDisplay
               Data={completedExam}
               imageurl={imageurl}
-              entryChange={entryChange}
               type={"Test"}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}

@@ -1,6 +1,5 @@
 import { ApiClient } from "../ApiClient";
 import {
-  setContentData,
   setSubjects,
   setTopics,
 } from "@repo/store/slice/noteSlice";
@@ -16,21 +15,21 @@ export class noteApi {
   // notes
 
   fetchAvalibleSubjectforUser = (dispatch: any) => {
-    let endpoint = `/user/notes/allsubject`;
+    let endpoint = `/user/notes/subject/all`;
     return this.api.apiDispatcher(endpoint, dispatch, setSubjects);
   };
   fetchSubject_topics = (dispatch: any, Subject: string) => {
-    let endpoint = `/notes/alltopic/${Subject}`;
+    let endpoint = `/notes/topic/all/${Subject}`;
     return this.api.apiDispatcher(endpoint, dispatch, setTopics);
   };
 
-  fetchNotes = (dispatch: any, Subject: string, topic: string) => {
-    let endpoint = `/notes/getnote/${Subject}/${topic}`;
-    this.api.apiDispatcher(endpoint, dispatch, setContentData);
+  fetchNotes = async (Subject: string, topic: string) => {
+    let endpoint = `/notes/note/${Subject}/${topic}`;
+    return await this.api.request(endpoint);
   };
 
   getSubjects = async (exam?: string, dispatch?: any, setinredux: boolean = false) => {
-    let endpoint = `/notes/allsubject`;
+    let endpoint = `/notes/subject/all`;
     if (exam) {
       endpoint += `?exam=${exam}`;
     }
@@ -41,7 +40,7 @@ export class noteApi {
   };
 
   getTopics = async (subject: string, dispatch?: any, setinredux: boolean = false) => {
-    let endpoint = `/notes/alltopic/${subject}`;
+    let endpoint = `/notes/topic/all/${subject}`;
     if (setinredux) {
       this.api.apiDispatcher(endpoint, dispatch, setTopics);
     }

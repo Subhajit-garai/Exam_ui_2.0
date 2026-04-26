@@ -7,7 +7,6 @@ import { SimplePagination as Pagination } from "@repo/design-system/pagenation";
 
 export const ExamDisplay = ({
     Data,
-    entryChange,
     type,
     noTitle = " No Tests",
     currentPage,
@@ -16,7 +15,6 @@ export const ExamDisplay = ({
     imageurl = "/assets/cardbg/background2.jpg"
 }: {
     Data: any;
-    entryChange: string;
     type: string;
     noTitle?: string;
     currentPage: number;
@@ -47,10 +45,8 @@ export const ExamDisplay = ({
                                             startTime={exam?.starttime}
                                             joinTime={exam?.jointime}
                                             particepents={exam?.ContestRegister?.count}
-                                            entryChange={entryChange}
                                             status={exam?.creationstatus}
                                             examtype={exam?.examtype}
-                                            access_type={exam?.access_type}
                                         />
                                     );
                                 }

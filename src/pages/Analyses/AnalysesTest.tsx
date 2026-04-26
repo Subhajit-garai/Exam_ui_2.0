@@ -10,7 +10,7 @@ import { useIsMobile } from "@repo/hooks/isMobile";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@repo/lib/utils/utils";
 
-import { useAppDispatch, useAppSelector } from "@repo/store/hook";
+import { useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import ExamAttemptQuestionChart from "../metrix/ExamAttemptQuestionChart";
 import LeaderBoard from "../metrix/LeaderBoard";
@@ -21,7 +21,7 @@ import { DialogBox } from "@/design-system/dialog";
 
 export const AnalysesTest = () => {
   const _ = useApi();
-  let { Exams, lastexam } = useAppSelector((state) => state.exam);
+  let { lastexam } = useAppSelector((state) => state.exam);
   // const [openModal, setOpenModal] = useState(false);
   const [examid, setexamid] = useState<string | null>(null);
   const [exams, setexams] = useState<exam_type[]>([]);
@@ -37,7 +37,6 @@ export const AnalysesTest = () => {
     inTop10: 0,
     topperScore: 0,
   });
-  const dispatch = useAppDispatch();
   let ismobile = useIsMobile();
 
   let iconSize = ismobile ? 20 : 25;
@@ -81,10 +80,12 @@ export const AnalysesTest = () => {
   }, [examid]);
 
   useEffect(() => {
-    if (!Exams) {
-      _.api.exam.fetchExams(dispatch);
-    }
-    setexams(Exams);
+
+    _.api.exam.fetchExams().then(res => {
+      if (res.success) {
+        setexams(res.data);
+      }
+    });
 
     let item;
 

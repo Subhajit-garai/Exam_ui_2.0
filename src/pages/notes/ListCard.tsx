@@ -60,12 +60,12 @@ export const SubjectListCard = ({
 };
 
 export const TopicListCard = ({ data, link }: { data: any; link?: string }) => {
-  const { category } = useParams();
+  const { subject } = useParams();
   const navigate = useNavigate();
   const color = getColor(data.name || "");
 
   const handleClick = () => {
-    navigate(link || `/notes/${category}/${data.slug}`);
+    navigate(link || `/notes/${subject}/${data.slug}`);
   };
   return (
     <motion.div
