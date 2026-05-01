@@ -4,7 +4,7 @@ import Textinput, { SelectionInput } from "@/design-system/inputs/InputComponent
 import { Checkbox } from "@repo/ui/checkbox";
 import { Label } from "@repo/ui/label";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useApi } from "@/ApiProvider";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import useHandleinpute from "@/hooks/useHandleInpute";
@@ -18,7 +18,7 @@ interface QuizSetupModalProps {
 }
 
 export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModalProps) => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const init = {
         mode: mode,
@@ -95,11 +95,9 @@ export const QuizSetupModal = ({ isOpen, onClose, mode = "1v1" }: QuizSetupModal
             if (response.success) {
                 toast.success("Quiz created successfully", ToastConfig());
                 // Assuming the response contains the created quiz ID
-
-                console.log("response.data", response.data);
-
-                const quizId = response.data.id;
-                navigate(`/quiz/start?id=${quizId}&mode=${value.mode}&subject=${value.subject}&topic=${selectedTopic}`);
+                // const quizId = response.data.id;
+                // navigate(`/quiz/start?id=${quizId}&mode=${value.mode}&subject=${value.subject}&topic=${selectedTopic}`);
+                // navigate(`/quiz/start`);
                 onClose();
             } else {
                 toast.error(response.message || "Failed to create quiz", ToastConfig());

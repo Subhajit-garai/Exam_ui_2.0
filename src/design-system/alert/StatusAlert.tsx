@@ -7,7 +7,7 @@ export type AlertType = "error" | "success" | "warning" | "info"
 interface StatusAlertProps extends Omit<React.ComponentProps<typeof Alert>, "variant"> {
     type?: AlertType
     title?: string
-    message: string
+    message: React.ReactNode
 }
 
 const iconMap = {

@@ -61,8 +61,8 @@ const Login = () => {
     if (response.success) {
       toast.success(response.message, ToastConfig(1000));
       _.api.user.fetchuser(dispatch);
-      navigate(`/login/validate/email?email=${response.email}`);
-      // navigate("/home");
+      // navigate(`/login/validate/email?email=${response.email}`);
+      navigate("/home");
     }
     else {
       toast.error(response.message, ToastConfig());

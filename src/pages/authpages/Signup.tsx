@@ -53,7 +53,8 @@ const Signup = () => {
     if (response.success) {
       toast.success(response.message, ToastConfig(1000));
       _.api.user.fetchuser(dispatch);
-      navigate("/user/validation?email=" + value.email, { replace: true });
+      // navigate("/user/validation?email=" + value.email, { replace: true });
+      navigate("/login", { replace: true })
     } else {
       toast.error(response.message, ToastConfig());
     }
