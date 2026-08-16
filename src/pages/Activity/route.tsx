@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import { Navigate, useRoutes } from "react-router-dom";
 import { SplitOutlet, QuizLayout } from "@repo/design-system/outlets/index";
-import ActivityDashboard from "./ActivityDashboard";
+import ActivityDashboard from "./dashboard";
 import QuizPage from "./QuizPage";
 import QuizStartPage from "../quiz/QuizStartPage";
 import type { SIDEBAR_ITEMS_types } from "@/design-system";

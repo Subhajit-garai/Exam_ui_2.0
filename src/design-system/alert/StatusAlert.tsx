@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Alert, AlertDescription, AlertTitle } from "./Alert"
+import { Alert, AlertDescription, AlertTitle } from "@repo/ui/alert"
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from "lucide-react"
 
 export type AlertType = "error" | "success" | "warning" | "info"

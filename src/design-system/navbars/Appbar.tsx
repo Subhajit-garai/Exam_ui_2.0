@@ -21,12 +21,48 @@ export type nav_items_types = {
 };
 
 export const menuOptions: nav_items_types[] = [
-  { id: 1, name: "Home", Component: Home, href: "/home", color: "text-[var(--color-blue)]" },
-  { id: 2, name: "Resource", Component: NotebookPen, href: "/resource/notes", color: "text-[var(--color-purple)]" },
-  { id: 3, name: "Exam", Component: BookCheck, href: "/exam/dashboard", color: "text-[var(--color-green)]" },
-  { id: 6, name: "Activity", Component: Activity, href: "/activity/dashboard", color: "text-[var(--color-orange)]" },
-  { id: 4, name: "Analysis", Component: BarChart, href: "/analysis/dashboard", color: "text-[var(--color-yellow)]" },
-  { id: 5, name: "Issue", Component: BadgeAlert, href: "/issue/dashboard", color: "text-[var(--color-red)]" },
+  {
+    id: 1,
+    name: "Home",
+    Component: Home,
+    href: "/home",
+    color: "text-[var(--color-blue)]",
+  },
+  {
+    id: 2,
+    name: "Resource",
+    Component: NotebookPen,
+    href: "/resource/dashboard",
+    color: "text-[var(--color-purple)]",
+  },
+  {
+    id: 3,
+    name: "Exam",
+    Component: BookCheck,
+    href: "/exam/dashboard",
+    color: "text-[var(--color-green)]",
+  },
+  {
+    id: 6,
+    name: "Activity",
+    Component: Activity,
+    href: "/activity/dashboard",
+    color: "text-[var(--color-orange)]",
+  },
+  {
+    id: 4,
+    name: "Analysis",
+    Component: BarChart,
+    href: "/analysis/dashboard",
+    color: "text-[var(--color-yellow)]",
+  },
+  {
+    id: 5,
+    name: "Issue",
+    Component: BadgeAlert,
+    href: "/issue/dashboard",
+    color: "text-[var(--color-red)]",
+  },
 ];
 
 // Custom hook for media query
@@ -50,7 +86,7 @@ export const Appbar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   const isMediumToXL = useMediaQuery(
-    "(min-width: 768px) and (max-width: 1535px)"
+    "(min-width: 768px) and (max-width: 1535px)",
   );
 
   useEffect(() => {
