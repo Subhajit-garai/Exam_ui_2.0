@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 import { Navigate, useRoutes } from "react-router-dom";
 import { SplitOutlet } from "@repo/design-system/outlets/index";
 import type { SIDEBAR_ITEMS_types } from "@repo/design-system/navbars/Sidebar";
-import { BarChart2 } from "lucide-react";
+import { Bug } from "lucide-react";
 
 import { IssueDashboard } from "./IssueDashboard";
 
@@ -10,7 +10,7 @@ const ISSUE_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
     id: 1,
     name: "Dashboard",
-    Icon: BarChart2,
+    Icon: Bug,
     color: "var(--color-red)",
     href: "/issue/dashboard",
   },

@@ -5,10 +5,8 @@ import {
   AlarmClockCheck,
   FileQuestion,
   ChevronRight,
-  GraduationCap,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { BetaTag } from "@repo/design-system/DevComponents/BetaTag";
 
 export const ExamDashboard = () => {
   const navigate = useNavigate();
@@ -61,7 +59,7 @@ export const ExamDashboard = () => {
         </p>
       </div>
 
-      <div className="">
+      <div>
         <div className="lg:col-span-2 space-y-8">
           {/* Quick Access Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

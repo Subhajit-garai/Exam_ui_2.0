@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@repo/ui/dialog";
-// A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
 
 import { useIsMobile } from "@repo/hooks/isMobile";
 import {
@@ -28,27 +27,40 @@ export function DialogBox({
   dialogDescription,
   Title,
   children,
+  open: externalOpen,
+  onOpenChange: externalOnOpenChange,
 }: {
-  TriggerBtnText: string;
+  TriggerBtnText?: string;
   Title?: string;
   dialogDescription?: string;
   children: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [internalOpen, setInternalOpen] = React.useState(false);
   const isDesktop = !useIsMobile();
+
+  const isControlled = externalOpen !== undefined;
+  const open = isControlled ? externalOpen : internalOpen;
+  const setOpen = (val: boolean) => {
+    if (externalOnOpenChange) externalOnOpenChange(val);
+    if (!isControlled) setInternalOpen(val);
+  };
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          {TriggerBtnText && (
+        {TriggerBtnText ? (
+          <DialogTrigger asChild>
             <Button variant="outline">{TriggerBtnText}</Button>
-          )}
-        </DialogTrigger>
+          </DialogTrigger>
+        ) : null}
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>{Title}</DialogTitle>
-            <DialogDescription>{dialogDescription}</DialogDescription>
+            {Title && <DialogTitle>{Title}</DialogTitle>}
+            {dialogDescription && (
+              <DialogDescription>{dialogDescription}</DialogDescription>
+            )}
             {children}
           </DialogHeader>
         </DialogContent>
@@ -58,18 +70,22 @@ export function DialogBox({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger>
-        {TriggerBtnText && <Button variant="outline">{TriggerBtnText}</Button>}
-      </DrawerTrigger>
+      {TriggerBtnText ? (
+        <DrawerTrigger asChild>
+          <Button variant="outline">{TriggerBtnText}</Button>
+        </DrawerTrigger>
+      ) : null}
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>{Title}</DrawerTitle>
-          <DrawerDescription>{dialogDescription}</DrawerDescription>
+          {Title && <DrawerTitle>{Title}</DrawerTitle>}
+          {dialogDescription && (
+            <DrawerDescription>{dialogDescription}</DrawerDescription>
+          )}
         </DrawerHeader>
         {children}
 
         <DrawerFooter className="pt-2">
-          <DrawerClose>
+          <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerFooter>
