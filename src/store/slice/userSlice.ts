@@ -6,7 +6,7 @@ export type user_social_type = {
   platform: SocialPlatform;
   link: string;
   isVerified: boolean;
-}
+};
 
 export type UserStats = {
   testsAttempted: { value: number; trend: any };
@@ -25,7 +25,7 @@ type user_type = {
   islogin: boolean;
   isverify: boolean;
   contact: string;
-  social: user_social_type[],
+  social: user_social_type[];
   target_exam?: string;
   academicProfile?: {
     category: string;
@@ -76,7 +76,7 @@ export const fetchUserStats = createAsyncThunk(
     } catch (error) {
       return rejectWithValue("Failed to fetch user stats");
     }
-  }
+  },
 );
 
 let userSlice = createSlice({
@@ -85,8 +85,18 @@ let userSlice = createSlice({
   reducers: {
     setUser: (state, actions) => {
       console.log("user set...");
-      let { name, balance, email, prime, social, target_exam, academicProfile, standard, stream, school } =
-        actions.payload;
+      let {
+        name,
+        balance,
+        email,
+        prime,
+        social,
+        target_exam,
+        academicProfile,
+        standard,
+        stream,
+        school,
+      } = actions.payload;
       state.name = name;
       state.email = email;
       state.balance = balance?.amount ?? 0;
@@ -122,10 +132,22 @@ let userSlice = createSlice({
     builder.addCase(fetchUserStats.fulfilled, (state, action) => {
       const stats = action.payload;
       state.stats = {
-        testsAttempted: { value: stats.testsAttempted.testsAttempted, trend: stats.testsAttempted.trend },
-        avgScore: { value: stats.avgScore.avgScore, trend: stats.avgScore.trend },
-        studyHours: { value: stats.studyHours.hours, trend: stats.studyHours.trend },
-        accuracy: { value: stats.accuracy.accuracy, trend: stats.accuracy.trend }
+        testsAttempted: {
+          value: stats.testsAttempted.testsAttempted,
+          trend: stats.testsAttempted.trend,
+        },
+        avgScore: {
+          value: stats.avgScore.avgScore,
+          trend: stats.avgScore.trend,
+        },
+        studyHours: {
+          value: stats.studyHours.hours,
+          trend: stats.studyHours.trend,
+        },
+        accuracy: {
+          value: stats.accuracy.accuracy,
+          trend: stats.accuracy.trend,
+        },
       };
     });
   },
