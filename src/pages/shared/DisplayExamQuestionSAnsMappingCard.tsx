@@ -6,7 +6,7 @@ import { Badge } from "@repo/ui/badge";
 import { cn } from "@repo/lib/utils";
 import { QuestionIssueCardCreate } from "@/design-system";
 import { Tabs } from "@/design-system/tabs/Tabs";
-import type { UserAnsFormat_type } from "@/pages/Analyses/types";
+import type { UserAnsFormat_type } from "@/pages/analyses/types";
 import { LoaderFive } from "@/design-system/loader/loader";
 import { DialogBox } from "@/design-system/dialog";
 
@@ -122,7 +122,6 @@ export const DisplayExamQuestionSAnsMapping = ({
     setoptions(tempOption);
   }, [parts]);
 
-
   return (
     <>
       <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative  flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-4 overflow-auto  no-visible-scrollbar mb-8">
@@ -163,7 +162,8 @@ export const DisplayQuestionAnsCard = ({
   let number = questionAnsData.number;
 
   let status: "correct" | "incorrect" | "unattempted" = "unattempted";
-  let statusColor = "text-[var(--text-secondary)] bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
+  let statusColor =
+    "text-[var(--text-secondary)] bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
 
   let currentUserAnswer = is_multiple_ans
     ? userAnswer
@@ -179,15 +179,18 @@ export const DisplayQuestionAnsCard = ({
 
   if (isCorrectAnswerFn(correctAnswerArray, currentUserAnswer, map)) {
     status = "correct";
-    statusColor = "text-emerald-600 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-900/20 dark:border-emerald-800";
+    statusColor =
+      "text-emerald-600 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-900/20 dark:border-emerald-800";
   } else {
     if (!userAnswer) console.log("user not attemp this question", number);
     if (isCorrectAnswerFn(currentUserAnswer, ["0"], map)) {
       status = "unattempted";
-      statusColor = "text-[var(--text-secondary)] bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
+      statusColor =
+        "text-[var(--text-secondary)] bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
     } else {
       status = "incorrect";
-      statusColor = "text-rose-600 bg-rose-50 border-rose-200 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800";
+      statusColor =
+        "text-rose-600 bg-rose-50 border-rose-200 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800";
     }
   }
 
@@ -197,15 +200,25 @@ export const DisplayQuestionAnsCard = ({
 
   return (
     <>
-      <div className={cn("rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-200 hover:shadow-md bg-white dark:bg-zinc-950")} key={id}>
+      <div
+        className={cn(
+          "rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-200 hover:shadow-md bg-white dark:bg-zinc-950",
+        )}
+        key={id}
+      >
         <div className={`  flex flex-col gap-4 justify-between h-full`}>
           <fieldset className="flex w-full  flex-col gap-4">
             <div className="flex justify-between items-start gap-4">
               <legend className="font-semibold text-lg text-[var(--text-primary)] leading-relaxed">
-                <span className="inline-block mr-2 text-[var(--text-secondary)]">Q{number}.</span>
+                <span className="inline-block mr-2 text-[var(--text-secondary)]">
+                  Q{number}.
+                </span>
                 {title}
               </legend>
-              <Badge variant="outline" className={cn("capitalize shrink-0", statusColor)}>
+              <Badge
+                variant="outline"
+                className={cn("capitalize shrink-0", statusColor)}
+              >
                 {status}
               </Badge>
             </div>
@@ -214,15 +227,19 @@ export const DisplayQuestionAnsCard = ({
               {options &&
                 options?.map((option, i) => {
                   const isSelected = currentUserAnswer.includes(String(i + 1));
-                  let optionStyles = "border-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900";
+                  let optionStyles =
+                    "border-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900";
 
                   if (isSelected) {
                     if (status === "correct") {
-                      optionStyles = "bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800";
+                      optionStyles =
+                        "bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800";
                     } else if (status === "incorrect") {
-                      optionStyles = "bg-rose-50 border-rose-200 dark:bg-rose-900/20 dark:border-rose-800";
+                      optionStyles =
+                        "bg-rose-50 border-rose-200 dark:bg-rose-900/20 dark:border-rose-800";
                     } else {
-                      optionStyles = "bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
+                      optionStyles =
+                        "bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700";
                     }
                   }
 
@@ -230,7 +247,7 @@ export const DisplayQuestionAnsCard = ({
                     <div
                       className={cn(
                         "flex items-start p-3 rounded-lg border transition-colors duration-200",
-                        optionStyles
+                        optionStyles,
                       )}
                       id="checkbox"
                       key={i}
@@ -239,9 +256,11 @@ export const DisplayQuestionAnsCard = ({
                         <Checkbox
                           className={cn(
                             "mt-1 peer appearance-none w-5 h-5 rounded-md border transition-all",
-                            isSelected && status === "correct" ? "border-emerald-500 checked:bg-emerald-500 checked:border-emerald-500" :
-                              isSelected && status === "incorrect" ? "border-rose-500 checked:bg-rose-500 checked:border-rose-500" :
-                                "border-zinc-300 dark:border-zinc-600 checked:bg-zinc-600 checked:border-zinc-600"
+                            isSelected && status === "correct"
+                              ? "border-emerald-500 checked:bg-emerald-500 checked:border-emerald-500"
+                              : isSelected && status === "incorrect"
+                                ? "border-rose-500 checked:bg-rose-500 checked:border-rose-500"
+                                : "border-zinc-300 dark:border-zinc-600 checked:bg-zinc-600 checked:border-zinc-600",
                           )}
                           id={`option${i + 1}-${id}`}
                           name={`question${number}`}
@@ -252,9 +271,11 @@ export const DisplayQuestionAnsCard = ({
                           htmlFor={`option${i + 1}-${id}`}
                           className={cn(
                             "text-base leading-relaxed cursor-pointer select-none w-full",
-                            isSelected && status === "correct" ? "text-emerald-700 dark:text-emerald-300 font-medium" :
-                              isSelected && status === "incorrect" ? "text-rose-700 dark:text-rose-300 font-medium" :
-                                "text-[var(--text-primary)]"
+                            isSelected && status === "correct"
+                              ? "text-emerald-700 dark:text-emerald-300 font-medium"
+                              : isSelected && status === "incorrect"
+                                ? "text-rose-700 dark:text-rose-300 font-medium"
+                                : "text-[var(--text-primary)]",
                           )}
                         >
                           {option}
@@ -278,13 +299,22 @@ export const DisplayQuestionAnsCard = ({
             </DialogBox>
 
             <div className="infoSection hidden md:flex gap-2">
-              <Badge variant="outline" className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800">
+              <Badge
+                variant="outline"
+                className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800"
+              >
                 {questionAnsData.part}
               </Badge>
-              <Badge variant="outline" className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800">
+              <Badge
+                variant="outline"
+                className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800"
+              >
                 {Topic.shortName}
               </Badge>
-              <Badge variant="outline" className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800">
+              <Badge
+                variant="outline"
+                className="text-xs font-medium text-[var(--text-secondary)] border-zinc-200 dark:border-zinc-800"
+              >
                 {is_multiple_ans ? "Multiple" : "Single"}
               </Badge>
             </div>

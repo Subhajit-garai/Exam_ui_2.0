@@ -3,7 +3,15 @@ import { Button } from "@repo/ui/button";
 import { Card } from "@repo/design-system/card"; // import { HeaderCompForSelectExam } from "../shared/HeaderCompForSelectExam";
 import StatCard from "../shared/StatCard";
 import { motion } from "motion/react";
-import { Ban, ChartLine, Check, Trophy, Users, Zap, FileQuestion } from "lucide-react";
+import {
+  Ban,
+  ChartLine,
+  Check,
+  Trophy,
+  Users,
+  Zap,
+  FileQuestion,
+} from "lucide-react";
 import WeaknessSegmentationOfexam from "../metrix/WeaknessSegmentationOfexam";
 import { DisplayExamQuestionSAnsMapping } from "../shared/DisplayExamQuestionSAnsMappingCard";
 import { useIsMobile } from "@repo/hooks/isMobile";
@@ -14,7 +22,7 @@ import { useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import ExamAttemptQuestionChart from "../metrix/ExamAttemptQuestionChart";
 import LeaderBoard from "../metrix/LeaderBoard";
-import { ExamSelection } from "../shared/ExamSelection";
+import { ExamSelection } from "@/pages/shared/ExamSelection";
 import type { exam_type, UserAnsFormat_type } from "./types";
 import { cn } from "@/lib/utils";
 import { DialogBox } from "@/design-system/dialog";
@@ -48,7 +56,7 @@ export const AnalysesTest = () => {
           type: "REVIEWING_WRONG_ANSWERS",
           title: "Reviewing Answers",
           description: `Reviewing answers for exam ${currentexams?.display_id || examid}`,
-          metadata: { examId: examid }
+          metadata: { examId: examid },
         });
       } catch (e) {
         console.error("Failed to log activity", e);
@@ -59,7 +67,7 @@ export const AnalysesTest = () => {
       if (!UserAnsset.success) {
         return toast.info(
           "Please ensure that you submitted the exam.",
-          ToastConfig()
+          ToastConfig(),
         );
       }
       setQuestionAns(UserAnsset.data);
@@ -80,8 +88,7 @@ export const AnalysesTest = () => {
   }, [examid]);
 
   useEffect(() => {
-
-    _.api.exam.fetchExams().then(res => {
+    _.api.exam.fetchExams().then((res) => {
       if (res.success) {
         setexams(res.data);
       }
@@ -123,7 +130,7 @@ export const AnalysesTest = () => {
             <p
               className={cn(
                 " text-[var(--text-primary)]",
-                ismobile ? "text-[10px]" : "text-sm"
+                ismobile ? "text-[10px]" : "text-sm",
               )}
             >
               ID:{currentexams?.display_id}{" "}
@@ -131,7 +138,7 @@ export const AnalysesTest = () => {
             <p
               className={cn(
                 " text-[var(--text-primary)]",
-                ismobile ? "text-[10px]" : "text-sm"
+                ismobile ? "text-[10px]" : "text-sm",
               )}
             >
               TIME:{" "}
@@ -148,7 +155,7 @@ export const AnalysesTest = () => {
                     exams={exams}
                     setcurrentexams={setcurrentexams}
                     setexamid={setexamid}
-                  // modelClose={setOpenModal}
+                    // modelClose={setOpenModal}
                   />
                 </div>
               </DialogBox>
@@ -235,9 +242,12 @@ export const AnalysesTest = () => {
               <div className="bg-secondary/20 p-4 rounded-full mb-4">
                 <FileQuestion size={48} className="text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground">No Answers Generated</h3>
+              <h3 className="text-lg font-semibold text-foreground">
+                No Answers Generated
+              </h3>
               <p className="text-muted-foreground max-w-sm mt-2">
-                Click the "Generate Ans" button above to view the detailed question-wise analysis.
+                Click the "Generate Ans" button above to view the detailed
+                question-wise analysis.
               </p>
             </div>
           )}

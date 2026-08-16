@@ -27,7 +27,7 @@ type user_type = {
   contact: string;
   social: user_social_type[];
   target_exam?: string;
-  academicProfile?: {
+  academic_profile?: {
     category: string;
     exam: string;
     year: string;
@@ -56,7 +56,7 @@ const initialState: user_type = {
   isverify: false,
   contact: "xxxxxxxx",
   social: [],
-  academicProfile: null,
+  academic_profile: null,
   standard: null,
   stream: null,
   school: null,
@@ -84,7 +84,6 @@ let userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, actions) => {
-      console.log("user set...");
       let {
         name,
         balance,
@@ -92,7 +91,7 @@ let userSlice = createSlice({
         prime,
         social,
         target_exam,
-        academicProfile,
+        academic_profile,
         standard,
         stream,
         school,
@@ -105,7 +104,7 @@ let userSlice = createSlice({
       state.social = social;
       state.status = prime?.status ?? "none";
       state.target_exam = target_exam;
-      state.academicProfile = academicProfile;
+      state.academic_profile = academic_profile;
       state.standard = standard;
       state.stream = stream;
       state.school = school;

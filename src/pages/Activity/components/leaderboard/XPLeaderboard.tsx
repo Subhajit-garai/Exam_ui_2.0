@@ -4,7 +4,7 @@ import { useApi } from "@/ApiProvider";
 import {
   LeaderboardComponent,
   type activity_time_range,
-} from "@/pages/Activity/components/LeaderboardComponent";
+} from "@/pages/activity/components/LeaderboardComponent";
 
 export const XPLeaderboard = () => {
   const [users, setUsers] = useState<any[]>([]);

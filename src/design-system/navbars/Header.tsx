@@ -23,7 +23,7 @@ export const Header = ({
   LogoUrl: string;
   BrandName?: string;
 }) => {
-  let { islogin, academicProfile } = useAppSelector((state) => state.user);
+  let { islogin, academic_profile } = useAppSelector((state) => state.user);
   return (
     <nav className=" header  top-0 right-0 left-0  border-b border-[var(--header-border)] h-[5rem] max-w-full z-[8]">
       <div className="  flex  gap-2 md:gap-4 items-center justify-between p-2 md:mx-20 h-full  ">
@@ -31,7 +31,7 @@ export const Header = ({
           <Logo url={LogoUrl} />
 
           <p className=" self md:whitespace-nowrap  md:text-xl font-semibold text-[var(--text-primary)]  ">
-            {academicProfile?.exam ?? BrandName}
+            {academic_profile?.exam ?? BrandName}
           </p>
         </div>
 
@@ -57,31 +57,22 @@ export const Header = ({
 };
 export default Header;
 
-export const Logo = ({
-  url
-}: {
-  url: string;
-}) => {
+export const Logo = ({ url }: { url: string }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { api } = useApi()
+  const { api } = useApi();
 
-  let { islogin, name, email } = useAppSelector(
-    (state) => state.user
-  );
+  let { islogin, name, email } = useAppSelector((state) => state.user);
 
   const userLogout = async () => {
     if (islogin) {
       dispatch(logout());
-      let response = await api.user.userLogout()
+      let response = await api.user.userLogout();
 
-      if (
-        response.success
-      ) {
+      if (response.success) {
         toast.success(response.message, ToastConfig());
-        console.log("removed  cached.."),
-          navigate("/login")
+        (console.log("removed  cached.."), navigate("/login"));
       } else {
         toast.info("processing", ToastConfig());
         window.location.reload();

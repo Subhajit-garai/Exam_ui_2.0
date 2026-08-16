@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export default function NoteSubjectList() {
   const dispatch = useAppDispatch();
   let { Subjects } = useAppSelector((state) => state.note);
-  let { academicProfile } = useAppSelector((state) => state.user);
+  let { academic_profile } = useAppSelector((state) => state.user);
 
   let [errorMessage, setErrorMessage] = useState<{
     message: string;
@@ -35,7 +35,7 @@ export default function NoteSubjectList() {
   return (
     <>
       <div className=" flex flex-col  gap-2">
-        {!academicProfile && (
+        {!academic_profile && (
           <div className="p-4 pb-0">
             <StatusAlert
               type="warning"

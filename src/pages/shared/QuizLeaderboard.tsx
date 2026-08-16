@@ -2,8 +2,8 @@ import { useState, useMemo, useEffect } from "react";
 import { Trophy, Medal, BrainCircuit } from "lucide-react";
 import { useApi } from "@/ApiProvider";
 import type { LeaderboardEntry } from "@/hooks/useQuizSocket";
-import { LeaderboardComponent } from "@/pages/Activity/components/LeaderboardComponent";
-import type { activity_time_range } from "@/pages/Activity/components/LeaderboardComponent";
+import { LeaderboardComponent } from "@/pages/activity/components/LeaderboardComponent";
+import type { activity_time_range } from "@/pages/activity/components/LeaderboardComponent";
 
 export type { activity_time_range };
 

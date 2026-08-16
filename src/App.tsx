@@ -11,10 +11,10 @@ import {
 } from "@repo/design-system/outlets/index";
 
 // pages
-import Home from "./pages/Home/Home.js";
+import Home from "./pages/home/Home.js";
 // defultpages
 // import LandingPage from "./pages/DefaultPages/LandingPage.js";
-import ErrorPage from "./pages/DefaultPages/ErrorPage.js";
+import ErrorPage from "./pages/defaultPages/ErrorPage.js";
 //authpages
 import Login from "./pages/authpages/Login.js";
 import ForgotPassword from "./pages/authpages/ForgotPassword.js";
@@ -33,13 +33,10 @@ import JoinDpp from "./pages/exam/JoinDpp.js";
 // analyses
 // import { Dashboard as AnalysesDashboard } from "./pages/Analyses/Dashboard.js";
 // import { AnalysesOverview } from "./pages/Analyses/AnalysesOverview.js";
-import { Overview } from "./pages/Analyses/Overview.js";
+import { Overview } from "./pages/analyses/Overview.js";
 
-import { AnalysesTest } from "./pages/Analyses/AnalysesTest.js";
-import { AnalysesPYQMock } from "./pages/Analyses/AnalysesPYQMock.js";
-import { AnalysesContest } from "./pages/Analyses/AnalysesContest.js";
-import { AnalysesQuiz } from "./pages/Analyses/AnalysesQuiz.js";
-import AnalysesDashboard from "./pages/Analyses/AnalysesDashboard.js";
+import { AnalysesTest } from "./pages/analyses/AnalysesTest.js";
+import AnalysesDashboard from "./pages/analyses/AnalysesDashboard.js";
 import ExamDashboard from "./pages/exam/ExamDashboard.js";
 //components
 import { Appbar } from "@repo/design-system/navbars/Appbar";
@@ -78,8 +75,8 @@ import { ApiProvider } from "./ApiProvider.js";
 import { JoinMock } from "./pages/exam/joinMock.js";
 import { JoinPYQ } from "./pages/exam/JoinPYQ.js";
 import { IssueDashboard } from "./pages/issue/IssueDashboard.js";
-import ActivityDashboard from "./pages/Activity/ActivityDashboard.js";
-import QuizPage from "./pages/Activity/QuizPage.js";
+import ActivityDashboard from "./pages/activity/ActivityDashboard.js";
+import QuizPage from "./pages/activity/QuizPage.js";
 import QuizStartPage from "./pages/quiz/QuizStartPage.js";
 // import { ActivityHistory } from "./pages/user/profile/ActivityHistory.js";
 
@@ -342,9 +339,6 @@ const App = () => {
                     <Route path="dashboard" element={<AnalysesDashboard />} />
                     <Route path="overview" element={<Overview />} />
                     <Route path="test" element={<AnalysesTest />} />
-                    <Route path="pyqmock" element={<AnalysesPYQMock />} />
-                    <Route path="contest" element={<AnalysesContest />} />
-                    <Route path="quiz" element={<AnalysesQuiz />} />
                   </Route>
                   <Route
                     path="/exam"
