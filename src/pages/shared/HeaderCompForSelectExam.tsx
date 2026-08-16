@@ -3,16 +3,16 @@ import { SimpleDatepicker } from "@repo/design-system/datepicker";
 import { Button } from "@repo/ui/button";
 import { SelectionInput } from "@repo/design-system/inputs";
 import { useApi } from "@/ApiProvider";
-export const ExamTypes = ["Exam", "Contest","Dpp" , "Mock", "PYQ"];
+export const ExamTypes = ["Exam", "Contest", "Dpp", "Mock", "PYQ"];
 
-export const HeaderCompForSelectExam = ({ setexams }:{setexams:React.Dispatch<React.SetStateAction<any>>}) => {
+export const HeaderCompForSelectExam = ({ setexams }: { setexams: React.Dispatch<React.SetStateAction<any>> }) => {
   const [startDate, setstartDate] = useState<Date | undefined>(new Date());
   const [endDate, setendDate] = useState<Date | undefined>(new Date());
   const [ExamType, setExamType] = useState("Exam");
-  const _ = useApi()
+  const _ = useApi();
 
   const handleGetExam = async () => {
-    if(!startDate || !endDate) return
+    if (!startDate || !endDate) return;
     let data = await _.api.exam.getExamFilterByTime(
       startDate.toISOString(),
       endDate.toISOString(),
@@ -21,7 +21,7 @@ export const HeaderCompForSelectExam = ({ setexams }:{setexams:React.Dispatch<Re
 
     setexams(data.data.exams);
   };
-  
+
 
   return (
     <>
@@ -29,7 +29,7 @@ export const HeaderCompForSelectExam = ({ setexams }:{setexams:React.Dispatch<Re
         <div className="flex  flex-col  gap-2 ">
           <p className="text-sm">Select Exam Time ( end - start {'>'} 1 day) </p>
           <div className="flex flex-col  lg:flex-row gap-2">
-            <SimpleDatepicker lable="select " date={startDate} setDate={setstartDate } />
+            <SimpleDatepicker lable="select " date={startDate} setDate={setstartDate} />
             <p>to</p>
             <SimpleDatepicker lable="select " date={endDate} setDate={setendDate} />
           </div>
@@ -44,7 +44,7 @@ export const HeaderCompForSelectExam = ({ setexams }:{setexams:React.Dispatch<Re
             options: ExamTypes,
             name: "ExamTypes",
           }]}
-          handleInputefn={(e)=>{setExamType(e.target.value)}}
+          handleInputefn={(e) => { setExamType(e.target.value); }}
           value={ExamType}
         />
         <Button className="h-fit" onClick={handleGetExam}>

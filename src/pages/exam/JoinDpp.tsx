@@ -3,7 +3,7 @@ import useExamTimetablehook from "@repo/hooks/examTime";
 import { Tabs } from "@repo/design-system/tabs/Tabs";
 import { useApi } from "@/ApiProvider";
 import { LoaderFive } from "@repo/design-system/loader/loader";
-import { ExamDisplay } from "./testDisplay";
+import { ExamDisplay } from "./components/testDisplay";
 
 const JoinExam = () => {
 

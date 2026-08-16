@@ -71,8 +71,6 @@ export const StreakCard = ({ variant = "gradient", className, showRefresh = true
                     <p className="text-xs text-muted-foreground">Keep learning to maintain it</p>
                 </div>
                 <div className="text-orange-600 font-bold text-xl">
-                    {/* Placeholder for XP or other stat if needed, or just remove */}
-                    {/* +50 XP */}
                 </div>
                 {showRefresh && (
                     <Button

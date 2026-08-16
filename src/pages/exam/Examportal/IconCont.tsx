@@ -6,7 +6,7 @@ import {
   setCurrentPart,
   type parts_type,
 } from "@repo/store/slice/examSlice";
-import { ExamEndTime } from "../Timer";
+import { ExamEndTime } from "../components/Timer";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ToastConfig } from "@/lib";

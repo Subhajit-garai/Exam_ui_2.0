@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SubjectListCard } from "./ListCard";
+import { SubjectListCard } from "./components/ListCard";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useApi } from "@/ApiProvider";
 import { StatusAlert } from "@/design-system";

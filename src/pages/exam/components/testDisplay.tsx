@@ -1,4 +1,3 @@
-
 import { LoaderFive } from "@/design-system/loader/loader";
 import JoinerxamCard from "./JoinerxamCard";
 import { useIsMobile } from "@/hooks";
@@ -72,7 +71,6 @@ export const ExamDisplay = ({
                                 currentPage={currentPage}
                                 itemsPerPage={EXAMS_PER_PAGE}
                                 totalItems={TestCount}
-                                //totalPages={Math.max(1, Math.ceil(TestCount / EXAMS_PER_PAGE || 0))}
                                 onPageChange={setCurrentPage}
                             />
                         )}

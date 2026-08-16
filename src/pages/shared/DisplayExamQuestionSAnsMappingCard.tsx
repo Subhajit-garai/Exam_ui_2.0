@@ -6,10 +6,9 @@ import { Badge } from "@repo/ui/badge";
 import { cn } from "@repo/lib/utils";
 import { QuestionIssueCardCreate } from "@/design-system";
 import { Tabs } from "@/design-system/tabs/Tabs";
-import type { UserAnsFormat_type } from "../Analyses/types";
+import type { UserAnsFormat_type } from "@/pages/Analyses/types";
 import { LoaderFive } from "@/design-system/loader/loader";
 import { DialogBox } from "@/design-system/dialog";
-// import { TabManue } from "@repo/design-system/tabs";
 
 interface Option {
   title: string;
@@ -77,8 +76,7 @@ export const DisplayExamQuestionSAnsMapping = ({
       } else {
         isCorrectAnswerFn(correctAns, userAns, question.shuffleMap)
           ? mapping["Correct"].push(question)
-          : // console.log("----->", isCorrectAnswerFn(correctAns, userAns) ,"ismultiple -->" ,question.is_multiple_ans," userAns-->",userAns ,"correctAns--->", correctAns),
-          mapping["InCorrect"].push(question);
+          : mapping["InCorrect"].push(question);
       }
     });
     return mapping;
@@ -249,7 +247,6 @@ export const DisplayQuestionAnsCard = ({
                           name={`question${number}`}
                           value={i + 1}
                           checked={isSelected}
-                        // readOnly={true}
                         />
                         <Label
                           htmlFor={`option${i + 1}-${id}`}
@@ -320,14 +317,12 @@ const SolutionDisplayCont = ({
   isMultipleAns: boolean;
 }) => {
   const [Solution, setSolution] = useState("");
-  // const [Link, setLink] = useState([]);
   const _ = useApi();
   useEffect(() => {
     _.api.question
       .GetQuestionExplanationData({ questionid })
       .then((res: any) => {
         setSolution(res.data.explanation);
-        // setLink(res.data.links);
       })
       .catch((err: any) => {
         console.log("error ->", err);

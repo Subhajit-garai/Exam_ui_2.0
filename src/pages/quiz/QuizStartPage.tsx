@@ -7,7 +7,7 @@ import { Badge } from "@repo/ui/badge";
 import { Loader2, User, Play } from "lucide-react";
 import { QuizActivePage } from "./QuizActivePage";
 
-import { QuizLeaderboard } from "@/pages/Activity/components/leaderboard/QuizLeaderboard";
+import { QuizLeaderboard } from "@/pages/shared/QuizLeaderboard";
 import { useQuizSocketContext } from "@/QuizSocketProvider";
 
 export const QuizStartPage = () => {

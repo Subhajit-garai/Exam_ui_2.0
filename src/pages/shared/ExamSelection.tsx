@@ -6,10 +6,10 @@ export const ExamSelection = ({
   setexamid,
   modelClose,
 }: {
-  exams:any[];
-  setcurrentexams:any;
-  setexamid:any;
-  modelClose?:any;
+  exams: any[];
+  setcurrentexams: any;
+  setexamid: any;
+  modelClose?: any;
 }) => {
   return (
     <div>

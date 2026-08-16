@@ -23,13 +23,11 @@ export const MyBadges = () => {
             try {
                 const response = await _.api.activity.getRewards();
                 if (response.success) {
-                    // Filter for badges if the API returns mixed rewards
                     const userBadges = response.data.badges.filter((r: Reward) => r.type === "BADGE" || !r.type);
                     setBadges(userBadges);
                 }
             } catch (error) {
                 console.error("Failed to fetch rewards", error);
-                // toast.error("Failed to fetch badges", ToastConfig(1500));
             } finally {
                 setLoading(false);
             }

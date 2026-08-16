@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PaymentSubcriptionCard__2, PaymentTokenCard__2 } from "./PaymentOfferCard";
+import { PaymentSubcriptionCard__2, PaymentTokenCard__2 } from "./components/PaymentOfferCard";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@repo/design-system/card/Card";
 import { useApi } from "@/ApiProvider";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { TopicListCard } from "./ListCard";
+import { TopicListCard } from "./components/ListCard";
 import { useApi } from "@/ApiProvider";
 import { useAppDispatch, useAppSelector } from "@repo/store/hook";
 import { useParams } from "react-router-dom";

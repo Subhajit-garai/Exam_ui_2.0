@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 
-import StatCard from "../common/StatCard";
+import StatCard from "../shared/StatCard";
 import PerformanceMetrix from "../metrix/PerformanceMetrix";
 import WeaknessSegmentation from "../metrix/WeaknessSegmentationOfOverAll";
 import { useApi } from "@/ApiProvider";

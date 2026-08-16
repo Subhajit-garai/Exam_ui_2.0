@@ -47,7 +47,6 @@ const JoinerxamCard = ({
 
   const handleJoinExam = async () => {
     let res = await _.api.exam.joinExams(contestid);
-    // .then((res) => {
     if (res.success == true) {
       toast.success(res.message, ToastConfig());
       _.api.user.fetchuser(dispatch);
@@ -57,7 +56,6 @@ const JoinerxamCard = ({
         dispatch(
           setTotal_Questions(responce.data[0]?.exam_pattern?.total_questions)
         );
-        // Log Activity
         _.api.activity.logActivity({
           type: examtype.toUpperCase(),
           title: `Joined ${Title}`,
@@ -67,7 +65,6 @@ const JoinerxamCard = ({
         });
         navigator(`/examportal?id=${encodeURIComponent(contestid)}`);
       } else {
-        // console.log("error res -> ", responce);
       }
     } else {
       toast.error(res.message, ToastConfig());
@@ -86,7 +83,6 @@ const JoinerxamCard = ({
         <img className="rounded-t-lg" src={imageurl} alt="" />
 
         <div className="info flex gap-2  absolute w-full top-0 left-0 py-4 px-2">
-          {/* replace start time with join time */}
           {examtype == "Mock" || examtype == "PYQ" ? (
             <Button
               className="absolute right-0 mr-5"
@@ -94,7 +90,6 @@ const JoinerxamCard = ({
               color="success"
               disabled={isDisabled}
               onClick={() => {
-                // set exam id
                 dispatch(setlastExam(contestid));
                 navigator("/analysis/test");
               }}
@@ -153,7 +148,6 @@ const JoinerxamCard = ({
                     color="success"
                     disabled={isDisabled}
                     onClick={() => {
-                      // set exam id
                       dispatch(setlastExam(contestid));
                       navigator("/analysis/test");
                     }}

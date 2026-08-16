@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { AvailableQuizzes } from "../quiz/component/AvailableQuizzes";
+import { AvailableQuizzes } from "@/pages/shared/AvailableQuizzes";
 import { QuizModesCard } from "./components/QuizModesCard";
-import { QuizLeaderboard } from "./components/leaderboard/QuizLeaderboard";
+import { QuizLeaderboard } from "@/pages/shared/QuizLeaderboard";
 import { QuizSetupModal } from "./QuizSetupModal";
 import { BetaTag } from "@/design-system/DevComponents/BetaTag";
 

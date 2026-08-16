@@ -1,6 +1,6 @@
 import { Card } from "@/design-system";
-import { StreakCard } from "@/pages/Activity/components/achievements/StreakCard";
-import { MyBadges } from "@/pages/Activity/MyBadges";
+import { StreakCard } from "@/pages/shared/StreakCard";
+import { MyBadges } from "@/pages/shared/MyBadges";
 
 export const Achievements = () => {
     return (
