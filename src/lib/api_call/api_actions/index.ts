@@ -3,11 +3,11 @@
  */
 
 export * from "./event.action";
-export * from "./exam.actions";
+export * from "./exam.action";
 export * from "./issue.action";
 export * from "./metrix.action";
 export * from "./notes.action";
 export * from "./payment.action";
 export * from "./question.action";
-export * from "./user.actions";
+export * from "./user.action";
 export * from "./progress.action";
