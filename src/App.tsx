@@ -81,7 +81,7 @@ import { IssueDashboard } from "./pages/issue/IssueDashboard.js";
 import ActivityDashboard from "./pages/Activity/ActivityDashboard.js";
 import QuizPage from "./pages/Activity/QuizPage.js";
 import QuizStartPage from "./pages/quiz/QuizStartPage.js";
-import { ActivityHistory } from "./pages/user/profile/ActivityHistory.js";
+// import { ActivityHistory } from "./pages/user/profile/ActivityHistory.js";
 
 let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
   {
@@ -267,8 +267,14 @@ const App = () => {
                   <Route path="/" element={<FullpageOutlet />}>
                     <Route path="/home" element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/forgotpassword" element={<ForgotPassword />} />
-                    <Route path="/forgotpassword/verify" element={<ValidationForgotpassword />} />
+                    <Route
+                      path="/forgotpassword"
+                      element={<ForgotPassword />}
+                    />
+                    <Route
+                      path="/forgotpassword/verify"
+                      element={<ValidationForgotpassword />}
+                    />
                     <Route path="/term" element={<LegalPages />} />
                     <Route path="/privacy" element={<LegalPages />} />
                     <Route path="/refund" element={<LegalPages />} />
@@ -302,13 +308,8 @@ const App = () => {
                     <Route index element={<Navigate to="balance" replace />} />
                     <Route path="balance" element={<Balance />} />
                     <Route path="profile" element={<Profile />} />
-                    <Route
-                      path="activityhistory"
-                      element={<ActivityHistory />}
-                    />
                     <Route path="validation" element={<ValidationUserPage />} />
                     <Route path="security" element={<SecurityUserPage />} />
-
                   </Route>
                   <Route
                     path="/activity"
@@ -334,7 +335,10 @@ const App = () => {
                       <SplitOutlet SIDEBAR_ITEMS={ANALYSIS_SIDEBAR_ITEMS} />
                     }
                   >
-                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route
+                      index
+                      element={<Navigate to="dashboard" replace />}
+                    />
                     <Route path="dashboard" element={<AnalysesDashboard />} />
                     <Route path="overview" element={<Overview />} />
                     <Route path="test" element={<AnalysesTest />} />
@@ -346,7 +350,10 @@ const App = () => {
                     path="/exam"
                     element={<SplitOutlet SIDEBAR_ITEMS={EXAM_SIDEBAR_ITEMS} />}
                   >
-                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route
+                      index
+                      element={<Navigate to="dashboard" replace />}
+                    />
                     <Route path="dashboard" element={<ExamDashboard />} />
                     <Route path="test" element={<JoinTests />} />
                     <Route path="dpp" element={<JoinDpp />} />

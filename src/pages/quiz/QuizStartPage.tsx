@@ -7,7 +7,7 @@ import { Badge } from "@repo/ui/badge";
 import { Loader2, User, Play } from "lucide-react";
 import { QuizActivePage } from "./QuizActivePage";
 
-import { QuizLeaderboard } from "../Activity/leaderboard/QuizLeaderboard";
+import { QuizLeaderboard } from "@/pages/Activity/components/leaderboard/QuizLeaderboard";
 import { useQuizSocketContext } from "@/QuizSocketProvider";
 
 export const QuizStartPage = () => {
@@ -32,8 +32,6 @@ export const QuizStartPage = () => {
   const [countdown, setCountdown] = useState(3);
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasJoined = useRef(false);
-
-
 
   // Reset join flag on disconnect
   useEffect(() => {
