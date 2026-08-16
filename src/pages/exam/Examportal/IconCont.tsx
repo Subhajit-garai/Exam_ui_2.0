@@ -36,17 +36,20 @@ const InfoButton = ({
     },
     green: {
       border: "hover:border-green-500/50 dark:hover:border-green-500/50",
-      iconBg: "bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400",
+      iconBg:
+        "bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400",
       text: "text-zinc-900 dark:text-zinc-100",
     },
     purple: {
       border: "hover:border-purple-500/50 dark:hover:border-purple-500/50",
-      iconBg: "bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400",
+      iconBg:
+        "bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400",
       text: "text-zinc-900 dark:text-zinc-100",
     },
     orange: {
       border: "hover:border-orange-500/50 dark:hover:border-orange-500/50",
-      iconBg: "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400",
+      iconBg:
+        "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400",
       text: "text-zinc-900 dark:text-zinc-100",
     },
   };
@@ -56,31 +59,29 @@ const InfoButton = ({
   return (
     <div
       onClick={onClick}
-      className={cn(
-        "relative group cursor-pointer",
-        className
-      )}
+      className={cn("relative group cursor-pointer", className)}
     >
-      <div className={cn(
-        "flex items-center gap-3 px-4 py-2 rounded-xl border shadow-sm transition-all duration-300",
-        "bg-white dark:bg-zinc-900",
-        "border-zinc-200 dark:border-zinc-800",
-        styles.border
-      )}>
-        <div className={cn(
-          "p-2 rounded-lg transition-colors",
-          styles.iconBg
-        )}>
+      <div
+        className={cn(
+          "flex items-center gap-3 px-4 py-2 rounded-xl border shadow-sm transition-all duration-300",
+          "bg-white dark:bg-zinc-900",
+          "border-zinc-200 dark:border-zinc-800",
+          styles.border,
+        )}
+      >
+        <div className={cn("p-2 rounded-lg transition-colors", styles.iconBg)}>
           <Icon size={20} strokeWidth={2.5} />
         </div>
         <div className="flex flex-col">
           <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
             {label}
           </span>
-          <span className={cn(
-            "text-lg font-bold font-mono tracking-tight leading-none",
-            styles.text
-          )}>
+          <span
+            className={cn(
+              "text-lg font-bold font-mono tracking-tight leading-none",
+              styles.text,
+            )}
+          >
             {value}
           </span>
         </div>
@@ -112,7 +113,7 @@ export const InfoCont = () => {
               type: "TEST",
               title: "Test Completed",
               description: `Completed exam ${Examid}`,
-              metadata: { examId: Examid }
+              metadata: { examId: Examid },
             });
           } catch (e) {
             console.error("Failed to log activity", e);
@@ -121,7 +122,7 @@ export const InfoCont = () => {
           console.log("test submission successful");
           toast.success(response.message, ToastConfig());
           dispatch(setanssetInit());
-          navigate("/test/submitsuccess");
+          navigate("/exam/submitsuccess");
         }
       })
       .catch((error) => {
@@ -135,7 +136,6 @@ export const InfoCont = () => {
   };
   return (
     <div className="flex flex-col gap-3 w-full">
-
       <ExamEndTime
         Examid={Examid}
         className="w-full"
