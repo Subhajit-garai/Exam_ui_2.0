@@ -7,7 +7,7 @@ import useHandleinpute, {
 } from "@repo/hooks/useHandleInpute";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { GotoSignUpPage } from "../authpages/Login.js";
+import { GotoSignUpPage } from "../auth/Login.js";
 import { ToastConfig } from "@repo/lib/utils/utils";
 import { ShieldCheck, ShieldX, CheckCircle2 } from "lucide-react";
 import { useApi } from "@/ApiProvider.js";
@@ -16,10 +16,7 @@ import type { InputOption } from "@repo/types/Input.js";
 import type { user_social_type } from "@/store/index.js";
 
 const ValidationUserPage = () => {
-  let { social } = useAppSelector(
-    (state) => state.user
-  );
-
+  let { social } = useAppSelector((state) => state.user);
 
   // let [telegram, settelegram] = useState<user_social_type>({
   //   platform: "telegram",
@@ -30,22 +27,20 @@ const ValidationUserPage = () => {
   let [email, setemail] = useState<user_social_type>({
     platform: "telegram",
     link: "",
-    isVerified: false
+    isVerified: false,
   });
   useEffect(() => {
-
     if (social) {
       social.map((link) => {
         // if (link.platform === "telegram") {
         //   settelegram(link)
         // }
         if (link.platform === "email") {
-          setemail(link)
+          setemail(link);
         }
-      })
-
+      });
     }
-  }, [social])
+  }, [social]);
 
   let [sendTokengen, setsendTokengen] = useState(false);
 
@@ -90,7 +85,7 @@ const ValidationUserPage = () => {
             title={"Email Verified"}
             Icon={ShieldCheck}
             data={email.link}
-          // btntext={"Validate agin"}
+            // btntext={"Validate agin"}
           />
 
           {/* {telegram.isVerified ? (
@@ -147,9 +142,6 @@ const ValidationUserPage = () => {
               />
             </>
           )} */}
-
-
-
         </>
       ) : (
         <>
@@ -231,7 +223,9 @@ export const VerificationRequirdCard = ({
         <div className="p-3 bg-red-100 dark:bg-red-900/20 rounded-full">
           <Icon size={32} strokeWidth={2.5} />
         </div>
-        <h1 className="text-center text-xl font-bold tracking-tight">{title}</h1>
+        <h1 className="text-center text-xl font-bold tracking-tight">
+          {title}
+        </h1>
       </div>
 
       <div className="w-full flex flex-col gap-4">
@@ -272,7 +266,9 @@ export const VerificationSuccessDisplayinfoCont = ({
         <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-full">
           <Icon size={32} strokeWidth={2.5} />
         </div>
-        <h1 className="text-center text-xl font-bold tracking-tight">{title}</h1>
+        <h1 className="text-center text-xl font-bold tracking-tight">
+          {title}
+        </h1>
       </div>
       <div className="w-full bg-secondary/50 p-3 rounded-md border border-border text-center font-medium text-sm text-muted-foreground break-all">
         {data}
@@ -325,10 +321,16 @@ export const ValidationForgotpassword = () => {
         toast.success(response.message, ToastConfig());
         navigate("/login");
       } else {
-        toast.error(response?.message || "Failed to verify token", ToastConfig());
+        toast.error(
+          response?.message || "Failed to verify token",
+          ToastConfig(),
+        );
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || error?.message || "An error occurred", ToastConfig());
+      toast.error(
+        error?.response?.data?.message || error?.message || "An error occurred",
+        ToastConfig(),
+      );
       toast.info(<GotoSignUpPage />, ToastConfig());
     }
   };
@@ -337,7 +339,7 @@ export const ValidationForgotpassword = () => {
     <div className="flex justify-center items-center min-h-[85vh] p-4 w-full mt-10 lg:mt-0">
       <Card className="w-full min-w-[20rem] max-w-[24rem] p-8 gap-6 flex flex-col shadow-lg border-primary/20 rounded-xl relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500" />
-        
+
         <div className="flex flex-col gap-3 items-center justify-center mt-2">
           <div className="p-4 bg-green-500/10 dark:bg-green-500/20 rounded-full text-green-600 dark:text-green-400 shadow-inner">
             <CheckCircle2 size={36} strokeWidth={2} />
@@ -358,8 +360,8 @@ export const ValidationForgotpassword = () => {
             handleInputefn={handleInputefn}
             value={value}
           />
-          <Button 
-            onClick={forgotpasswordToken_verify} 
+          <Button
+            onClick={forgotpasswordToken_verify}
             className="w-full font-semibold flex items-center justify-center gap-2 py-6 text-md bg-green-600 hover:bg-green-700 text-white"
             variant="default"
           >

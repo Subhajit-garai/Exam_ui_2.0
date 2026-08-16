@@ -34,7 +34,7 @@ export const SubjectListCard = ({
   const color = getColor(data.name || "");
 
   const handleClick = () => {
-    navigate(link || `/notes/${data.slug && data.slug}`);
+    navigate(link || `/resource/notes/${data.slug && data.slug}`);
   };
   return (
     <motion.div
@@ -65,7 +65,7 @@ export const TopicListCard = ({ data, link }: { data: any; link?: string }) => {
   const color = getColor(data.name || "");
 
   const handleClick = () => {
-    navigate(link || `/notes/${subject}/${data.slug}`);
+    navigate(link || `/resource/notes/${subject}/${data.slug}`);
   };
   return (
     <motion.div

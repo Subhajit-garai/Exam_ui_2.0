@@ -22,7 +22,7 @@ export type nav_items_types = {
 
 export const menuOptions: nav_items_types[] = [
   { id: 1, name: "Home", Component: Home, href: "/home", color: "text-[var(--color-blue)]" },
-  { id: 2, name: "Notes", Component: NotebookPen, href: "/notes/notes", color: "text-[var(--color-purple)]" },
+  { id: 2, name: "Resource", Component: NotebookPen, href: "/resource/notes", color: "text-[var(--color-purple)]" },
   { id: 3, name: "Exam", Component: BookCheck, href: "/exam/dashboard", color: "text-[var(--color-green)]" },
   { id: 6, name: "Activity", Component: Activity, href: "/activity/dashboard", color: "text-[var(--color-orange)]" },
   { id: 4, name: "Analysis", Component: BarChart, href: "/analysis/dashboard", color: "text-[var(--color-yellow)]" },

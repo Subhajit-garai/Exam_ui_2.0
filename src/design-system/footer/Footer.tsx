@@ -38,8 +38,8 @@ export const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/notes/notes" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-                                    Notes
+                                <Link to="/resource/notes" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
+                                    Resource
                                 </Link>
                             </li>
                             <li>

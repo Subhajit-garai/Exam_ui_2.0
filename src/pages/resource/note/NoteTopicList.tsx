@@ -8,7 +8,7 @@ export default function NoteTopicList() {
   const dispatch = useAppDispatch();
   const { subject } = useParams();
   let { Topics } = useAppSelector((state) => state.note);
-  const _ = useApi()
+  const _ = useApi();
   useEffect(() => {
     if (subject) {
       _.api.notes.fetchSubject_topics(dispatch, subject);

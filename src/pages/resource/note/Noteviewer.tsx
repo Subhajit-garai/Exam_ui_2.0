@@ -17,7 +17,6 @@ import Color from '@tiptap/extension-color'
 import { TextStyle } from '@tiptap/extension-text-style'
 import { useAppSelector } from '@/store/hook';
 
-// Custom Image Extension to handle alignments (optional if you just want to view)
 const CustomImage = Image.extend({
   addAttributes() {
     return {
@@ -34,13 +33,13 @@ export function NoteViewer({ content }: { content: string }) {
 
   const extensions = [
     StarterKit.configure({
-      link: false,       // disable default
-      underline: false,  // disable default
+      link: false,
+      underline: false,
     }),
     CustomImage,
     Highlight.configure({ multicolor: true }),
     Table.configure({
-      resizable: true, // Note: resizable requires extra setup in read-only mode usually
+      resizable: true,
     }),
     TableRow,
     TableHeader,
@@ -49,7 +48,7 @@ export function NoteViewer({ content }: { content: string }) {
       controls: false,
     }),
     Link.configure({
-      openOnClick: true, // Set to true for Viewer so links work
+      openOnClick: true,
     }),
     Subscript,
     Superscript,
@@ -72,8 +71,6 @@ export function NoteViewer({ content }: { content: string }) {
 
   if (!editor) return null;
 
-
-  // Create a dynamic SVG for the watermark
   const watermarkText = `- ${name} --${email}`;
   const svgString = encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
@@ -93,7 +90,6 @@ export function NoteViewer({ content }: { content: string }) {
   return (
     <div className="w-full flex justify-end relative">
       <div className="relative w-full">
-        {/* Watermark Overlay using Background Image */}
         <div
           className="absolute inset-0 z-50 pointer-events-none"
           style={{

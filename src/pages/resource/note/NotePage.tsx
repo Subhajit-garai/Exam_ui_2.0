@@ -1,4 +1,3 @@
-// NotePage.jsx
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { NoteViewer } from "./Noteviewer";
@@ -20,14 +19,11 @@ export function NotePage() {
     throw console.log("subject or topic is not valid");
   }
 
-
-  const _ = useApi()
+  const _ = useApi();
 
   const { timeSpent, formatTime } = useReadingTracker(topic);
 
   const handleMarkComplete = async () => {
-    console.log("currentTopic --->", topic);
-
     if (!topic) return;
     try {
       await _.api.progress.markComplete(topic);
@@ -42,9 +38,9 @@ export function NotePage() {
     (async () => {
       let note_cont = await _.api.notes.fetchNotes(subject, topic);
       if (note_cont?.success && note_cont.data) {
-        setContent(note_cont.data.content)
+        setContent(note_cont.data.content);
       }
-    })()
+    })();
   }, []);
 
   return (

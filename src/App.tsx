@@ -1,244 +1,43 @@
-import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-// outlates
+// outlets
 import {
   FullpageOutlet,
-  SplitOutlet,
   ProtectedRoute,
-  QuizLayout,
 } from "@repo/design-system/outlets/index";
 
 // pages
 import Home from "./pages/home/Home.js";
-// defultpages
-// import LandingPage from "./pages/DefaultPages/LandingPage.js";
-import ErrorPage from "./pages/defaultPages/ErrorPage.js";
-//authpages
-import Login from "./pages/authpages/Login.js";
-import ForgotPassword from "./pages/authpages/ForgotPassword.js";
-import Signup from "./pages/authpages/Signup.js";
-import ValidateEmailwhileLogin from "./pages/authpages/ValidateEmailwhileLogin.js";
+import ErrorPage from "./pages/default/ErrorPage.js";
+import Login from "./pages/auth/Login.js";
+import ForgotPassword from "./pages/auth/ForgotPassword.js";
+import Signup from "./pages/auth/Signup.js";
+import ValidateEmailwhileLogin from "./pages/auth/ValidateEmailwhileLogin.js";
 
-//exam
+// exam
 import Examportal from "./pages/exam/Examportal/Examportal.js";
-// import Exam from "./pages/exam/Exam.js";
-import ExamSubmitSuccess from "./pages/exam/ExamSubmitSuccess.js";
-import JoinTests from "./pages/exam/JoinTests.js";
-import JoinDpp from "./pages/exam/JoinDpp.js";
 
-// performence
-
-// analyses
-// import { Dashboard as AnalysesDashboard } from "./pages/Analyses/Dashboard.js";
-// import { AnalysesOverview } from "./pages/Analyses/AnalysesOverview.js";
-import { Overview } from "./pages/analyses/Overview.js";
-
-import { AnalysesTest } from "./pages/analyses/AnalysesTest.js";
-import AnalysesDashboard from "./pages/analyses/AnalysesDashboard.js";
-import ExamDashboard from "./pages/exam/ExamDashboard.js";
-//components
+// components
 import { Appbar } from "@repo/design-system/navbars/Appbar";
-import { type SIDEBAR_ITEMS_types } from "@repo/design-system/navbars/Sidebar";
 import { Component as Breadcrumb } from "@repo/design-system/navbars/Breadcrumb";
 import { Header } from "@repo/design-system/navbars/Header";
-//icons
-import {
-  BarChart2,
-  HandCoins,
-  Trophy,
-  Pencil,
-  ChartLine,
-  ShieldCheck,
-  ListChecks,
-  AlarmClockCheck,
-  FileQuestion,
-  BrainCircuit,
-} from "lucide-react";
+
 import { store } from "@repo/store/store.js";
 import { Provider } from "react-redux";
-import Payment from "./pages/payment/payment.js";
-import Checkout from "./pages/payment/Checkout.js";
-import PaymentSuccess from "./pages/payment/PaymentSuccess.js";
-import Profile from "./pages/user/profile/Profile.js";
-import { Balance } from "./pages/user/Balance.js";
-import { SecurityUserPage } from "./pages/user/SecurityUserPage.js";
-import ValidationUserPage, {
-  ValidationForgotpassword,
-} from "./pages/user/ValidationUserPage.js";
+import { ValidationForgotpassword } from "./pages/user/ValidationUserPage.js";
 import LegalPages from "./pages/legal/LegalPages.js";
-import { NotePage } from "./pages/notes/NotePage.js";
-import NoteSubjectList from "./pages/notes/NoteSubjectList.js";
-import NoteTopicList from "./pages/notes/NoteTopicList.js";
 import { ApiProvider } from "./ApiProvider.js";
-import { JoinMock } from "./pages/exam/joinMock.js";
-import { JoinPYQ } from "./pages/exam/JoinPYQ.js";
-import { IssueDashboard } from "./pages/issue/IssueDashboard.js";
-import ActivityDashboard from "./pages/activity/ActivityDashboard.js";
-import QuizPage from "./pages/activity/QuizPage.js";
-import QuizStartPage from "./pages/quiz/QuizStartPage.js";
-// import { ActivityHistory } from "./pages/user/profile/ActivityHistory.js";
 
-let ANALYSIS_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
-  {
-    id: 1,
-    name: "Dashboard",
-    Icon: BarChart2,
-    color: "var(--color-indigo)",
-    href: "/analysis/dashboard",
-  },
-  {
-    id: 2,
-    href: "/analysis/pyqmock",
-    Icon: Trophy,
-    color: "var(--color-purple)",
-    name: "PYQ Mock",
-  },
-  {
-    id: 3,
-    href: "/analysis/test",
-    color: "var(--color-yellow)",
-    Icon: ChartLine,
-    name: "Test",
-  },
-  {
-    id: 4,
-    name: "Overview",
-    Icon: BarChart2,
-    color: "var(--color-indigo)",
-    href: "/analysis/overview",
-  },
-];
-
-const EXAM_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
-  {
-    id: 1,
-    name: "Dashboard",
-    Icon: BarChart2,
-    color: "var(--color-indigo)",
-    href: "/exam/dashboard",
-  },
-  {
-    id: 2,
-    name: "Tests",
-    Icon: ListChecks,
-    color: "var(--color-indigo)", // Indigo
-    href: "/exam/test",
-  },
-  {
-    id: 3,
-    name: "DPP",
-    Icon: Pencil,
-    color: "var(--color-pink)", // Pink
-    href: "/exam/dpp",
-  },
-  {
-    id: 4,
-    name: "Mock",
-    Icon: AlarmClockCheck,
-    color: "var(--color-green)", // Emerald
-    href: "/exam/mock",
-  },
-  {
-    id: 5,
-    name: "PYQ",
-    Icon: FileQuestion,
-    color: "var(--color-yellow)", // Amber
-    href: "/exam/pyq",
-  },
-];
-
-const USER_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
-  {
-    id: 1,
-    name: "Profile",
-    Icon: BarChart2,
-    color: "var(--color-indigo)",
-    href: "/user/profile",
-  },
-  {
-    id: 2,
-    name: "Balance",
-    Icon: HandCoins,
-    color: "var(--color-green)",
-    href: "/user/balance",
-  },
-
-  {
-    id: 3,
-    name: "Activity History",
-    Icon: ChartLine,
-    color: "var(--color-yellow)",
-    href: "/user/activityhistory",
-  },
-  {
-    id: 4,
-    name: "Validate",
-    Icon: ShieldCheck,
-    color: "var(--color-pink)",
-    href: "/user/validation",
-  },
-];
-
-let NotesOtions: SIDEBAR_ITEMS_types[] = [
-  {
-    id: 2,
-    href: "/notes/notes",
-    Icon: AlarmClockCheck,
-    name: "notes",
-    color: "var(--color-indigo)",
-  },
-];
-let ActivityOptions: SIDEBAR_ITEMS_types[] = [
-  {
-    id: 1,
-    href: "/activity/dashboard",
-    Icon: BarChart2,
-    name: "Dashboard",
-    color: "var(--color-indigo)",
-  },
-  // {
-  //   id: 2,
-  //   href: "/activity/challenge",
-  //   Icon: Swords,
-  //   name: "Challenge",
-  //   color: "var(--color-red)",
-  // },
-  // {
-  //   id: 3,
-  //   href: "/activity/contest",
-  //   Icon: Trophy,
-  //   name: "Contest",
-  //   color: "var(--color-yellow)",
-  // },
-  {
-    id: 4,
-    href: "/activity/quiz",
-    Icon: BrainCircuit,
-    name: "Quiz",
-    color: "var(--color-purple)",
-  },
-];
-
-const ISSUE_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
-  {
-    id: 1,
-    name: "Dashboard",
-    Icon: BarChart2,
-    color: "var(--color-red)", // Red color for issues
-    href: "/issue/dashboard",
-  },
-];
-// const QUIZ_SIDEBAR_ITEMS: SIDEBAR_ITEMS_types[] = [
-//   {
-//     id: 1,
-//     name: "Quiz",
-//     Icon: BarChart2,
-//     color: "var(--color-red)", // Red color for issues
-//     href: "/quiz/start",
-//   },
-// ];
+// Modular Route Imports
+import ActivityRoutes from "./pages/activity/route.js";
+import AnalysesRoutes from "./pages/analyses/route.js";
+import ExamRoutes from "./pages/exam/route.js";
+import UserRoutes from "./pages/user/route.js";
+import ResourceRoutes from "./pages/resource/route.js";
+import IssueRoutes from "./pages/issue/route.js";
+import PaymentRoutes from "./pages/payment/route.js";
 
 let baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -259,8 +58,7 @@ const App = () => {
               <div className="main flex  flex-col text-[var(--text-primary)]   lg:pl-[5rem]  w-screen pb-24 md:pb-0 ">
                 <Breadcrumb />
                 <Routes>
-                  <Route path="/" element={<Home />} />{" "}
-                  {/*  {<LandingPage />} */}
+                  <Route path="/" element={<Home />} />
                   <Route path="/" element={<FullpageOutlet />}>
                     <Route path="/home" element={<Home />} />
                     <Route path="/login" element={<Login />} />
@@ -285,92 +83,17 @@ const App = () => {
                   </Route>
                   <Route path="/" element={<ProtectedRoute />}>
                     <Route path="examportal" element={<Examportal />} />
-                    <Route path="payment" element={<Payment />} />
-                    <Route path="payment/checkout" element={<Checkout />} />
-                    <Route path="paymentsuccess" element={<PaymentSuccess />} />
+                    <Route path="payment/*" element={<PaymentRoutes />} />
                   </Route>
-                  <Route
-                    path="/notes"
-                    element={<SplitOutlet SIDEBAR_ITEMS={NotesOtions} />}
-                  >
-                    <Route index element={<Navigate to="notes" replace />} />
-                    <Route path="notes" element={<NoteSubjectList />} />
-                    <Route path=":subject" element={<NoteTopicList />} />
-                    <Route path=":subject/:topic" element={<NotePage />} />
-                  </Route>
-                  <Route
-                    path="/user"
-                    element={<SplitOutlet SIDEBAR_ITEMS={USER_SIDEBAR_ITEMS} />}
-                  >
-                    <Route index element={<Navigate to="balance" replace />} />
-                    <Route path="balance" element={<Balance />} />
-                    <Route path="profile" element={<Profile />} />
-                    <Route path="validation" element={<ValidationUserPage />} />
-                    <Route path="security" element={<SecurityUserPage />} />
-                  </Route>
-                  <Route
-                    path="/activity"
-                    element={<SplitOutlet SIDEBAR_ITEMS={ActivityOptions} />}
-                  >
-                    <Route
-                      index
-                      element={<Navigate to="dashboard" replace />}
-                    />
-                    <Route path="dashboard" element={<ActivityDashboard />} />
-                    {/* <Route path="challenge" element={<ChallengePage />} /> */}
-                    {/* <Route path="contest" element={<ContestPage />} /> */}
 
-                    <Route path="quiz" element={<QuizLayout />}>
-                      <Route index element={<QuizPage />} />
-                      <Route path="start" element={<QuizStartPage />} />
-                    </Route>
-                    {/* <Route path="leaderboard" element={<LeaderboardPage />} /> */}
-                  </Route>
-                  <Route
-                    path="/analysis"
-                    element={
-                      <SplitOutlet SIDEBAR_ITEMS={ANALYSIS_SIDEBAR_ITEMS} />
-                    }
-                  >
-                    <Route
-                      index
-                      element={<Navigate to="dashboard" replace />}
-                    />
-                    <Route path="dashboard" element={<AnalysesDashboard />} />
-                    <Route path="overview" element={<Overview />} />
-                    <Route path="test" element={<AnalysesTest />} />
-                  </Route>
-                  <Route
-                    path="/exam"
-                    element={<SplitOutlet SIDEBAR_ITEMS={EXAM_SIDEBAR_ITEMS} />}
-                  >
-                    <Route
-                      index
-                      element={<Navigate to="dashboard" replace />}
-                    />
-                    <Route path="dashboard" element={<ExamDashboard />} />
-                    <Route path="test" element={<JoinTests />} />
-                    <Route path="dpp" element={<JoinDpp />} />
-                    {/* <Route path="contest" element={<JoinContest />} /> */}
-                    <Route path="mock" element={<JoinMock />} />
-                    <Route path="pyq" element={<JoinPYQ />} />
-                    <Route
-                      path="submitsuccess"
-                      element={<ExamSubmitSuccess />}
-                    />
-                  </Route>
-                  <Route
-                    path="/issue"
-                    element={
-                      <SplitOutlet SIDEBAR_ITEMS={ISSUE_SIDEBAR_ITEMS} />
-                    }
-                  >
-                    <Route
-                      index
-                      element={<Navigate to="dashboard" replace />}
-                    />
-                    <Route path="dashboard" element={<IssueDashboard />} />
-                  </Route>
+                  {/* Feature Module Routes */}
+                  <Route path="/resource/*" element={<ResourceRoutes />} />
+                  <Route path="/user/*" element={<UserRoutes />} />
+                  <Route path="/activity/*" element={<ActivityRoutes />} />
+                  <Route path="/analysis/*" element={<AnalysesRoutes />} />
+                  <Route path="/exam/*" element={<ExamRoutes />} />
+                  <Route path="/issue/*" element={<IssueRoutes />} />
+
                   <Route path="*" element={<ErrorPage />} />
                 </Routes>
               </div>
